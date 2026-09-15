@@ -40,7 +40,6 @@ void XSIO::Task::Scheduler::m_acquired(Virtual::Thread *thread, Virtual::Process
 
   // handle all the outcome thread states
   switch (auto state = thread->state()) {
-    // reschedule the trh
   case Virtual::State::READY: scheduler->schedule(thread); break;
   case Virtual::State::EXITED: scheduler->recycle(thread); break;
   case Virtual::State::WAITING: Switch::Context::wait_for_thread(thread, processor); break;

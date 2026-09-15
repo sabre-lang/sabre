@@ -42,6 +42,14 @@ class Thread {
   Switch::Pointer m_context = nullptr;   // Associated fcontext_t value.
   Switch::Callback m_callback = nullptr; // Post-context switch callback.
 
+#if $_ASAN_ENABLED
+  struct {
+    size_t size = 0;
+    void *stack = nullptr;
+    const void *bottom = nullptr;
+  } m_asan;
+#endif
+
 public:
   //  CONSTRUCTORS  //
 
@@ -131,6 +139,10 @@ private:
     m_callback = nullptr;
     m_state = State::CLEANED;
     m_ts = Timer::Yield::NEVER;
+
+#if $_ASAN_ENABLED
+    m_asan = {};
+#endif
 
     auto *stack = m_stack; // return
     return m_stack = nullptr, stack;
