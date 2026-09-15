@@ -45,6 +45,10 @@ void XSIO::Switch::Context::yield_to_worker(Task::Scheduler *loop) {
   // update the current thread state to be waiting now
   thread->m_update(Virtual::State::RUNNING, Virtual::State::WAITING), g_thread = nullptr;
 
+#if $_ASAN_ENABLED
+  __sanitizer_start_switch_fiber(&thread->m_asan.stack, thread->m_asan.bottom, thread->m_asan.size);
+#endif
+
   // and attempt jump function contexts
   auto transfer = Operation::jump(worker->context(), nullptr);
 
@@ -55,6 +59,10 @@ void XSIO::Switch::Context::yield_to_worker(Task::Scheduler *loop) {
 
   // successful, so update as necessary
   worker->m_context = transfer.fctx, g_thread = thread;
+
+#if $_ASAN_ENABLED
+  __sanitizer_finish_switch_fiber(thread->m_asan.stack, &thread->m_asan.bottom, &thread->m_asan.size);
+#endif
 }
 
 void XSIO::Switch::Context::yield_to_scheduler(Virtual::Worker *worker) {
@@ -68,6 +76,12 @@ void XSIO::Switch::Context::yield_to_scheduler(Virtual::Worker *worker) {
   loop->m_worker = worker; // update the thread worker to be used now
   loop->m_ts.compare_exchange_strong(Timer::Yield::NEVER, Timer::Point());
 
+#if $_ASAN_ENABLED
+  void *asan_stack_fake = nullptr; // prepare a fake address-sanitizer stack
+  auto *asan_stack_bottom = reinterpret_cast<void *>(loop->m_stack->buffer().address());
+  __sanitizer_start_switch_fiber(&asan_stack_fake, asan_stack_bottom, loop->m_stack->size());
+#endif
+
   // attempt jumping context now
   auto transfer = Operation::jump(loop->m_context, loop);
   $_ASSERT(transfer.data == nullptr, "Failed function-context jump");
@@ -77,6 +91,10 @@ void XSIO::Switch::Context::yield_to_scheduler(Virtual::Worker *worker) {
   loop->m_ts = Timer::Yield::NEVER;
   loop->m_worker = nullptr;
   worker->m_thread = nullptr;
+
+#if $_ASAN_ENABLED
+  __sanitizer_finish_switch_fiber(asan_stack_fake, nullptr, nullptr);
+#endif
 
   $_ASSERT(loop->state() == Virtual::State::WAITING, "Scheduler thread not completed");
   $_ASSERT(worker->m_scheduler == loop, "Scheduler thread mismatch occured");
@@ -102,10 +120,20 @@ void XSIO::Switch::Context::yield_to_thread(Task::Scheduler *loop, Virtual::Thre
   to->m_ts.compare_exchange_strong(Timer::Yield::NEVER, Timer::Point());
   to->m_worker = worker; // and swap the worker instance back again
 
+#if $_ASAN_ENABLED
+  void *asan_stack_fake = nullptr; // prepare a fake address-sanitizer stack
+  auto *asan_stack_bottom = reinterpret_cast<void *>(to->m_stack->buffer().address());
+  __sanitizer_start_switch_fiber(&asan_stack_fake, asan_stack_bottom, to->m_stack->size());
+#endif
+
   // attempt the context jump now
   auto transfer = Operation::jump(to->m_context, to);
   $_ASSERT(transfer.data == to, "Failed function-context jump");
   to->m_context = transfer.fctx, g_thread = from; // update now
+
+#if $_ASAN_ENABLED
+  __sanitizer_finish_switch_fiber(asan_stack_fake, nullptr, nullptr);
+#endif
 
   // re-enter scheduler thread
   $_ASSERT(worker->m_scheduler == from, "Scheduler thread mismatch");
@@ -139,6 +167,11 @@ void XSIO::Switch::Context::yield_to_scheduler(Virtual::Thread *thread, Virtual:
   loop->m_update(Virtual::State::WAITING, Virtual::State::RUNNING);
   loop->m_worker = worker, worker->m_thread = loop; // resolve worker
 
+#if $_ASAN_ENABLED
+  auto *asan_stack_fake = state >= Virtual::State::EXITED ? nullptr : &thread->m_asan.stack;
+  __sanitizer_start_switch_fiber(asan_stack_fake, thread->m_asan.bottom, thread->m_asan.size);
+#endif
+
   // attempt the context jump now
   auto transfer = Operation::jump(loop->m_context, thread);
   $_ASSERT(transfer.data == thread, "Failed function-context jump");
@@ -146,6 +179,10 @@ void XSIO::Switch::Context::yield_to_scheduler(Virtual::Thread *thread, Virtual:
   // update our final details now
   loop = thread->m_worker->m_scheduler.load();
   loop->m_context = transfer.fctx, g_thread = thread;
+
+#if $_ASAN_ENABLED
+  __sanitizer_finish_switch_fiber(thread->m_asan.stack, &thread->m_asan.bottom, &thread->m_asan.size);
+#endif
 }
 
 //  PRIVATE METHODS  //
@@ -172,9 +209,13 @@ $_NORETURN void XSIO::Switch::Context::m_transfer(Transfer transfer) {
   // ensure we have a non-thread mismatch now
   $_ASSERT(worker->thread() == thread, "Context handler thread-mismatch");
 
-  // if we have a scheduler thread, then run another assertion
+  // if we have a scheduler thread, then run another assertion check here
   if (!thread->is<Task::Scheduler>()) loop->m_context = transfer.fctx;
   else worker->m_context = transfer.fctx, $_ASSERT(loop == thread, "Scheduler thread mismatch");
+
+#if $_ASAN_ENABLED
+  __sanitizer_finish_switch_fiber(nullptr, &thread->m_asan.bottom, &thread->m_asan.size);
+#endif
 
   // and run the handler now to be used
   thread->m_execute(), thread->exit();

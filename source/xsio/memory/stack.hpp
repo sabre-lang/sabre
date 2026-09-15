@@ -32,6 +32,9 @@ public:
   /// @brief Gets the size of the stack.
   inline constexpr size_t size() const noexcept { return m_buffer.size(); }
 
+  /// @brief Gets the underlying stack buffer.
+  inline constexpr const Buffer &buffer() const noexcept { return m_buffer; }
+
   /// @brief Gets the low-offset address.
   inline constexpr void *low() const noexcept { return m_buffer.data(); }
 

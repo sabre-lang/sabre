@@ -60,7 +60,7 @@ public:
   /// @brief Handles setting a new scoping with outer depth.
   inline constexpr auto scope(Depth depth) noexcept {
     std::swap(m_outer, depth), m_scopes.emplace_back(Entries());
-    return $::Lambda::Defer([&] { m_close(depth); });
+    return $::Lambda::Defer([&, depth] { m_close(depth); });
   }
 
   /// @brief Handles setting a new scoping and declaration.

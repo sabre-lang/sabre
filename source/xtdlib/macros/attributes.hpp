@@ -20,8 +20,15 @@
 
 #if __has_feature(address_sanitizer) || defined(__SANITIZE_ADDRESS__)
 #define $_ASAN_ENABLED 1
+#include <sanitizer/asan_interface.h>
 #else
 #define $_ASAN_ENABLED 0
+#endif
+
+#if __has_feature(thread_sanitizer) || defined(__SANITIZE_THREAD__)
+#define $_TSAN_ENABLED 1
+#else
+#define $_TSAN_ENABLED 0
 #endif
 
 #if !$_PP_NDEBUG
