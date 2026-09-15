@@ -16,7 +16,7 @@
 namespace Talos::Runtime {
 
 /// @brief Runtime Thread Isolate.
-class $_ABSTRACT $_ALIGNAS(16) Isolate {
+class $_ABSTRACT Isolate {
   //  TYPEDEFS  //
 
   /// @brief Allow the allocator internal access.

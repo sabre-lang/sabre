@@ -14,13 +14,14 @@
 #define $_FALLTHROUGH [[fallthrough]]
 #define $_DEPRECATED(...) [[deprecated(__VA_ARGS__)]]
 
-// prepare all the available options
-#ifdef _XTDLIB_ENABLE_MTRACE
-#define $_ENABLE_MTRACE _XTDLIB_ENABLE_MTRACE
+#ifndef __has_feature
+#define __has_feature(...) 0
 #endif
 
-#ifndef $_ENABLE_MTRACE
-#define $_ENABLE_MTRACE 0
+#if __has_feature(address_sanitizer) || defined(__SANITIZE_ADDRESS__)
+#define $_ASAN_ENABLED 1
+#else
+#define $_ASAN_ENABLED 0
 #endif
 
 #if !$_PP_NDEBUG
@@ -41,11 +42,12 @@
 #define $_ALIGNAS_CACHE() $_ALIGNAS(std::hardware_destructive_interference_size)
 #define $_INLINE_FORCE inline $_INLINE_ALWAYS
 
-#if defined(__clang__)
+#if defined(__clang__) && !$_ASAN_ENABLED
 #define $_MUSTTAIL [[clang::musttail]]
 #define $_WILLTAIL [[clang::preserve_none]]
 #else
 #define $_MUSTTAIL
+#define $_WILLTAIL
 #endif
 
 #if defined(__has_builtin) && __has_builtin(__builtin_expect)
