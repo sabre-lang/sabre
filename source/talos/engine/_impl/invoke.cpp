@@ -163,7 +163,7 @@ Talos::Value::Any Talos::Engine::Invoke::m_jitted(
 
   // construct the underlying stack and frame to be used
   Value::Any stack[Machine::Offset::STK_SIZE] = {};
-  auto frame = Machine::Frame(isolate, info, stack);
+  auto frame = Machine::Frame(isolate, info, nullptr);
 
   // define all the stack properties now
   stack[Machine::Offset::STK_OPTR] = Value::Any(0);
