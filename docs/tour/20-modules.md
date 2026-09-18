@@ -2,18 +2,18 @@
 title: 20. Modules
 ---
 
-Programs in Talos can be split into mutiple files called modules. A module is a collection of variables that have been exposed via an `export` declaration.
+Programs in Sabre can be split into mutiple files called modules. A module is a collection of variables that have been exposed via an `export` declaration.
 
 Local modules can be imported/exported using the following syntax:
 
-```talos
-// Local file "a.tal"
+```sabre
+// Local file "a.sabre"
 export let a = "A";
 ```
 
-```talos
-// Relative file "b.tal"
-import "./a.tal" as { a };
+```sabre
+// Relative file "b.sabre"
+import "./a.sabre" as { a };
 
 // Showing the result of our imported module.
 Debug.println(a);

@@ -1,5 +1,5 @@
-/// Talos Includes
-#include <talos/toolchain/bundle.hpp>
+/// Sabre Includes
+#include <sabre/toolchain/bundle.hpp>
 
 /// Shell Includes
 #include "shell/bundle/action.hpp"
@@ -39,7 +39,7 @@ void Shell::Bundle::Action::m_execute() {
   // remove any items before and including the dashes
   if (dashes != end) m_runtime.script.argv.erase(begin, dashes + 1);
 
-  auto exit_code = Talos::Toolchain::bundle(m_options, m_runtime);
+  auto exit_code = Sabre::Toolchain::bundle(m_options, m_runtime);
   if (exit_code) throw CLI::RuntimeError(exit_code); // failed
 }
 
@@ -57,7 +57,7 @@ void Shell::Bundle::Action::m_subscribe(CLI::App *command) {
   command->add_flag_callback("--quiet", [&] { m_runtime.flags.verbose = false; });
 
   // prepare the positionsal the will be available now
-  command->add_option("script.tal", m_runtime.script);
+  command->add_option("script.sabre", m_runtime.script);
   command->add_option("argv", m_runtime.script.argv);
 
   // set the necessary callback to run the instance now

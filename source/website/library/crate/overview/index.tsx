@@ -12,7 +12,7 @@ export function Overview({ className, ...props }: Overview) {
     // prepare all the available portals to be show now
     const portals = Registry.list().map(({ name, describe }) => {
         const base = name.slice(Product.identifier.length + 2); // ensure we get the base-name now to be used
-        return <Portal key={name} name={`talos:${base}`} href={`/crates/${base}`} description={describe} />;
+        return <Portal key={name} name={`sabre:${base}`} href={`/crates/${base}`} description={describe} />;
     });
 
     // revise the incoming class-name to be used

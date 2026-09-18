@@ -1,0 +1,117 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(size)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the size of a `String` in UTF-8 codepoints.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(bytes)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the size of a `String` in bytes.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(symbol)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Symbol")
+SABRE_XX_FIELDS_DESCRIBE("Gets the hashed `Symbol` of a `String` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(empty)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `String` has no codepoints.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(at)
+SABRE_XX_FIELDS_TYPEDEF("fn (index: Number) -> String")
+SABRE_XX_FIELDS_DESCRIBE("Gets a codepoint of a `String` by index.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(slice)
+SABRE_XX_FIELDS_TYPEDEF("fn (start?: Number, end?: Number) -> String")
+SABRE_XX_FIELDS_DESCRIBE("Creates a section of a `String` indicated by a given range.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(compare)
+SABRE_XX_FIELDS_TYPEDEF("fn (other: String) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Compares the difference between a `String` and another.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(contains)
+SABRE_XX_FIELDS_TYPEDEF("fn (needle: String, index?: Number) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `String` contains a matching needle value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(starts_with)
+SABRE_XX_FIELDS_TYPEDEF("fn (needle: String) -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `String` starts with a matching needle value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(ends_with)
+SABRE_XX_FIELDS_TYPEDEF("fn (needle: String) -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `String` ends with a matching needle value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(to_lower)
+SABRE_XX_FIELDS_TYPEDEF("fn -> String")
+SABRE_XX_FIELDS_DESCRIBE("Converts a `String` to lower-case.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(to_upper)
+SABRE_XX_FIELDS_TYPEDEF("fn -> String")
+SABRE_XX_FIELDS_DESCRIBE("Converts a `String` to upper-case.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(trim_both)
+SABRE_XX_FIELDS_TYPEDEF("fn -> String")
+SABRE_XX_FIELDS_DESCRIBE("Removes all leading and trailing whitespace.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(trim_leading)
+SABRE_XX_FIELDS_TYPEDEF("fn -> String")
+SABRE_XX_FIELDS_DESCRIBE("Removes any leading whitespace.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(trim_trailing)
+SABRE_XX_FIELDS_TYPEDEF("fn -> String")
+SABRE_XX_FIELDS_DESCRIBE("Removes any trailing whitespace.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(pad_leading)
+SABRE_XX_FIELDS_TYPEDEF("fn (length: Number, padding?: String) -> String")
+SABRE_XX_FIELDS_DESCRIBE("Pads a `String` shorter than the length with a given padding from the left.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(pad_trailing)
+SABRE_XX_FIELDS_TYPEDEF("fn (length: Number, padding?: String) -> String")
+SABRE_XX_FIELDS_DESCRIBE("Pads a `String` shorter than the length with a given padding from the right.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(fmt)
+SABRE_XX_FIELDS_TYPEDEF("fn (...args: Any) -> String")
+SABRE_XX_FIELDS_DESCRIBE("Formats a `String` using the [`fmt`](https://fmt.dev/) library.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

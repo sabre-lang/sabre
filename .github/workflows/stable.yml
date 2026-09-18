@@ -1,5 +1,5 @@
 name: Release Stable
-description: Workflow for publishing Talos stable releases
+description: Workflow for publishing Sabre stable releases
 on: [workflow_dispatch]
 
 jobs:

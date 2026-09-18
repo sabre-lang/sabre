@@ -6,7 +6,7 @@ When an exceptional error occurs, the `panic` statement should be used.
 
 The default behaviour for `panic` statements is to force an immediate exit with failure message.
 
-```talos
+```sabre
 // Panicking from the main-thread will result in an immediate exit
 panic;
 
@@ -16,7 +16,7 @@ panic "Panic failed because: ...";
 
 Exceptions that are thrown within a `Future` can be handled using the `.fails(...)` method. If not explicitly caught, an exception will propagate to the parent thread.
 
-```talos
+```sabre
 // Prepare a future that will fail
 let future = Future.async(fn => panic "Future failed!");
 

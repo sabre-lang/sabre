@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/codec",
-    "main": "library/_main.tal",
+    "name": "@sabre/codec",
+    "main": "library/_main.sabre",
     "describe": "Utilities for encoding and decoding common formats"
 }

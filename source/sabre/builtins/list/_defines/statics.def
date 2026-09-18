@@ -1,0 +1,33 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(from)
+SABRE_XX_STATICS_TYPEDEF("fn [T](value: Iterable[T]) -> List[T]")
+SABRE_XX_STATICS_DESCRIBE("Creates a `List` from an iterable or array-like value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(empty)
+SABRE_XX_STATICS_TYPEDEF("fn [T = Any] -> List[T]")
+SABRE_XX_STATICS_DESCRIBE("Creates an empty `List` value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(range)
+SABRE_XX_STATICS_TYPEDEF("fn (start?: Number, end?: Number, step?: Number) -> List[Number]")
+SABRE_XX_STATICS_DESCRIBE("Creates a ranged `List` value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(filled)
+SABRE_XX_STATICS_TYPEDEF("fn [V](size: Number, value: V) -> List[V]")
+SABRE_XX_STATICS_DESCRIBE("Creates a `List` filled to a size with a given value.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

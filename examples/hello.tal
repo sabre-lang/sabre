@@ -1,6 +1,0 @@
-///
-/// @example "hello.tal"
-/// @describe Prints "Hello, World!" to `stdout`.
-///
-
-Debug.println("Hello, World!");

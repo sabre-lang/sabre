@@ -1,7 +1,7 @@
 {
     "version": "0.3.0",
-    "name": "@talos/_detail",
-    "main": "library/_main.tal",
+    "name": "@sabre/_detail",
+    "main": "library/_main.sabre",
     "lint": {
         "overrides": {
             "3000360": "none"

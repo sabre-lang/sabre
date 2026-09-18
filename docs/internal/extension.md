@@ -1,8 +1,8 @@
-# Talos for Visual Studio Code
+# Sabre for Visual Studio Code
 
-This extension provides support for the [Talos](https://talos.rroessler.io/) programming langauge.
+This extension provides support for the [Sabre](https://sabre.rroessler.io/) programming langauge.
 
-Since this extension requires Talos to be installed locally, the [installation instructions](https://talos.rroessler.io/language/development/installation) should be followed before installing this extension.
+Since this extension requires Sabre to be installed locally, the [installation instructions](https://sabre.rroessler.io/language/development/installation) should be followed before installing this extension.
 
 ## Available Features
 

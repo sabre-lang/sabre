@@ -1,6 +1,6 @@
-/// Talos Includes
-#include <talos/bundle/fuse.hpp>
-#include <talos/toolchain/launch.hpp>
+/// Sabre Includes
+#include <sabre/bundle/fuse.hpp>
+#include <sabre/toolchain/launch.hpp>
 
 /// Shell Includes
 #include "shell/command/program.hpp"
@@ -16,7 +16,7 @@
 #include "shell/upgrade/action.hpp"
 
 /**
- * @brief Talos runtime entry-point.
+ * @brief Sabre runtime entry-point.
  * @param argc                  Argument count.
  * @param argv                  Variadic arguments.
  */
@@ -25,7 +25,7 @@ int32_t main(int32_t argc, char **argv) {
   $::Terminal::utf8();
 
   // check if we have a bundled program to bypass
-  if (Talos::Fuse::BUNDLED.exists()) return Talos::Toolchain::launch(argc, argv);
+  if (Sabre::Fuse::BUNDLED.exists()) return Sabre::Toolchain::launch(argc, argv);
 
   // construct the underlying program
   auto program = Shell::Command::Program();

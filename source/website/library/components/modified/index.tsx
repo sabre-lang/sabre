@@ -9,7 +9,7 @@ import { Product } from '@/website/product';
 export interface Modified extends Modified.Props {}
 export async function Modified({ path, options = {}, className, ...props }: Modified) {
     // revise the outgoing options to be used and get the necessary last-modified details
-    const input = { path: `docs/${path}`, owner: 'rroessler', repo: 'talos-lang', ...options };
+    const input = { path: `docs/${path}`, owner: 'rroessler', repo: 'sabre-lang', ...options };
     const edited = Product.development ? null : await getGithubLastEdit(input).catch(() => null);
 
     // prepare a suitable format to be used as well

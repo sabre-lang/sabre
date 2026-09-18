@@ -3,7 +3,7 @@
     "icon": "BookText",
     "title": "Language",
     "defaultOpen": true,
-    "description": "The core language documentation for Talos",
+    "description": "The core language documentation for Sabre",
     "pages": [
         "---Development---",
         "index",

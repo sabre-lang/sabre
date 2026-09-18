@@ -6,15 +6,15 @@ description: Effective multi-tasking via user-space green-threads
 
 import { Callout } from '@/website/components';
 
-Within computing, concurrency is the ability to manage multiple tasks through simultaneous execution or context-switching. Unlike other programming languages, Talos implements this syntactically by removing [function coloring](http://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/) and instead baking concurrency where functions are invoked. This allows Talos to keep the underlying ideas of [async/await](https://en.wikipedia.org/wiki/async/await) but with newly invisioned syntax.
+Within computing, concurrency is the ability to manage multiple tasks through simultaneous execution or context-switching. Unlike other programming languages, Sabre implements this syntactically by removing [function coloring](http://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/) and instead baking concurrency where functions are invoked. This allows Sabre to keep the underlying ideas of [async/await](https://en.wikipedia.org/wiki/async/await) but with newly invisioned syntax.
 
-Under the hood, Talos then utilizes lightweight processes known as green threads. These are long-running processes that receive scheduled tasks, balancing the workload across the available hardware processors. Since the incoming tasks (eg: asynchronous code) are cheap to spawn, this allows Talos to execute concurrent and performant work. This can then be combined with [explicit resource management](/language/advanced/resources), to allow Talos to effectively synchronize asynchronous operations.
+Under the hood, Sabre then utilizes lightweight processes known as green threads. These are long-running processes that receive scheduled tasks, balancing the workload across the available hardware processors. Since the incoming tasks (eg: asynchronous code) are cheap to spawn, this allows Sabre to execute concurrent and performant work. This can then be combined with [explicit resource management](/language/advanced/resources), to allow Sabre to effectively synchronize asynchronous operations.
 
 ## Colorless Functions
 
-All functions within Talos can be made asynchronous _without_ declaring them as such. This is possible through the use of an [execution policy](/language/advanced/policies). Functions can be called with a sigil keyword, such that:
+All functions within Sabre can be made asynchronous _without_ declaring them as such. This is possible through the use of an [execution policy](/language/advanced/policies). Functions can be called with a sigil keyword, such that:
 
-```talos
+```sabre
 // Suppose we have some long-running task.
 let foo = fn { ... };
 
@@ -30,7 +30,7 @@ By removing the `async` keyword from function declaration, and moving this to th
 
 ### Alternative Models
 
-Eventually, Talos plans to allow custom execution policies for asynchronous scheduling. This would free developers to use any form of concurrency they desire.
+Eventually, Sabre plans to allow custom execution policies for asynchronous scheduling. This would free developers to use any form of concurrency they desire.
 
 <Callout title="Note:">
     The current proposal is to use an additional execution policy, such as `::spawn`, the takes a scheduler context as
@@ -41,7 +41,7 @@ Eventually, Talos plans to allow custom execution policies for asynchronous sche
 
 After a future has been spawned, it can then be awaited on synchronously using the `Future.await` method.
 
-```talos
+```sabre
 // Again some long-running task.
 let bar = fn { ... };
 
@@ -49,17 +49,17 @@ let bar = fn { ... };
 let result = bar::async().await();
 ```
 
-When a future is awaited upon, Talos' runtime queues the current thread isolate to be resolved when the future resolves.
+When a future is awaited upon, Sabre' runtime queues the current thread isolate to be resolved when the future resolves.
 
-With these combined features, Talos has removed function coloring entirely, whilst also exposing syntax for additional execution policies (such as error handling).
+With these combined features, Sabre has removed function coloring entirely, whilst also exposing syntax for additional execution policies (such as error handling).
 
 ## Virtual Threading
 
-When the runtime executes a script, it constructs a thread isolate. Internally, these are virtual tasks that execute Talos code and can be scheduled, cancelled and awaited. For now, the only external interaction that the runtime has with these isolates is through the `Future[T]` object.
+When the runtime executes a script, it constructs a thread isolate. Internally, these are virtual tasks that execute Sabre code and can be scheduled, cancelled and awaited. For now, the only external interaction that the runtime has with these isolates is through the `Future[T]` object.
 
 ## Thread Safety
 
-Internally, most mutations of Talos values are made thread-safe. Each object contains a descriptor (or header) that describes the object and has a one-byte mutex. This mutex is locked when objects are internally updated, resulting in seamless thread safety for developers. For memory safety, see the guide on [garbage collection](/language/advanced/memory) within Talos.
+Internally, most mutations of Sabre values are made thread-safe. Each object contains a descriptor (or header) that describes the object and has a one-byte mutex. This mutex is locked when objects are internally updated, resulting in seamless thread safety for developers. For memory safety, see the guide on [garbage collection](/language/advanced/memory) within Sabre.
 
 However, variable assignment is inherently not thread-safe but can be made so using the standard library [utilities for concurrency](/crates/async) and [explicit resource management](/language/advanced/resources).
 

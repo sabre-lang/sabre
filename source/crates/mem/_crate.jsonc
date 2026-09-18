@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/mem",
-    "main": "library/_main.tal",
+    "name": "@sabre/mem",
+    "main": "library/_main.sabre",
     "describe": "Utility functions for reading current memory usage"
 }

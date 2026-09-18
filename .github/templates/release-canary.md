@@ -1,15 +1,15 @@
-To install Talos {{version}}:
+To install Sabre {{version}}:
 
 ```shell
 # To install for Linux / Darwin
-curl -fsSL https://talos.rroessler.io/install.sh | bash --tag {{version}}
+curl -fsSL https://sabre.rroessler.io/install.sh | bash --tag {{version}}
 
 # Or alternatively on Windows
-powershell -c "irm https://talos.rroessler.io/install.ps1 | iex -Tag {{version}}"
+powershell -c "irm https://sabre.rroessler.io/install.ps1 | iex -Tag {{version}}"
 ```
 
-To upgrade to Talos {{version}}:
+To upgrade to Sabre {{version}}:
 
 ```shell
-talos upgrade --tag {{version}}
+sabre upgrade --tag {{version}}
 ```

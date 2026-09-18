@@ -1,0 +1,15 @@
+///
+/// @testing Builtin "Todo" Functionality.
+/// @describe Coordinates testing the builtin "Todo".
+///
+
+// Sabre Modules
+import "sabre:test" as Test;
+import "sabre:assert" as Assert;
+
+// - TEST CASES - //
+
+Test.suite("Traits", fn {
+    Test.case("Call '()'", fn => Assert.panics(fn => Todo()));
+    Test.case("Call 'String'", fn => Assert.panics(fn => Todo("...")));
+});

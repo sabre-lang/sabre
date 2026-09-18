@@ -9,7 +9,7 @@ import { Hero, Footer, Install } from '@/website/components';
 <Hero className="mb-10" />
 
 <h2 className="text-2xl">
-    Talos aims to provide a fast, flexible, and robust language/toolkit for modern programming development.
+    Sabre aims to provide a fast, flexible, and robust language/toolkit for modern programming development.
 </h2>
 
 <Install className="text-2xl italic mt-10 mb-4" />
@@ -18,25 +18,25 @@ import { Hero, Footer, Install } from '@/website/components';
     Powered with builtin type-safety, a feature-rich standard library, and a highly fault-tolerant concurrent runtime.
 </h2>
 
-```talos tab="hello.tal"
+```sabre tab="hello.sabre"
 Debug.println("Hello, 🦄!");
 ```
 
-```talos tab="types.tal"
+```sabre tab="types.sabre"
 let add = fn (a: Number, b: Number): Number => a + b;
 Debug.println("5 + 7 = {0}".fmt(add(5, 7))); // typed
 ```
 
-```talos tab="future.tal"
-for (ch, n in "Talos") {
+```sabre tab="future.sabre"
+for (ch, n in "Sabre") {
     Debug.println("{0}: {1}".fmt(n, ch));
     Future.delay(1000).await(); // wait
 }
 ```
 
-```talos tab="testing.tal"
-import "talos:test" as Test;
-import "talos:assert" as Assert;
+```sabre tab="testing.sabre"
+import "sabre:test" as Test;
+import "sabre:assert" as Assert;
 
 Test.suite("Addition", fn {
     Test.case("5 + 7 = 12", fn => Assert.equals(5 + 7, 12));
@@ -45,24 +45,24 @@ Test.suite("Addition", fn {
 ```
 
 <h2 className="text-2xl mt-10 mb-4">
-    Talos comes with batteries-included, so all the essential tools you need to build, test and deploy applications are
+    Sabre comes with batteries-included, so all the essential tools you need to build, test and deploy applications are
     included out of the box.
 </h2>
 
 <Tabs items={['Execute', 'Lint', 'Format', 'Test', 'Deploy']}>
     <Tab value="Execute">
-        Whether it be simple scripts, tasks or entire projects, Talos can [execute](/language/toolkit/runtime) it all.
+        Whether it be simple scripts, tasks or entire projects, Sabre can [execute](/language/toolkit/runtime) it all.
     </Tab>
     <Tab value="Lint">
         A builtin [linter](/language/toolkit/linting) to help maintain code consistency and avoid bugs.
     </Tab>
-    <Tab value="Format">[Formatting](/language/toolkit/formatter) support that prettifies Talos files.</Tab>
+    <Tab value="Format">[Formatting](/language/toolkit/formatter) support that prettifies Sabre files.</Tab>
     <Tab value="Test">
-        Talos provides a [test-runner](/language/toolkit/testing) and assertion libraries to ensure code accuracy during
+        Sabre provides a [test-runner](/language/toolkit/testing) and assertion libraries to ensure code accuracy during
         development.
     </Tab>
     <Tab value="Deploy">
-        Seamlessly create [standalone native executables](/language/toolkit/bundler) from your Talos program.
+        Seamlessly create [standalone native executables](/language/toolkit/bundler) from your Sabre program.
     </Tab>
 </Tabs>
 

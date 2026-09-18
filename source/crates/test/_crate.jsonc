@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/test",
-    "main": "library/_main.tal",
+    "name": "@sabre/test",
+    "main": "library/_main.sabre",
     "describe": "Tools for describing and mocking testing files"
 }

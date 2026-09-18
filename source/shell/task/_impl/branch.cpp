@@ -1,18 +1,18 @@
-/// Talos Includes
-#include <talos/crate/constants.hpp>
+/// Sabre Includes
+#include <sabre/crate/constants.hpp>
 
 /// Shell Includes
 #include "shell/task/action.hpp"
 
 //  PUBLIC METHODS  //
 
-bool Shell::Task::Branch::execute(const Talos::Crate::Manifest *crate) const {
+bool Shell::Task::Branch::execute(const Sabre::Crate::Manifest *crate) const {
   return m_parallel ? m_concurrent(crate) : m_sequential(crate);
 }
 
 Shell::Task::Collection Shell::Task::Branch::workspaces() const noexcept {
   // prepare the constant to be used now
-  static constexpr auto s_crate = Talos::Crate::Constants::filename();
+  static constexpr auto s_crate = Sabre::Crate::Constants::filename();
 
   // if the workspace given is empty, then resolve to this current directory
   if (m_filter.empty() || m_filter == ".") {
@@ -51,7 +51,7 @@ Shell::Task::Collection Shell::Task::Branch::workspaces() const noexcept {
   return workspaces;
 }
 
-$::Map::Dict<$::String::Buffer> Shell::Task::Branch::tasks(const Talos::Crate::Manifest *crate) const {
+$::Map::Dict<$::String::Buffer> Shell::Task::Branch::tasks(const Sabre::Crate::Manifest *crate) const {
   // ignore if the tasks if not given options
   if (crate == nullptr) return {};
 
@@ -88,9 +88,9 @@ $::Map::Dict<$::String::Buffer> Shell::Task::Branch::tasks(const Talos::Crate::M
 
 //  PRIVATE METHODS  //
 
-XPC::Process::Child Shell::Task::Branch::m_spawn($::String::Buffer script, const Talos::Crate::Manifest *crate) const {
+XPC::Process::Child Shell::Task::Branch::m_spawn($::String::Buffer script, const Sabre::Crate::Manifest *crate) const {
   // check for this executable if its available
-  static constexpr $::String::View s_identifier = TALOS_MM_IDENTIFIER;
+  static constexpr $::String::View s_identifier = SABRE_MM_IDENTIFIER;
 
   // prepare some common paths to be used here
   static auto s_shell = XPC::Shell::Path::binary();
@@ -125,7 +125,7 @@ XPC::Process::Child Shell::Task::Branch::m_spawn($::String::Buffer script, const
   return XPC::Process::Child(builder);
 }
 
-bool Shell::Task::Branch::m_sequential(const Talos::Crate::Manifest *crate) const {
+bool Shell::Task::Branch::m_sequential(const Sabre::Crate::Manifest *crate) const {
   // iterate over the available scripts now
   for (const auto &[task, script] : tasks(crate)) {
     if (m_verbose) m_prettify(script); // show
@@ -138,7 +138,7 @@ bool Shell::Task::Branch::m_sequential(const Talos::Crate::Manifest *crate) cons
   return true;
 }
 
-bool Shell::Task::Branch::m_concurrent(const Talos::Crate::Manifest *crate) const {
+bool Shell::Task::Branch::m_concurrent(const Sabre::Crate::Manifest *crate) const {
   // prepare the available tasks as well
   auto expanded = tasks(crate);
 

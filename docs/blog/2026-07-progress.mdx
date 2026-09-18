@@ -14,7 +14,7 @@ The month of July has been productive with a baseline rewrite soon to be ready <
 
 For some background, bytecode interpreters typically dispatch a sequence of instructions where a basic implementation would use a switch case:
 
-```talos
+```sabre
 // The program, a list of encoded instructions
 let bytecode: List[Number] = [...];
 
@@ -38,7 +38,7 @@ let dispatch = fn (offset: Number) {
 for (offset in Iterator.range(bytecode.size())) dispatch(offset);
 ```
 
-Previously <Anchor.Super index="2"/>, Talos implemented the interpreter using direct-threading. Although this solution has great performance, it could be relatively finicky to fine-tune since it relied on all cases being perfectly inlined <Anchor.Super index="3"/> to maintain this performance. During the current rewrite, I decided to instead opt for a tail-call interpreter since this should come with similar benefits to the direct-thread approach whilst also simplifying compilation heuristics.
+Previously <Anchor.Super index="2"/>, Sabre implemented the interpreter using direct-threading. Although this solution has great performance, it could be relatively finicky to fine-tune since it relied on all cases being perfectly inlined <Anchor.Super index="3"/> to maintain this performance. During the current rewrite, I decided to instead opt for a tail-call interpreter since this should come with similar benefits to the direct-thread approach whilst also simplifying compilation heuristics.
 
 <Callout title="Note:">
     The `match` statement is currently unimplemented in v0.1.2 and will be available when v0.2.0 is released.
@@ -46,9 +46,9 @@ Previously <Anchor.Super index="2"/>, Talos implemented the interpreter using di
 
 ## Baseline JIT Compilation
 
-Many modern dynamic programming languages implement some form a JIT within their compilation/optimization process. For Talos, I wanted to make this JIT opt-in through a specialized attribute:
+Many modern dynamic programming languages implement some form a JIT within their compilation/optimization process. For Sabre, I wanted to make this JIT opt-in through a specialized attribute:
 
-```talos
+```sabre
 #[Internal.Optimize]
 let foo = fn => 42;
 ```
@@ -57,7 +57,7 @@ Since this is only a baseline JIT, it should be utilized sparingly to improve pe
 
 ## Upcoming Work
 
-After work on the baseline JIT has been completed, the next goal is to prepare a canary release for Talos from the work that has been implemented thus far. This canary release will also include the foundations for the `match` statement.
+After work on the baseline JIT has been completed, the next goal is to prepare a canary release for Sabre from the work that has been implemented thus far. This canary release will also include the foundations for the `match` statement.
 
 ## Footnotes
 

@@ -1,10 +1,10 @@
 ---
 icon: AtSign
 title: Decorators
-description: Runtime annotations to empower the metaprogramming capabilities of Talos
+description: Runtime annotations to empower the metaprogramming capabilities of Sabre
 ---
 
-To lay the foundations for prospective reflection capabilities in Talos, there needed to be a way to support annotations of variables at runtime. Decorators, similar to those in TypeScript, provide a way to add these meta-programming features.
+To lay the foundations for prospective reflection capabilities in Sabre, there needed to be a way to support annotations of variables at runtime. Decorators, similar to those in TypeScript, provide a way to add these meta-programming features.
 
 A decorator is a special annotation expressed in the form `@expression`, where the expression must evaluate to a function that when called at runtime receives a targeted declaration for introspection and returns the target in-place.
 
@@ -12,7 +12,7 @@ A decorator is a special annotation expressed in the form `@expression`, where t
 
 The syntax of a decorator is relatively simple, where we simply prepend the `@` operator before the decorator expression that is then applied to a chosen target.
 
-```talos
+```sabre
 // A basic decorator declaration.
 let simple = fn (target): Any {
     Debug.println("Simple decorator called");
@@ -33,9 +33,9 @@ Unlike other programming languages, decorators can be applied to any valid decla
 
 ## Factories
 
-Since Talos treats functions as first-class citizens, this means that decorators can be constructed with an enclosed context.
+Since Sabre treats functions as first-class citizens, this means that decorators can be constructed with an enclosed context.
 
-```talos
+```sabre
 // This is a decorator factory that receives a context.
 let color = fn (value: String): Any {
     // This is the decorator that is constructed.
@@ -49,7 +49,7 @@ let color = fn (value: String): Any {
 
 Decorators are executed only once in sequential order, after the incoming declaration has been initialized. So for the following:
 
-```talos
+```sabre
 // A decorator that logs functions.
 let log_eval = fn (label: String): Any {
     Debug.println("Eval: '{0}'".fmt(label));

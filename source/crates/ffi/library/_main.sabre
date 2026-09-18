@@ -1,0 +1,79 @@
+///
+/// @crate "ffi"
+/// @describe Bindings to call native libraries from Sabre.
+///
+
+// Sabre Modules
+import "sabre:_detail" as Detail;
+
+// - HELPERS - //
+
+//! @brief Internal helper to reduce bytecode output.
+let m_cast = Detail.Unsafe.cast;
+
+// - TYPEDEFS - //
+
+//! @brief A safe numeric representation of pointers. This ensures type-safety,
+//! whilst also being a valid alias for internal `uintptr` values.
+export enum Pointer {};
+
+//! @brief All available FFI types.
+export enum Typedef {
+    FN,
+    CH,
+    BIT,
+    STR,
+    PTR,
+
+    I8,
+    I16,
+    I32,
+    I64,
+
+    U8,
+    U16,
+    U32,
+    U64,
+
+    F32,
+    F64,
+};
+
+//! @brief Native Value Wrapper.
+export class Value(_typedef: Typedef, _value: Number) {
+    // - PROPERTIES - //
+
+    private let m_value = _value;
+    private let m_typedef = _typedef;
+
+    // - PUBLIC METHODS - //
+
+    //! @brief Gets the raw value representation.
+    public let value = fn: Number => Self.m_value;
+
+    //! @brief Gets the associated typing.
+    public let typedef = fn: Typedef => Self.m_typedef;
+
+    //! @brief Gets the associated name.
+    public let name = fn: String => Enum.label(Typedef, Self.m_typedef);
+
+    //! @brief Converts the value to a pointer.
+    public let as_ptr = fn: Pointer {
+        Self.m_assert(Typedef.PTR); // check
+        return m_cast[Pointer](Self.m_value);
+    };
+
+    // - PRIVATE METHODS - //
+
+    //! @brief Handles validating the values typing.
+    private let m_assert = fn (expected: Typedef) {
+        if (Self.m_typedef == expected) return; // can safely exit here now
+        let message = "Mismatched FFI.Typedef, value is '{0}' but expected '{1}'";
+        panic message.fmt(Self.name(), Enum.label(Typedef, expected)); // failure
+    };
+};
+
+// - PUBLIC METHODS - //
+
+//! @brief Factory for generating immediate `NULL` and `nullptr` values.
+export let Null = fn: Value => Value(Typedef.PTR, 0);

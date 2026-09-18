@@ -1,4 +1,4 @@
-/// Talos Modules
+/// Sabre Modules
 import { Inversify } from '../vendors';
 
 /** Disposable Interface. */

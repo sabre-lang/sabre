@@ -1,11 +1,11 @@
 #ifndef _CRATES_PACKAGE_MEMORY_HPP
 #define _CRATES_PACKAGE_MEMORY_HPP
 
-/// Talos Includes
-#include <talos/heap/service.hpp>
+/// Sabre Includes
+#include <sabre/heap/service.hpp>
 
 /// Addon Includes
-#include <talos/dylib/_inline/dylib.ipp>
+#include <sabre/dylib/_inline/dylib.ipp>
 
 //  X-MACROS  //
 
@@ -20,7 +20,7 @@
 
 //  NAMESPACES  //
 
-namespace Talos::Package {
+namespace Sabre::Package {
 
 /// @brief Memory Package Addon.
 struct Memory : public Dylib::Mixin<"mem"> {
@@ -36,9 +36,9 @@ struct Memory : public Dylib::Mixin<"mem"> {
 private:
   //  PRIVATE METHODS  //
 
-  CRATE_XX_MEMORY_METHODS(TALOS_MM_DYLIB_DEFINE)
+  CRATE_XX_MEMORY_METHODS(SABRE_MM_DYLIB_DEFINE)
 };
 
-} // namespace Talos::Package
+} // namespace Sabre::Package
 
 #endif

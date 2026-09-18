@@ -1,5 +1,5 @@
-/// Talos Includes
-#include <talos/toolchain/serve.hpp>
+/// Sabre Includes
+#include <sabre/toolchain/serve.hpp>
 
 /// Shell Includes
 #include "shell/command/macros.hpp"
@@ -25,13 +25,13 @@ Shell::Serve::Action::Action() : Abstract("serve") {
   m_runtime.async.worker.wait_time = 1s;
 
   // ensure we show all diagnostic values as well
-  m_runtime.diagnostics.severity = Talos::Diagnostic::Severity::HINT;
+  m_runtime.diagnostics.severity = Sabre::Diagnostic::Severity::HINT;
 }
 
 //  PRIVATE METHODS  //
 
 void Shell::Serve::Action::m_execute() const {
-  auto exit_code = Talos::Toolchain::serve(m_runtime);
+  auto exit_code = Sabre::Toolchain::serve(m_runtime);
   if (exit_code) throw CLI::RuntimeError(exit_code);
 }
 

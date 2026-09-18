@@ -2,7 +2,7 @@
 #define _CRATES_PACKAGE_TEST_HPP
 
 /// Addon Includes
-#include <talos/dylib/_inline/dylib.ipp>
+#include <sabre/dylib/_inline/dylib.ipp>
 
 //  X-MACROS  //
 
@@ -15,7 +15,7 @@
 
 //  NAMESPACES  //
 
-namespace Talos::Package {
+namespace Sabre::Package {
 
 /// @brief Testing Package Addon.
 struct Test : public Dylib::Mixin<"test"> {
@@ -31,7 +31,7 @@ struct Test : public Dylib::Mixin<"test"> {
 private:
   //  PRIVATE METHODS  //
 
-  CRATE_XX_TEST_METHODS(TALOS_MM_DYLIB_DEFINE)
+  CRATE_XX_TEST_METHODS(SABRE_MM_DYLIB_DEFINE)
 
   /**
    * @brief Handles validating testing is enabled.
@@ -80,6 +80,6 @@ private:
   static XT::Trivia::Location m_location(const Resource::Trace &trace);
 };
 
-} // namespace Talos::Package
+} // namespace Sabre::Package
 
 #endif

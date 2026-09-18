@@ -2,9 +2,9 @@
 title: 25. Concurrency
 ---
 
-Syntactically speaking, all functions within Talos can be called asynchronously through the `Future.async` static method or more succinctly using an execution policy.
+Syntactically speaking, all functions within Sabre can be called asynchronously through the `Future.async` static method or more succinctly using an execution policy.
 
-```talos
+```sabre
 // Let's construct a function that wraps values.
 let enclose = fn (value) => value;
 
@@ -17,7 +17,7 @@ future = enclose::async(42);
 
 The result of both of these is a `Future[T]` value, that can be awaited on later using the `Future.await` method.
 
-```talos
+```sabre
 // Let's wait for the future...
 let result = future.await();
 
@@ -27,7 +27,7 @@ Debug.println("Result {0}".fmt(result));
 
 Additionally, futures can be chained and managed through the `.then` and `.fails` methods.
 
-```talos
+```sabre
 // Prepare a future that may fail if it is negative.
 let acceptor = fn (value: Number): Boolean => value < 0 ? panic : True;
 

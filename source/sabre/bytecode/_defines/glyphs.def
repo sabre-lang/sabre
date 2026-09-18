@@ -1,0 +1,242 @@
+/// Vendor Includes
+#include <xtdlib/xtdlib.hpp>
+
+//  X-MACROS  //
+
+#ifndef SABRE_XX_GLYPH_BASE
+#define SABRE_XX_GLYPH_BASE(N, ...)
+#endif
+
+#ifndef SABRE_XX_GLYPH_EXEC
+#define SABRE_XX_GLYPH_EXEC(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_LOAD
+#define SABRE_XX_GLYPH_LOAD(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_STORE
+#define SABRE_XX_GLYPH_STORE(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_REGISTER
+#define SABRE_XX_GLYPH_REGISTER(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_JUMP
+#define SABRE_XX_GLYPH_JUMP(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_TYPE
+#define SABRE_XX_GLYPH_TYPE(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_CALL
+#define SABRE_XX_GLYPH_CALL(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_DISPOSE
+#define SABRE_XX_GLYPH_DISPOSE(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_MODULE
+#define SABRE_XX_GLYPH_MODULE(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_CLASS
+#define SABRE_XX_GLYPH_CLASS(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_OBJECT
+#define SABRE_XX_GLYPH_OBJECT(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_ENUM
+#define SABRE_XX_GLYPH_ENUM(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_LIST
+#define SABRE_XX_GLYPH_LIST(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_ITERATOR
+#define SABRE_XX_GLYPH_ITERATOR(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_STRING
+#define SABRE_XX_GLYPH_STRING(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_CLOSURE
+#define SABRE_XX_GLYPH_CLOSURE(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_UNARY
+#define SABRE_XX_GLYPH_UNARY(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_BINARY
+#define SABRE_XX_GLYPH_BINARY(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_INDEXED
+#define SABRE_XX_GLYPH_INDEXED(P, N, ...) SABRE_XX_GLYPH_BASE(P##_##N##I, __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_GLYPH_COMPARE
+#define SABRE_XX_GLYPH_COMPARE(N, ...) SABRE_XX_GLYPH_BASE(N, __VA_ARGS__)
+#endif
+
+//  MACROS  //
+
+SABRE_XX_GLYPH_EXEC(EXEC_NOOP)
+SABRE_XX_GLYPH_EXEC(EXEC_PANIC)
+SABRE_XX_GLYPH_EXEC(EXEC_RETURN)
+SABRE_XX_GLYPH_EXEC(EXEC_CANCEL)
+SABRE_XX_GLYPH_EXEC(EXEC_ABORT, /** errc */ Index)
+SABRE_XX_GLYPH_EXEC(EXEC_RAISE, /** signum */ Index)
+
+SABRE_XX_GLYPH_LOAD(LOAD_ZERO, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_LOAD(LOAD_ONE, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_LOAD(LOAD_VOID, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_LOAD(LOAD_TRUE, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_LOAD(LOAD_FALSE, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_LOAD(LOAD_SELF, /** dst */ Register::Slot)
+
+SABRE_XX_GLYPH_LOAD(LOAD_CONST, /** dst */ Register::Slot, /** symbol */ Index)
+SABRE_XX_GLYPH_LOAD(LOAD_GLOBAL, /** dst */ Register::Slot, /** symbol */ Index)
+
+SABRE_XX_GLYPH_LOAD(LOAD_CONTEXT, /** dst */ Register::Slot, /** slot */ Register::Slot)
+SABRE_XX_GLYPH_LOAD(LOAD_FIELD, /** dst */ Register::Slot, /** tx */ Register::Slot, /** symbol */ Index)
+SABRE_XX_GLYPH_LOAD(LOAD_UPVALUE, /** dst */ Register::Slot, /** slot */ Register::Slot, /** symbol */ Index)
+
+SABRE_XX_GLYPH_STORE(STORE_CONTEXT, /** slot */ Register::Slot, /** src */ Register::Slot)
+SABRE_XX_GLYPH_STORE(STORE_FIELD, /** tx */ Register::Slot, /** src */ Register::Slot, /** symbol */ Index)
+SABRE_XX_GLYPH_STORE(STORE_UPVALUE, /** slot */ Register::Slot, /** src */ Register::Slot, /** symbol */ Index)
+
+SABRE_XX_GLYPH_REGISTER(REG_SWAP, /** ax */ Register::Slot, /** bx */ Register::Slot)
+SABRE_XX_GLYPH_REGISTER(REG_MOVE, /** dst */ Register::Slot, /** src */ Register::Slot)
+
+SABRE_XX_GLYPH_JUMP(JUMP_TO, /** offset */ Index)
+SABRE_XX_GLYPH_JUMP(JUMP_TPL, /** offset */ Index)
+SABRE_XX_GLYPH_JUMP(JUMP_FILLED, /** offset */ Index, /** tx */ Register::Slot)
+SABRE_XX_GLYPH_JUMP(JUMP_FALSEY, /** offset */ Index, /** tx */ Register::Slot)
+SABRE_XX_GLYPH_JUMP(JUMP_TRUTHY, /** offset */ Index, /** tx */ Register::Slot)
+
+SABRE_XX_GLYPH_JUMP(MATCH_VOID, /** offset */ Index, /** src */ Register::Slot)
+SABRE_XX_GLYPH_JUMP(MATCH_TRUE, /** offset */ Index, /** src */ Register::Slot)
+SABRE_XX_GLYPH_JUMP(MATCH_FALSE, /** offset */ Index, /** src */ Register::Slot)
+SABRE_XX_GLYPH_JUMP(MATCH_TEXT, /** offset */ Index, /** src */ Register::Slot, /** string */ Index)
+SABRE_XX_GLYPH_JUMP(MATCH_CONST, /** offset */ Index, /** src */ Register::Slot, /** symbol */ Index)
+SABRE_XX_GLYPH_JUMP(MATCH_GUARD, /** offset */ Index, /** src */ Register::Slot, /** guard */ Register::Slot)
+
+SABRE_XX_GLYPH_TYPE(TYPE_CAST, /** dst */ Register::Slot, /** src */ Register::Slot, /** guard */ Register::Slot)
+SABRE_XX_GLYPH_TYPE(TYPE_GUARD, /** dst */ Register::Slot, /** src */ Register::Slot, /** guard */ Register::Slot)
+
+SABRE_XX_GLYPH_CALL(CALL_0_VOID, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_CALL(CALL_N_VOID, /** dst */ Register::Slot, /** argv */ Register::Span)
+
+SABRE_XX_GLYPH_CALL(CALL_0_INLINE, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_CALL(CALL_N_INLINE, /** dst */ Register::Slot, /** argv */ Register::Span)
+
+SABRE_XX_GLYPH_CALL(CALL_0_FIELD, /** dst */ Register::Slot, /** symbol */ Index)
+SABRE_XX_GLYPH_CALL(CALL_N_FIELD, /** dst */ Register::Slot, /** symbol */ Index, /** argv */ Register::Span)
+
+SABRE_XX_GLYPH_CALL(SPAWN_0_VOID, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_CALL(SPAWN_N_VOID, /** dst */ Register::Slot, /** argv */ Register::Span)
+
+SABRE_XX_GLYPH_CALL(SPAWN_0_FIELD, /** dst */ Register::Slot, /** symbol */ Index)
+SABRE_XX_GLYPH_CALL(SPAWN_N_FIELD, /** dst */ Register::Slot, /** symbol */ Index, /** argv */ Register::Span)
+
+SABRE_XX_GLYPH_DISPOSE(DISPOSE_OPEN, /** depth */ Index)
+SABRE_XX_GLYPH_DISPOSE(DISPOSE_CLOSE, /** depth */ Index)
+SABRE_XX_GLYPH_DISPOSE(DISPOSE_DEFER, /** src */ Register::Slot)
+
+SABRE_XX_GLYPH_MODULE(MODULE_OPEN, /** src */ Register::Slot)
+SABRE_XX_GLYPH_MODULE(MODULE_CLOSE, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_MODULE(MODULE_BARREL, /** src */ Register::Slot)
+SABRE_XX_GLYPH_MODULE(MODULE_IMPORT, /** dst */ Register::Slot, /** path */ Index)
+SABRE_XX_GLYPH_MODULE(MODULE_EXPORT, /** src */ Register::Slot, /** name */ Index)
+
+SABRE_XX_GLYPH_CLASS(CLASS_BIND, /** dst */ Register::Slot, /** index */ Index)
+SABRE_XX_GLYPH_CLASS(CLASS_SUPER, /** src */ Register::Slot, /** argv */ Register::Span)
+SABRE_XX_GLYPH_CLASS(CLASS_MAKE, /** dst */ Register::Slot, /** name */ Index, /** shape */ Index)
+SABRE_XX_GLYPH_CLASS(CLASS_EXPORT, /** src */ Register::Slot, /** name */ Index, /** immutable */ Index)
+
+SABRE_XX_GLYPH_ENUM(ENUM_EMPTY, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_ENUM(ENUM_MAKE, /** dst */ Register::Slot, /** values */ Register::Span)
+
+SABRE_XX_GLYPH_LIST(LIST_EMPTY, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_LIST(LIST_MAKE, /** dst */ Register::Slot, /** values */ Register::Span)
+
+SABRE_XX_GLYPH_OBJECT(OBJECT_EMPTY, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_OBJECT(OBJECT_MAKE, /** dst */ Register::Slot, /** pairs */ Register::Span)
+SABRE_XX_GLYPH_OBJECT(OBJECT_ATTR, /** dst */ Register::Slot, /** self */ Register::Slot, /** attr */ Index)
+
+SABRE_XX_GLYPH_STRING(STRING_MAKE, /** dst */ Register::Slot, /** string */ Index)
+SABRE_XX_GLYPH_STRING(STRING_CONCAT, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Register::Slot)
+
+SABRE_XX_GLYPH_CLOSURE(CLOSURE_PASS, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_CLOSURE(CLOSURE_LIFT, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_CLOSURE(CLOSURE_MAKE, /** dst */ Register::Slot, /** index */ Index)
+
+SABRE_XX_GLYPH_ITERATOR(ITER_LOAD, /** dst */ Register::Slot, /** iter */ Register::Slot)
+SABRE_XX_GLYPH_ITERATOR(ITER_NEXT, /** iter */ Register::Slot, /** value */ Register::Slot, /** index */ Register::Slot)
+
+SABRE_XX_GLYPH_UNARY(UNOP_TPL, /** dst */ Register::Slot, /** tx */ Register::Slot)
+SABRE_XX_GLYPH_UNARY(UNOP_NEG, /** dst */ Register::Slot, /** tx */ Register::Slot)
+#define SABRE_XX_TOKEN_UNARY(N, ...) SABRE_XX_GLYPH_UNARY(UNOP_##N, Register::Slot, Register::Slot)
+#include "sabre/lexer/_defines/tokens.def"
+
+SABRE_XX_GLYPH_BASE(BINOP_TPL, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Register::Slot)
+#define SABRE_XX_TOKEN_COMPARE(...) // hide all the test operations now
+#define SABRE_XX_TOKEN_BINARY(N, ...) SABRE_XX_GLYPH_BINARY(BINOP_##N, Register::Slot, Register::Slot, Register::Slot)
+#include "sabre/lexer/_defines/tokens.def"
+
+SABRE_XX_GLYPH_BASE(BINOP_TPLI, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, ADD, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, SUB, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, MUL, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, DIV, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, MOD, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, POW, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+
+SABRE_XX_GLYPH_INDEXED(BINOP, XOR, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, SHL, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, SHR, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, BOR, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(BINOP, BAND, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+
+#define SABRE_XX_TOKEN_COMPARE(N, ...) SABRE_XX_GLYPH_COMPARE(TEST_##N, Register::Slot, Register::Slot, Register::Slot)
+#include "sabre/lexer/_defines/tokens.def"
+
+SABRE_XX_GLYPH_INDEXED(TEST, LE, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(TEST, GE, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(TEST, LT, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+SABRE_XX_GLYPH_INDEXED(TEST, GT, /** dst */ Register::Slot, /** ax */ Register::Slot, /** bx */ Index)
+
+SABRE_XX_GLYPH_BASE(EXEC_INVALID)
+
+//  UNDEFINES  //
+
+#undef SABRE_XX_GLYPH_BASE
+#undef SABRE_XX_GLYPH_EXEC
+#undef SABRE_XX_GLYPH_LOAD
+#undef SABRE_XX_GLYPH_STORE
+#undef SABRE_XX_GLYPH_REGISTER
+#undef SABRE_XX_GLYPH_JUMP
+#undef SABRE_XX_GLYPH_TYPE
+#undef SABRE_XX_GLYPH_CALL
+#undef SABRE_XX_GLYPH_DISPOSE
+#undef SABRE_XX_GLYPH_MODULE
+#undef SABRE_XX_GLYPH_CLASS
+#undef SABRE_XX_GLYPH_ENUM
+#undef SABRE_XX_GLYPH_LIST
+#undef SABRE_XX_GLYPH_OBJECT
+#undef SABRE_XX_GLYPH_STRING
+#undef SABRE_XX_GLYPH_CLOSURE
+#undef SABRE_XX_GLYPH_ITERATOR
+#undef SABRE_XX_GLYPH_UNARY
+#undef SABRE_XX_GLYPH_BINARY
+#undef SABRE_XX_GLYPH_COMPARE
+#undef SABRE_XX_GLYPH_INDEXED

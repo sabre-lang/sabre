@@ -4,11 +4,11 @@ icon: Shapes
 description: Defining nominal objects through `class` statements
 ---
 
-Similar to other object-orientated programming languages, Talos encapsulates data (fields) in classes to structure reusable code. Classes are the core templates or prototype to objects, which once constructed give a concrete value based on that prototype.
+Similar to other object-orientated programming languages, Sabre encapsulates data (fields) in classes to structure reusable code. Classes are the core templates or prototype to objects, which once constructed give a concrete value based on that prototype.
 
 ## Declaring Classes
 
-To declare a class in Talos, they required the following ordered components:
+To declare a class in Sabre, they required the following ordered components:
 
 - Starting with the `class` keyword (required)
 - Specify a primary constructor (optional)
@@ -18,7 +18,7 @@ To declare a class in Talos, they required the following ordered components:
 
 For example:
 
-```talos
+```sabre
 // This is a class that defines a constructor and some public fields
 class Person(a_name: String, a_age: Number) {
     public let name = a_name;
@@ -37,7 +37,7 @@ Debug.println(person.age);
 
 Classes can be optionally declared with a primary constructor. This is similar to a function declaration, minus the return-type (since this is always the class instance).
 
-```talos
+```sabre
 // This is a class with an implicit primary constructor
 class Person {};
 
@@ -51,7 +51,7 @@ Constructors then pass their arguments onto the enclosing body when the class is
 
 Since the primary constructor for classes utilizes function syntax for its declaration, generics can be declared in the same fashion.
 
-```talos
+```sabre
 // Declaring a generic class
 class Box[T](a_value: T) {
     public let value = a_value;
@@ -62,7 +62,7 @@ class Box[T](a_value: T) {
 
 To inherit from other classes, a super-type must be placed after the primary constructor and instantiated.
 
-```talos
+```sabre
 // Define a base class instance
 class Base(value: Number) {};
 
@@ -72,7 +72,7 @@ class Derived(value: Number) => Base(value) {};
 
 If the base class does not require any constructor arguments, then it can be declared without such:
 
-```talos
+```sabre
 // Define a parameter-less base class
 class Base {};
 
@@ -84,7 +84,7 @@ class Derived => Base {};
 
 Alongside the nominal subtyping that classes inherit, classes can also utilize structural typing by implemeting given interfaces.
 
-```talos
+```sabre
 // Define a common interface between classes
 type Person = {
     name: String;

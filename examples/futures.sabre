@@ -1,0 +1,20 @@
+///
+/// @example "futures.sabre"
+/// @describe Showcases delayed concurrency with `Future` values.
+///
+
+// Prepare a random set of durations.
+let durations = [100, 50, 400, 250, 500, 10];
+
+// Map these values into a set of futures to later await.
+let futures = durations.map(fn (value: Number, nn: Number): Future {
+    Debug.println("{0}: Started Waiting for {1} ms".fmt(nn, value));
+    let callback = fn => Debug.println("{0}: Finished Waiting After {1} ms".fmt(nn, value));
+    return Future.delay(value).then(callback); // show our callback after the delay
+});
+
+// Prepare a little interlude between our print statements.
+Debug.println();
+
+// Block until all the instanced futures are finished.
+for (future in futures) future.await();

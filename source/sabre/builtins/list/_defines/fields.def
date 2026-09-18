@@ -1,0 +1,129 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(size)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the number of elements in a `List` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(empty)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `List` has no elements.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(front)
+SABRE_XX_FIELDS_TYPEDEF("fn -> T")
+SABRE_XX_FIELDS_DESCRIBE("Gets the first element of a `List` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(back)
+SABRE_XX_FIELDS_TYPEDEF("fn -> T")
+SABRE_XX_FIELDS_DESCRIBE("Gets the last element of a `List` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(get)
+SABRE_XX_FIELDS_TYPEDEF("fn (index: Number) -> T")
+SABRE_XX_FIELDS_DESCRIBE("Gets an element from a `List` by index.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(set)
+SABRE_XX_FIELDS_TYPEDEF("fn (index: Number, value: T) -> T")
+SABRE_XX_FIELDS_DESCRIBE("Sets an element in a `List` by index.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(map)
+SABRE_XX_FIELDS_TYPEDEF("fn [V = Any](callback: fn (T?, Number?) -> V) -> List[V]")
+SABRE_XX_FIELDS_DESCRIBE("Mutates each element in a `List` with a given transformation callback.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(fold)
+SABRE_XX_FIELDS_TYPEDEF("fn [V = Any](initial: V, callback: fn (V, T) -> V) -> V")
+SABRE_XX_FIELDS_DESCRIBE("Reduces all elements in a `List` to an accumulated value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(clear)
+SABRE_XX_FIELDS_TYPEDEF("fn -> List[T]")
+SABRE_XX_FIELDS_DESCRIBE("Removes all elements from a `List` collection.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(drop)
+SABRE_XX_FIELDS_TYPEDEF("fn (index: Number) -> T")
+SABRE_XX_FIELDS_DESCRIBE("Removes an element by index from a `List` collection.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(erase)
+SABRE_XX_FIELDS_TYPEDEF("fn (start: Number, end: Number) -> List[T]")
+SABRE_XX_FIELDS_DESCRIBE("Removes elements from a `List` indicated by a given range.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(slice)
+SABRE_XX_FIELDS_TYPEDEF("fn (start?: Number, end?: Number) -> List[T]")
+SABRE_XX_FIELDS_DESCRIBE("Creates a view of a `List` indicated by a given range.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(filter)
+SABRE_XX_FIELDS_TYPEDEF("fn (callback?: (T) -> Boolean) -> List[T]")
+SABRE_XX_FIELDS_DESCRIBE("Filters a `List` with a given predicate callback.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(reverse)
+SABRE_XX_FIELDS_TYPEDEF("fn -> List[T]")
+SABRE_XX_FIELDS_DESCRIBE("Reverses a `List` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(push_front)
+SABRE_XX_FIELDS_TYPEDEF("fn (...values: T) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Pushes values onto a `List` from the front.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(push_back)
+SABRE_XX_FIELDS_TYPEDEF("fn (...values: T) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Pushes values onto a `List` from the back.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(pop_front)
+SABRE_XX_FIELDS_TYPEDEF("fn -> T")
+SABRE_XX_FIELDS_DESCRIBE("Pops the first element from a `List` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(pop_back)
+SABRE_XX_FIELDS_TYPEDEF("fn -> T")
+SABRE_XX_FIELDS_DESCRIBE("Pops the last element from a `List` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(first_index_of)
+SABRE_XX_FIELDS_TYPEDEF("fn (needle: T) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Finds the index of the first element in a `List` that matches a given needle.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(last_index_of)
+SABRE_XX_FIELDS_TYPEDEF("fn (needle: T) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Finds the index of the last element in a `List` that matches a given needle.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

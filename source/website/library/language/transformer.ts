@@ -17,7 +17,7 @@ export namespace Transformer {
     /** Strikes Deprecated Words. */
     export function Deprecated(): Transformer {
         return createCommentNotationTransformer(
-            '@talos/transformers:notation-deprecated-word',
+            '@sabre/transformers:notation-deprecated-word',
             m_deprecated,
             function ([, word, range], _, comment, lines, index) {
                 const ln = range ? Number.parseInt(range.slice(1), 10) : lines.length;

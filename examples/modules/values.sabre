@@ -1,0 +1,18 @@
+///
+/// @example "modules/values.sabre"
+/// @describe Exports a variety of values for testing.
+///
+
+export let numeric = 42;
+export mut text = "abc";
+export let maybe = Void;
+export mut state = True;
+
+// Handles updating module references.
+export let mutate = fn {
+    // update the current state value
+    state = !state;
+
+    // and use it to define the text value
+    text = state ? "abc" : "def";
+};

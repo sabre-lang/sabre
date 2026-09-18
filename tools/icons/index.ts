@@ -14,11 +14,11 @@ import { Assets } from '~/tools/assets/index';
     const outdir = Assets.vscode('icons');
 
     // prepare the image directories to be used
-    const svg = Assets.root('icons', 'talos.svg');
-    const png = Assets.resolve(outdir, 'talos.png');
+    const svg = Assets.root('icons', 'sabre.svg');
+    const png = Assets.resolve(outdir, 'sabre.png');
 
     const buffer = await sharp(svg).png().resize(128, 128).toBuffer();
     if (!fs.existsSync(outdir)) await fs.promises.mkdir(outdir, { recursive: true });
     await fs.promises.writeFile(png, buffer); // and write the output
-    await fs.promises.copyFile(svg, Assets.resolve(outdir, 'talos.svg'));
+    await fs.promises.copyFile(svg, Assets.resolve(outdir, 'sabre.svg'));
 })();

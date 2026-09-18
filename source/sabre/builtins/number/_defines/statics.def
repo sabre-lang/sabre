@@ -1,0 +1,15 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(parse)
+SABRE_XX_STATICS_TYPEDEF("fn (input: String, radix?: Number) -> Number")
+SABRE_XX_STATICS_DESCRIBE("Parses an input `String`, as a possible `Number` value.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/path",
-    "main": "library/_main.tal",
+    "name": "@sabre/path",
+    "main": "library/_main.sabre",
     "describe": "Utilities for working with filesystem paths"
 }

@@ -1,5 +1,5 @@
 name: Release Canary
-description: Workflow for publishing Talos canary releases
+description: Workflow for publishing Sabre canary releases
 on: [workflow_dispatch]
 
 jobs:

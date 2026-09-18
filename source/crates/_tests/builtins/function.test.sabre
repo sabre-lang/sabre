@@ -1,0 +1,116 @@
+///
+/// @testing Builtin "Function" Functionality.
+/// @describe Coordinates testing the builtin "Function".
+///
+
+// Sabre Modules
+import "sabre:test" as Test;
+import "sabre:assert" as Assert;
+
+// - TEST MOCKS - //
+
+namespace Mock {
+    //! @brief This function forces an immediate panic.
+    export let panics = fn => panic;
+
+    //! @brief This function adds together two numbers.
+    export let addition = fn (a: Number, b: Number): Number => a + b;
+
+    //! @brief This function subtracts two numbers.
+    export let subtraction = fn (a: Number, b: Number): Number {
+        return a - b;
+    };
+
+    //! @brief This function encloses a given value.
+    export let encapsulate = fn (value: Any): fn -> Any {
+        return fn => value;
+    };
+
+    //! @brief Tests for optional parameters.
+    export let optional = fn (value: Number = 42): Number => value;
+
+    //! @brief Tests for variadic parameters.
+    export let variadic: Function = fn (...vargs): Any => vargs;
+};
+
+// - TEST CASES - //
+
+Test.suite("Traits", fn {
+    // prepare some upvalues to be used
+    let a = 6;
+    let b = 7;
+    let c = {};
+
+    // test the expected math results
+    Test.case("Call 'addition'", fn => Assert.equals(Mock.addition(a, b), a + b));
+    Test.case("Call 'subtraction'", fn => Assert.equals(Mock.subtraction(a, b), a - b));
+
+    // test whether we can enclose values
+    Test.case("Call 'encapsulate'", fn {
+        Assert.equals(Mock.encapsulate(Void)(), Void);
+        Assert.equals(Mock.encapsulate(a)(), a);
+        Assert.equals(Mock.encapsulate(c)(), c);
+        Assert.differs(Mock.encapsulate({})(), c);
+    });
+
+    // test that when we call a panic it flows upwards
+    Test.case("Call 'panics'", fn => Assert.panics(Mock.panics));
+
+    // tests against fallback parameters
+    Test.case("Call 'optional'", fn {
+        Assert.equals(Mock.optional(), 42);
+        Assert.equals(Mock.optional(a), a);
+    });
+
+    // tests against variadic parameters
+    Test.case("Call 'variadic'", fn => Assert.okay(Mock.variadic() is List[Any]));
+});
+
+Test.suite("Methods", fn {
+    // test whether or not we can rebind the receiver
+    Test.case("Function.bind 'Self'", fn {
+        let list = [0, 1, 2];
+        let szl = Function.bind([].size, list);
+
+        Assert.equals(szl(), list.size());
+        Assert.equals(szl.receiver(), list);
+    });
+
+    // test the exepected minimum arguments of functions
+    Test.case("Function.arity '()'", fn {
+        Assert.equals(Mock.panics.arity(), 0);
+        Assert.equals(Mock.addition.arity(), 2);
+        Assert.equals(Mock.encapsulate.arity(), 1);
+
+        Assert.equals(Mock.optional.arity(), 0);
+        Assert.equals(Mock.variadic.arity(), 0);
+    });
+
+    // test the exepected maximum arguments of functions
+    Test.case("Function.adicity '()'", fn {
+        Assert.equals(Mock.panics.adicity(), 0);
+        Assert.equals(Mock.addition.adicity(), 2);
+        Assert.equals(Mock.encapsulate.adicity(), 1);
+
+        Assert.equals(Mock.optional.adicity(), 1);
+        Assert.equals(Mock.variadic.adicity(), Function.vlimit());
+    });
+});
+
+Test.suite("Statics", fn {
+    // prepare some upvalues to be used
+    let a = 6;
+    let b = 7;
+
+    // test all the "call" handlers to be used
+    Test.case("Function.call 'optional'", fn => Assert.equals(Function.call(Mock.optional), 42));
+    Test.case("Function.call 'optional'", fn => Assert.equals(Function.call(Mock.optional, a), a));
+    Test.case("Function.call 'addition'", fn => Assert.equals(Function.call(Mock.addition, a, b), a + b));
+    Test.case("Function.call 'subtraction'", fn => Assert.equals(Function.call(Mock.subtraction, a, b), a - b));
+
+    // test all the "apply" handlers to be used
+    Test.case("Function.apply 'optional'", fn => Assert.equals(Function.apply(Mock.optional), 42));
+    Test.case("Function.apply 'optional'", fn => Assert.equals(Function.apply(Mock.optional, [a]), a));
+    Test.case("Function.apply 'addition'", fn => Assert.equals(Function.apply(Mock.addition, [a, b]), a + b));
+    Test.case("Function.apply 'subtraction'", fn => Assert.equals(Function.apply(Mock.subtraction, [a, b]), a - b));
+});

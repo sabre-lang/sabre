@@ -19,41 +19,41 @@ $C_RESET = if ($C_NONE) { "" } else { [char]27 + "[0m"; };
 $C_RED = if ($C_NONE) { "" } else { [char]27 + "[1;31m"; };
 $C_GREEN = if ($C_NONE) { "" } else { [char]27 + "[32m"; };
 
-# check if Talos already exists currently
-$TalosRepo = "rroessler/talos-lang";
-$TalosBinary = try { (Get-Command "talos" -ErrorAction Stop).Path; } catch {};
-$TalosVersion = try { & $TalosBinary --version } catch {};
-$TalosUpgrade = $TalosBinary.Count -ne 0; # denote if we are upgrading
-$TalosDest = if ($env:TALOS_DIRECTORY_ROOT) { $env:TALOS_DIRECTORY_ROOT; } else { "${Home}\.talos"; };
+# check if Sabre already exists currently
+$SabreRepo = "rroessler/sabre-lang";
+$SabreBinary = try { (Get-Command "sabre" -ErrorAction Stop).Path; } catch {};
+$SabreVersion = try { & $SabreBinary --version } catch {};
+$SabreUpgrade = $SabreBinary.Count -ne 0; # denote if we are upgrading
+$SabreDest = if ($env:SABRE_DIRECTORY_ROOT) { $env:SABRE_DIRECTORY_ROOT; } else { "${Home}\.sabre"; };
 
-$TalosLabelFatal = if ($TalosUpgrade) { "Upgrade" } else { "Install" };
-$TalosLabelBasic = if ($TalosUpgrade) { "Upgrading" } else { "Installing" };
-$TalosLabelPrefix = if ($TalosUpgrade) { "upgrad" } else { "install" };
+$SabreLabelFatal = if ($SabreUpgrade) { "Upgrade" } else { "Install" };
+$SabreLabelBasic = if ($SabreUpgrade) { "Upgrading" } else { "Installing" };
+$SabreLabelPrefix = if ($SabreUpgrade) { "upgrad" } else { "install" };
 
 # -  METHODS  - #
 
 # Handles formating spinner messages.
 function Format-Message {
-    param([String]$Msg, [String]$Lbl = $TalosLabelBasic);
+    param([String]$Msg, [String]$Lbl = $SabreLabelBasic);
     return "${C_GREEN}${Lbl}${C_RESET}: ${C_DIM}$Msg${C_RESET}";
 }
 
 # Handles formating fatal exceptions.
 function Format-Fatal {
-    param([String]$Msg, [String]$Lbl = $TalosLabelFatal);
+    param([String]$Msg, [String]$Lbl = $SabreLabelFatal);
     return "${C_RED}Exception.${Lbl}${C_RESET}: $Msg";
 }
 
 # Handles exiting with a fatal exception.
 function Exit-Fatal {
-    param([String]$Msg, [String]$Lbl = $TalosLabelFatal);
+    param([String]$Msg, [String]$Lbl = $SabreLabelFatal);
     Write-Host (Format-Fatal -Msg $Msg -Lbl $Lbl);
     exit 1; # and exit forcefully now from process
 }
 
 # Handles exiting with a success result.
 function Exit-Success {
-    param([String]$Msg, [String]$Lbl = $TalosLabelBasic);
+    param([String]$Msg, [String]$Lbl = $SabreLabelBasic);
     Write-Host (Format-Message -Msg $Msg -Lbl $Lbl);
     exit 0;# and exit forcefully now from process
 }
@@ -146,13 +146,13 @@ function Get-Env {
     $EnvRegisterKey.GetValue($Key, $null, [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
 }
 
-# Attempts finding the latest Talos version.
-function Find-Talos-Latest([String]$target) {
+# Attempts finding the latest Sabre version.
+function Find-Sabre-Latest([String]$target) {
     $message = Format-Message -Lbl "Validating" -Msg "'${target}:latest'";
     $version = Invoke-Spinner -Msg $message -ScriptBlock {
         param([String]$repo); # allow access to the given repository value now
         return (curl.exe -sL "https://api.github.com/repos/$repo/releases/latest" | ConvertFrom-Json).tag_name;
-    } -ArgumentList $TalosRepo;
+    } -ArgumentList $SabreRepo;
 
     # return if we have a valid version resolved
     if ($version.Count -ne 0) { return $version; }
@@ -161,8 +161,8 @@ function Find-Talos-Latest([String]$target) {
     Exit-Fatal -Lbl "Validation" -Msg "Could not resolve '${target}:latest'";
 }
 
-# Handles validating a talos version.
-function Validate-Talos-Version([String]$version) {
+# Handles validating a sabre version.
+function Validate-Sabre-Version([String]$version) {
     return Invoke-Spinner -Msg $message -ScriptBlock {
         param([String]$version, [String]$repo); # ensure we capture our params to be used
         $tags = try { curl.exe -fsL "https://api.github.com/repos/$repo/tags" | ConvertFrom-Json; } catch { @() };
@@ -174,12 +174,12 @@ function Validate-Talos-Version([String]$version) {
 
         # if we reached here, then there is no valid tag available
         return $false;
-    } -ArgumentList $version, $TalosRepo;
+    } -ArgumentList $version, $SabreRepo;
 }
 
 # Handles registering the path instance.
-function Register-Talos-Path([String]$binary) {
-    # only try adding to path if there isn't already a "talos.exe" in the path
+function Register-Sabre-Path([String]$binary) {
+    # only try adding to path if there isn't already a "sabre.exe" in the path
     $path = (Get-Env -Key "Path") -split ';'
 
     # update the binary when we cannot find the original
@@ -190,37 +190,37 @@ function Register-Talos-Path([String]$binary) {
     }
 }
 
-# We install talos using it's own function in the unlikely case we need to recall anything.
-function Install-Talos-Main {
+# We install sabre using it's own function in the unlikely case we need to recall anything.
+function Install-Sabre-Main {
     # prepare the incoming parameters to be used now
     param([String]$Tag);
 
     # resolve the incoming details about the installation
     $arch = "x64";
     $validated = $false;
-    $target = "talos-windows-$arch";
+    $target = "sabre-windows-$arch";
     $version = if ($Tag -match "^\d+\.\d+\.\d+") { "v$Tag"; } else { $Tag; };
 
     # check if the requested tag actually exists firstly
     if ($version -eq "latest") {
-        $version = Find-Talos-Latest $target;
+        $version = Find-Sabre-Latest $target;
         $validated = $true; # define as validated
     }
 
     # run some validation checks now as necessary
     $message = Format-Message -Lbl "Validating" -Msg "'${target}:$version'";
-    if (-not $validated) { $validated = Validate-Talos-Version $version };
+    if (-not $validated) { $validated = Validate-Sabre-Version $version };
 
     # handle the resulting validation now
-    if (-not $validated) { Exit-Fatal -Lbl "Validation" -Msg "Invalid Talos tag '$version'"; }
-    if ($Dry) { Exit-Success -Msg "Would have tried ${TalosLabelPrefix}ing Talos '$version'"; }
+    if (-not $validated) { Exit-Fatal -Lbl "Validation" -Msg "Invalid Sabre tag '$version'"; }
+    if ($Dry) { Exit-Success -Msg "Would have tried ${SabreLabelPrefix}ing Sabre '$version'"; }
 
     # we need to stop if the current version is the same
-    if (-not $Force -and $version -eq $TalosVersion) {
-        Exit-Success -Msg "Talos already upgraded to '$version'";
+    if (-not $Force -and $version -eq $SabreVersion) {
+        Exit-Success -Msg "Sabre already upgraded to '$version'";
     }
 
-    $tmpdir = "$([System.IO.Path]::GetTempPath())talos";
+    $tmpdir = "$([System.IO.Path]::GetTempPath())sabre";
     $zip_src = "$tmpdir\$target"; # prepare the source of the zip
     $zip_file = "$tmpdir\$target.zip"; # prepare zipped output location
 
@@ -229,7 +229,7 @@ function Install-Talos-Main {
     New-Item -Path $tmpdir -ItemType Directory -Force | Out-Null
 
     # construct the resulting url to be used now
-    $url = "https://github.com/$TalosRepo/releases/download/$version/$target.zip";
+    $url = "https://github.com/$SabreRepo/releases/download/$version/$target.zip";
 
     # attempt downloading with curl now
     $message = Format-Message -Lbl "Downloading" -Msg "'${target}:$version'";
@@ -241,10 +241,10 @@ function Install-Talos-Main {
     # handle the incoming result of the request now
     $message = switch ($download) {
         200 { break; }
-        404 { "Could not find Talos '$Tag'"; }
+        404 { "Could not find Sabre '$Tag'"; }
         500 { "Release endpoint is not available"; }
         000 { "Script requires an internet connection"; }
-        default { "Could not request Talos '$Tag'. Received response-code '$download'" }
+        default { "Could not request Sabre '$Tag'. Received response-code '$download'" }
     };
 
     # stop on any incoming failures now
@@ -266,39 +266,39 @@ function Install-Talos-Main {
         catch { return "Could not unzip download, $_"; };
 
         # get the incoming target executable
-        $executable = "$source\bin\talos.exe";
+        $executable = "$source\bin\sabre.exe";
 
         # once unpacked, we firstly test the new binary
-        if (-not (Test-Path $executable)) { return "Download was corrupted, could not find 'talos.exe'"; }
+        if (-not (Test-Path $executable)) { return "Download was corrupted, could not find 'sabre.exe'"; }
     } -ArgumentList $zip_file, $zip_src;
 
     # if we received an unpacking error, then show
     if ($unpack.Count -ne 0) { Exit-Fatal -Lbl "Unpack" -Msg $unpack; }
 
     # prepare environment registration
-    Register-Talos-Path "$TalosDest\bin";
+    Register-Sabre-Path "$SabreDest\bin";
 
     # and finally show the user the resulting details
-    Write-Host (Format-Message -Msg "Talos '$version' was ${TalosLabelPrefix}ed successfully!");
+    Write-Host (Format-Message -Msg "Sabre '$version' was ${SabreLabelPrefix}ed successfully!");
 
     # check if this was called from an outside source at all
     if (-not $PSScriptRoot) {
-        Remove-Item -Path "$TalosDest" -Recurse -Force -ErrorAction SilentlyContinue;
-        Move-Item -Path "$zip_src" -Destination "$TalosDest" -ErrorAction SilentlyContinue;
+        Remove-Item -Path "$SabreDest" -Recurse -Force -ErrorAction SilentlyContinue;
+        Move-Item -Path "$zip_src" -Destination "$SabreDest" -ErrorAction SilentlyContinue;
     }
 
     # otherwise we need to schedule the replacement instance here
     else {
-        # prepare the scheduled job trigger to be used (this is to bypass when "talos.exe" calls this script)
+        # prepare the scheduled job trigger to be used (this is to bypass when "sabre.exe" calls this script)
         $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddSeconds(1);
         $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries;
         $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive;
 
         # to ensure that our action runs without show a window we must call it via the preinstalled "conhost.exe"
-        $action = New-ScheduledTaskAction -Execute 'conhost.exe' -Argument "--headless powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$PSScriptRoot\replace.ps1`" -Source `"$zip_src`" -Destination `"$TalosDest`"";
+        $action = New-ScheduledTaskAction -Execute 'conhost.exe' -Argument "--headless powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$PSScriptRoot\replace.ps1`" -Source `"$zip_src`" -Destination `"$SabreDest`"";
 
         # then we want to schedule the incoming job to replace the files
-        Register-ScheduledTask -TaskName "Replace-Talos" -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force | Out-Null;
+        Register-ScheduledTask -TaskName "Replace-Sabre" -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force | Out-Null;
     }
 }
 
@@ -306,7 +306,7 @@ function Install-Talos-Main {
 
 # ensure we are actually running only on "x64" installations for now
 if (-not ((Get-CimInstance Win32_ComputerSystem)).SystemType -match "x64-based") {
-    Exit-Fatal -Msg "Talos is currently only available Windows x64 hosts";
+    Exit-Fatal -Msg "Sabre is currently only available Windows x64 hosts";
 }
 
 try {
@@ -314,7 +314,7 @@ try {
     [Console]::CursorVisible = $false;
 
     # actually attempt installing our instance
-    Install-Talos-Main -Tag $Tag;
+    Install-Sabre-Main -Tag $Tag;
 }
 
 finally {

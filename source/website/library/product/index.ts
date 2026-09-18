@@ -10,10 +10,10 @@ export namespace Product {
     export const identifier = publisher;
 
     /** Available extension typing. */
-    export const extension = '.tal';
+    export const extension = '.sabre';
 
     /** The baseline github URL. */
-    export const github = 'https://github.com/rroessler/talos-lang';
+    export const github = 'https://github.com/rroessler/sabre-lang';
 
     /** Assign the associated website description. */
     export const description = d;
@@ -24,8 +24,8 @@ export namespace Product {
     /** Long descriptor name. */
     export const longName = displayName;
 
-    /** Denotes the latest Talos version. */
-    export const version = process.env.TALOS_VERSION?.substring(1);
+    /** Denotes the latest Sabre version. */
+    export const version = process.env.SABRE_VERSION?.substring(1);
 
     /** Checks if currently in development. */
     export const development = process.env.NODE_ENV === 'development';

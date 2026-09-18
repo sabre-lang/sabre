@@ -1,5 +1,5 @@
 name: Publish Website
-description: Workflow for deploying the Talos website
+description: Workflow for deploying the Sabre website
 on: [workflow_dispatch, workflow_call]
 
 permissions:

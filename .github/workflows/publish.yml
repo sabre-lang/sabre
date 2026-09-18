@@ -1,5 +1,5 @@
 name: Publish Release
-description: Workflow for publishing Talos releases to GitHub
+description: Workflow for publishing Sabre releases to GitHub
 
 on:
     workflow_call:
@@ -35,7 +35,7 @@ jobs:
               uses: actions/download-artifact@v8
               with:
                   path: dist
-                  pattern: talos-*
+                  pattern: sabre-*
                   merge-multiple: true
 
             - name: Deduplicate Canary
@@ -53,7 +53,7 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   gh release create ${{ steps.version.outputs.long }} "./dist/*" \
-                    --title "Talos ${{ steps.version.outputs.long }}" \
+                    --title "Sabre ${{ steps.version.outputs.long }}" \
                     --notes-file "CHANGELOG.md" \
                     --repo "${{ github.repository }}" \
                     --latest=${{ inputs.release == 'stable' && 'true' || 'false' }}

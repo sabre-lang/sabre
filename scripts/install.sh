@@ -3,18 +3,18 @@ set -euo pipefail
 
 # -  PROPERTIES  - #
 
-# get some incoming details about talos
-talos_target="talos-"
-talos_repo="rroessler/talos-lang"
-talos_binary=$(command -v talos 2>&1 || true)
-talos_dest=${TALOS_DIRECTORY_ROOT:-$HOME/.talos}
-talos_upgrade=$([ -z $talos_binary ] && echo false || echo true)
-talos_version=$([ -z $talos_binary ] && echo "" || $talos_binary --version)
+# get some incoming details about sabre
+sabre_target="sabre-"
+sabre_repo="rroessler/sabre-lang"
+sabre_binary=$(command -v sabre 2>&1 || true)
+sabre_dest=${SABRE_DIRECTORY_ROOT:-$HOME/.sabre}
+sabre_upgrade=$([ -z $sabre_binary ] && echo false || echo true)
+sabre_version=$([ -z $sabre_binary ] && echo "" || $sabre_binary --version)
 
-talos_label_fatal=$([ $talos_upgrade = true ] && echo "Upgrade" || echo "Install")
-talos_label_basic=$([ $talos_upgrade = true ] && echo "Upgrading" || echo "Installing")
-talos_label_prefix=$([ $talos_upgrade = true ] && echo "upgrad" || echo "install")
-talos_label_padding=$(printf "%${#talos_label_basic}s " "")
+sabre_label_fatal=$([ $sabre_upgrade = true ] && echo "Upgrade" || echo "Install")
+sabre_label_basic=$([ $sabre_upgrade = true ] && echo "Upgrading" || echo "Installing")
+sabre_label_prefix=$([ $sabre_upgrade = true ] && echo "upgrad" || echo "install")
+sabre_label_padding=$(printf "%${#sabre_label_basic}s " "")
 
 # check if we have been told about no color
 NO_COLOR=${NO_COLOR:-"0"}
@@ -36,7 +36,7 @@ C_GREEN=$([ $NO_COLOR != "0" ] || echo "\033[32m")
 
 # Handles successful exits.
 exit_success() {
-    echo -e "$C_GREEN$talos_label_basic$C_RESET: $C_DIM$1$C_RESET"
+    echo -e "$C_GREEN$sabre_label_basic$C_RESET: $C_DIM$1$C_RESET"
     exit # ensure we forcefully exit
 }
 
@@ -48,16 +48,16 @@ exit_failure() {
 
 # Handles validating "latest" versions.
 version_latest() {
-    local url="https://api.github.com/repos/$talos_repo/releases/latest"
+    local url="https://api.github.com/repos/$sabre_repo/releases/latest"
     local command="curl -sL $url | jq -r '.tag_name'" # prepare the command
-    spinner_run "Validating" "'$talos_target:latest'" eval $command
+    spinner_run "Validating" "'$sabre_target:latest'" eval $command
 }
 
 # Handles validating any incoming versions.
 version_validate() {
-    local url="https://api.github.com/repos/$talos_repo/tags"
+    local url="https://api.github.com/repos/$sabre_repo/tags"
     local command="curl -sL $url | jq -r '.[] | select(.name == \"$1\") | .name'"
-    spinner_run "Validating" "'$talos_target:$1'" eval $command
+    spinner_run "Validating" "'$sabre_target:$1'" eval $command
 }
 
 # Handles resolving a suitable version.
@@ -72,7 +72,7 @@ version_resolve() {
 
         # force an immediate failure if the incoming version was not found
         if [ $OPT_TAG = null ]; then
-            exit_failure "Validation" "Could not resolve '$talos_target:latest'"
+            exit_failure "Validation" "Could not resolve '$sabre_target:latest'"
         fi
 
         # can safely return since we have a valid "latest" tag
@@ -80,7 +80,7 @@ version_resolve() {
     fi
 
     # we want to ensure the incoming version is valid now
-    if [ -z $(version_validate "$OPT_TAG") ]; then exit_failure "Validation" "Invalid Talos tag '$OPT_TAG'"; fi
+    if [ -z $(version_validate "$OPT_TAG") ]; then exit_failure "Validation" "Invalid Sabre tag '$OPT_TAG'"; fi
 }
 
 # Handles deciding platform labels.
@@ -90,12 +90,12 @@ platform_resolve() {
 
     # and convert it to a suitable value
     case $platform in
-    'MINGW64'*) talos_target+="windows-x64" ;;
-    'Darwin x86_64') talos_target+="darwin-x64" ;;
-    'Darwin arm64') talos_target+="darwin-arm64" ;;
-    'Linux x86_64') talos_target+="linux-x64" ;;
-    'Linux aarch64' | 'Linux arm64') talos_target+="linux-arm64" ;;
-    *) exit_failure $talos_label_fatal "Unsupported platform '$platform'" ;;
+    'MINGW64'*) sabre_target+="windows-x64" ;;
+    'Darwin x86_64') sabre_target+="darwin-x64" ;;
+    'Darwin arm64') sabre_target+="darwin-arm64" ;;
+    'Linux x86_64') sabre_target+="linux-x64" ;;
+    'Linux aarch64' | 'Linux arm64') sabre_target+="linux-arm64" ;;
+    *) exit_failure $sabre_label_fatal "Unsupported platform '$platform'" ;;
     esac
 }
 
@@ -158,10 +158,10 @@ env_tildify() {
     fi
 }
 
-# Handles bootstrapping the $PATH with "talos".
+# Handles bootstrapping the $PATH with "sabre".
 env_bootstrap() {
     # prepare the installation directory now
-    local binary="$talos_dest/bin"
+    local binary="$sabre_dest/bin"
     local shell=$(basename "$SHELL")
     local btldr=$(env_tildify $binary)
 
@@ -202,12 +202,12 @@ env_bootstrap() {
 
             # update the incoming configuration now
             {
-                echo -e "\n# Talos Environment Variables"
+                echo -e "\n# Sabre Environment Variables"
                 for cmd in "${commands[@]}"; do echo "$cmd"; done
             } >>"$config"
 
             # declare to the used about adding this item
-            echo -e "$talos_label_padding ${C_DIM}Added '$btldr' to \$PATH in '$ctldr'$C_RESET"
+            echo -e "$sabre_label_padding ${C_DIM}Added '$btldr' to \$PATH in '$ctldr'$C_RESET"
 
             # add this command to the refresh handler
             refresh+=("source $ctldr")
@@ -220,16 +220,16 @@ env_bootstrap() {
     # show the manual prompt if necessary
     if [ $manual = true ]; then
         # alert the user about manual installations
-        echo -e "$talos_label_padding ${C_DIM}Manually add '$btldr' to \$PATH for '$shell' or similar$C_RESET"
+        echo -e "$sabre_label_padding ${C_DIM}Manually add '$btldr' to \$PATH for '$shell' or similar$C_RESET"
 
         # and exit since there is nothing else that we can do for the user
         return
     fi
 
     # otherwise show all the necessary export commands now
-    echo -e "$talos_label_padding ${C_DIM}To get started, run the following commands$C_RESET"
-    for cmd in "${refresh[@]}"; do echo -e "$talos_label_padding     $C_DIM$cmd$C_RESET"; done
-    echo -e "$talos_label_padding     ${C_DIM}talos --help$C_RESET" # and show the main prompt
+    echo -e "$sabre_label_padding ${C_DIM}To get started, run the following commands$C_RESET"
+    for cmd in "${refresh[@]}"; do echo -e "$sabre_label_padding     $C_DIM$cmd$C_RESET"; done
+    echo -e "$sabre_label_padding     ${C_DIM}sabre --help$C_RESET" # and show the main prompt
 }
 
 # Handles parsing the incoming arguments
@@ -268,49 +268,49 @@ main_install() {
     local version=$OPT_TAG
 
     # check if we are just doing a dry-run or if there would be no override at all
-    if [ $OPT_DRY = true ]; then exit_success "Would have tried ${talos_label_prefix}ing Talos '$version'"; fi
-    if [[ $OPT_FORCE == false && $talos_version == $version ]]; then exit_success "Talos already upgraded to '$version'"; fi
+    if [ $OPT_DRY = true ]; then exit_success "Would have tried ${sabre_label_prefix}ing Sabre '$version'"; fi
+    if [[ $OPT_FORCE == false && $sabre_version == $version ]]; then exit_success "Sabre already upgraded to '$version'"; fi
 
     # prepare all the temporary file locations
     local tmp_dir=$(mktemp -d)
-    local zip_odir="$tmp_dir/$talos_target"
-    local zip_file="$tmp_dir/$talos_target.zip"
+    local zip_odir="$tmp_dir/$sabre_target"
+    local zip_file="$tmp_dir/$sabre_target.zip"
 
     # construct the necessary download url now
-    local url="https://github.com/$talos_repo/releases/download/$version/$talos_target.zip"
+    local url="https://github.com/$sabre_repo/releases/download/$version/$sabre_target.zip"
 
     # attempt downloading with curl now
     local command="curl -sL -o '$zip_file' -w '%{response_code}' '$url'"
-    local result=$(spinner_run "Downloading" "'$talos_target:$version'" eval $command)
+    local result=$(spinner_run "Downloading" "'$sabre_target:$version'" eval $command)
 
     # handling incoming results now
     case $result in
     200) result='' ;;
-    404) result="Could not find Talos '$version'" ;;
+    404) result="Could not find Sabre '$version'" ;;
     500) result="Release endpoint is not available" ;;
     000) result="Script requires an internet connection" ;;
-    *) result="Could not request Talos '$version'. Received response-code '$result'" ;;
+    *) result="Could not request Sabre '$version'. Received response-code '$result'" ;;
     esac
 
     # stop on any incoming failure results
     if [[ -n $result ]]; then exit_failure "Download" $result; fi
 
     # remove the original location if it exists
-    rm -rf $talos_dest
+    rm -rf $sabre_dest
 
     # attempt unpacking the incoming archive now
-    command="unzip -q '$zip_file' -d '$zip_odir' && mv '$zip_odir' '$talos_dest'"
-    spinner_run "Unpacking" "'$talos_target:$version'" eval $command
+    command="unzip -q '$zip_file' -d '$zip_odir' && mv '$zip_odir' '$sabre_dest'"
+    spinner_run "Unpacking" "'$sabre_target:$version'" eval $command
 
     # restore the cursor that we hid now
     spinner_cleanup
 
     # show the resulting success message for the user
-    local success="Talos '$version' was ${talos_label_prefix}ed successfully!"
-    echo -e "$C_GREEN$talos_label_basic$C_RESET: $C_DIM$success$C_RESET"
+    local success="Sabre '$version' was ${sabre_label_prefix}ed successfully!"
+    echo -e "$C_GREEN$sabre_label_basic$C_RESET: $C_DIM$success$C_RESET"
 
     # prepare the environment registration now
-    if command -v talos >/dev/null; then exit; fi
+    if command -v sabre >/dev/null; then exit; fi
 
     # otherwise we need to update the path now
     env_bootstrap

@@ -1,11 +1,11 @@
 #ifndef _CRATES_PACKAGE_GARBAGE_HPP
 #define _CRATES_PACKAGE_GARBAGE_HPP
 
-/// Talos Includes
-#include <talos/garbage/service.hpp>
+/// Sabre Includes
+#include <sabre/garbage/service.hpp>
 
 /// Addon Includes
-#include <talos/dylib/_inline/dylib.ipp>
+#include <sabre/dylib/_inline/dylib.ipp>
 
 //  X-MACROS  //
 
@@ -15,14 +15,14 @@
 
 //  NAMESPACES  //
 
-namespace Talos::Package {
+namespace Sabre::Package {
 
 /// @brief Garbage Package Addon.
 class Garbage : public Dylib::Mixin<"gc"> {
   //  TYPEDEFS  //
 
   /// @brief Available service typing.
-  using Service = ::Talos::Garbage::Service;
+  using Service = ::Sabre::Garbage::Service;
 
 public:
   //  CONSTRUCTORS  //
@@ -37,9 +37,9 @@ public:
 private:
   //  PRIVATE METHODS  //
 
-  CRATE_XX_GARBAGE_METHODS(TALOS_MM_DYLIB_DEFINE)
+  CRATE_XX_GARBAGE_METHODS(SABRE_MM_DYLIB_DEFINE)
 };
 
-} // namespace Talos::Package
+} // namespace Sabre::Package
 
 #endif

@@ -108,10 +108,10 @@ export class Client extends Disposable {
         if (typeof command === 'undefined') return;
 
         // get the necessary environment variables that we enable now
-        const TALOS_LOGGING_LEVEL = Settings.Registry.get('server.loggingLevel');
+        const SABRE_LOGGING_LEVEL = Settings.Registry.get('server.loggingLevel');
 
         // prepare the environment now
-        const env = { ...process.env, TALOS_LOGGING_LEVEL, NO_COLOR: '1' };
+        const env = { ...process.env, SABRE_LOGGING_LEVEL, NO_COLOR: '1' };
 
         // prepare the options to be inherited
         const options: vslc.ExecutableOptions = { env };

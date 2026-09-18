@@ -1,12 +1,12 @@
 ---
 title: Configuration
 icon: Settings
-description: Reference guide for configuring development Talos tools
+description: Reference guide for configuring development Sabre tools
 ---
 
 import { Callout } from '@/website/components';
 
-Talos' behaviour can be configured by utilizing `_crate.jsonc` configuration files. Although it's design is similar to `package.json`, this new format was built to accomodate features specific to Talos. Additionally, since crate-files use the JSONC format, comments are enabled by default and trailing commas are allowed.
+Sabre' behaviour can be configured by utilizing `_crate.jsonc` configuration files. Although it's design is similar to `package.json`, this new format was built to accomodate features specific to Sabre. Additionally, since crate-files use the JSONC format, comments are enabled by default and trailing commas are allowed.
 
 ## Crate Properties
 
@@ -25,7 +25,7 @@ All crates should specify a designated name that is used to identify itself. Alo
 
     - It is best to use short descriptive naming.
     - It is recommended to use a scoping such as `@author/...`.
-    - Do not put "tal" or "talos" in the name. This is already implied.
+    - Do not put "sabre" or "sabre" in the name. This is already implied.
 
 </Callout>
 
@@ -39,35 +39,35 @@ This field designates the primary entry-point to your crate. This means that if 
 
 ### `tasks`
 
-Tasks allow a developer to define custom commands that can be executed with the `talos task` command. It is similar to the `scripts` field in a `package.json` file, however it allows chaining tasks by glob patterns similar to the [`npm-run-all`](https://github.com/bcomnes/npm-run-all2) package for JavaScript.
+Tasks allow a developer to define custom commands that can be executed with the `sabre task` command. It is similar to the `scripts` field in a `package.json` file, however it allows chaining tasks by glob patterns similar to the [`npm-run-all`](https://github.com/bcomnes/npm-run-all2) package for JavaScript.
 
 ```jsonc
 {
     "tasks": {
-        "start": "talos run library/_main.tal",
-        "test": "talos test --pattern tests/*.tal",
-        "lint": "talos lint --hints",
+        "start": "sabre run library/_main.sabre",
+        "test": "sabre test --pattern tests/*.sabre",
+        "lint": "sabre lint --hints",
 
-        "build": "talos task build:*",
+        "build": "sabre task build:*",
         "build:clean": "rm -rf dist",
-        "build:bundle": "talos bundle --outfile dist/app",
+        "build:bundle": "sabre bundle --outfile dist/app",
     },
 }
 ```
 
-To execute a task, use the `talos task` command followed by the tasks. For example:
+To execute a task, use the `sabre task` command followed by the tasks. For example:
 
 ```shell
 # run singular tasks
-talos task start
-talos task test
-talos task lint
+sabre task start
+sabre task test
+sabre task lint
 
 # or run tasks sequentially
-talos task build:*
+sabre task build:*
 ```
 
-Read more about [`talos task`](/language/toolkit/tasks).
+Read more about [`sabre task`](/language/toolkit/tasks).
 
 ### `test`
 
@@ -75,7 +75,7 @@ The testing framework can be configured using the `test` field. More specificall
 
 ### `lint`
 
-The builtin linter can be configured using the `lint` field. For now, this only allows toggling the linter rules that Talos is shipped with. See the [linting](/language/toolkit/linting) section for more information.
+The builtin linter can be configured using the `lint` field. For now, this only allows toggling the linter rules that Sabre is shipped with. See the [linting](/language/toolkit/linting) section for more information.
 
 <Callout title="Note:">
     Builtin rules are still actively being developed and as such may be subject to change. Additionally, plugin support

@@ -1,0 +1,287 @@
+//  X-MACROS  //
+
+#ifndef SABRE_XX_DIAGNOSTIC_CODE
+#define SABRE_XX_DIAGNOSTIC_CODE(C, N, S, M, ...)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_SYNTAX
+#define SABRE_XX_DIAGNOSTIC_SYNTAX(...) SABRE_XX_DIAGNOSTIC_CODE("Syntax", __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_LEXER
+#define SABRE_XX_DIAGNOSTIC_LEXER(...) SABRE_XX_DIAGNOSTIC_SYNTAX(__VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_ANALYSIS
+#define SABRE_XX_DIAGNOSTIC_ANALYSIS(...) SABRE_XX_DIAGNOSTIC_CODE("Analysis", __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_REFERENCE
+#define SABRE_XX_DIAGNOSTIC_REFERENCE(...) SABRE_XX_DIAGNOSTIC_CODE("Reference", __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_RUNTIME
+#define SABRE_XX_DIAGNOSTIC_RUNTIME(...) SABRE_XX_DIAGNOSTIC_CODE("Runtime", __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_ASSERTION
+#define SABRE_XX_DIAGNOSTIC_ASSERTION(...) SABRE_XX_DIAGNOSTIC_CODE("Assertion", __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_IMPORT
+#define SABRE_XX_DIAGNOSTIC_IMPORT(...) SABRE_XX_DIAGNOSTIC_CODE("Import", __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_INTERNAL
+#define SABRE_XX_DIAGNOSTIC_INTERNAL(...) SABRE_XX_DIAGNOSTIC_CODE("Developer", __VA_ARGS__)
+#endif
+
+#ifndef SABRE_XX_DIAGNOSTIC_LINTER
+#define SABRE_XX_DIAGNOSTIC_LINTER(S, ...)                                                                       \
+  SABRE_XX_DIAGNOSTIC_CODE("Linter", 10000000 | (1 << static_cast<uint8_t>(Severity::S)), S, "{0}")              \
+  SABRE_XX_DIAGNOSTIC_CODE("Linter", 10000032 | (1 << static_cast<uint8_t>(Severity::S)), S, "{0}", Deprecated)  \
+  SABRE_XX_DIAGNOSTIC_CODE("Linter", 10000064 | (1 << static_cast<uint8_t>(Severity::S)), S, "{0}", Unnecessary)
+#endif
+
+//  MACROS  //
+
+/// "Unknown" Diagnostics Group (-1)
+SABRE_XX_DIAGNOSTIC_CODE("Unknown", -1, ERROR, "...")
+
+/// "Syntax" Diagnostics Group 1_000_000
+SABRE_XX_DIAGNOSTIC_LEXER(1000100, ERROR, "Unexpected token '{0}'")
+SABRE_XX_DIAGNOSTIC_LEXER(1000101, ERROR, "Unterminated {0}")
+
+/// "Syntax" Diagnostics Group 2_000_000
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000100, ERROR, "Expected {0}")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000101, ERROR, "Expected {0} after {1}")
+
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000200, WARN, "Parameters are immutable by default")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000201, ERROR, "Cannot declare multiple spread-parameters")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000202, ERROR, "Spread-parameter must be last in parameter list")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000203, ERROR, "A spread-parameter cannot have an initializer value")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000204, ERROR, "A spread-parameter cannot be declared as optional")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000205, ERROR, "Parameter cannot be optional and have an initializer")
+
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000300, WARN, "Expected at least one 'implements' interface")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000301, ERROR, "Type argument list cannot be empty")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000302, ERROR, "Type parameter list cannot be empty")
+
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000500, ERROR, "Invalid left-hand side assignment target")
+
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000600, ERROR, "A 'for' statement expect at least one iterator parameter")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000601, ERROR, "A '{0}' statement can only be used within an enclosing loop")
+
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000650, ERROR, "A 'match' statement can only have one '*' fallback clause")
+
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000800, ERROR, "Unknown attribute category '{0}'")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000801, ERROR, "Unknown operator overload '{0}'")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000802, ERROR, "Unknown internal feature '{0}'")
+
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000900, WARN, "Duplicate declaration modifier '{0}'")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000901, WARN, "Cannot apply decorators/attributes to this declaration")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000902, ERROR, "A '{0}' modifier cannot appear in a class property")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000903, ERROR, "A '{0}' modifier cannot appear in a top-level declaration")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000904, ERROR, "A '{0}' modifier cannot appear in a function-level declaration")
+SABRE_XX_DIAGNOSTIC_SYNTAX(2000905, ERROR, "Cannot combine different accessibility modifiers in this context")
+
+/// "Analysis" Diagnostics Group 3_000_000
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000000, ERROR, "{0}")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000100, ERROR, "Cannot assign to '{0}' because it is a constant")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000101, ERROR, "Cannot assign to dynamic property because it is 'readonly'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000102, ERROR, "Cannot assign to '{0}' because it is a 'readonly' property")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000150, ERROR, "Disposable resources cannot be exported outside their scope")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000151, ERROR, "Property '{0}' cannot be declared as a disposable resource")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000200, ERROR, "'{0}' refers to a type, but is being used as a value here")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000201, ERROR, "'{0}' refers to a value, but is being used as a type here")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000300, ERROR, "Type '{0}' is not assignable to type '{1}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000301, ERROR, "Argument of type '{0}' is not assignable to type '{1}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000302, ERROR, "Type '{0}' is not assignable to type '{1}' for enum variant values")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000303, ERROR, "Type '{0}' is not assignable to type '{1}' for enum variant labels")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000304, ERROR, "Type '{0}' is not assignable to type '{1}' for this constraint")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000350, ERROR, "Type '{0}' is not generic")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000351, ERROR, "Type '{0}' does not satisfy constraint '{1}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000352, ERROR, "Value of type '{0}' cannot be cast to type '{1}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000353, ERROR, "Value of type '{0}' is not a valid type-guard")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000360, WARN, "Assertion casts from type 'Any' may lead to unsound results")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000361, WARN, "Assertion checks from type 'Any' will always {0}")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000362, WARN, "Assertion checks of type '{0}' with '{1}' will always {2}")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000363, WARN, "Assertion checks of inverted type '{0}' with '{1}' will always {2}")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000400, ERROR, "Expected {0} type-argument(s)")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000401, ERROR, "Expected at least {0} type-argument(s)")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000402, ERROR, "Expected at most {0} type-argument(s)")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000500, ERROR, "Extraneous argument")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000501, ERROR, "Expected {0} argument(s), but got {1}")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000502, ERROR, "Expected at least {0} argument(s), but got {1}")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000550, ERROR, "Expression of type '{0}' is not callable")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000551, ERROR, "The caret '^' operator can only be used within a function")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000552, ERROR, "Expression is not callable after generic instantiation")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000600, WARN, "This condition will always be '{0}y'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000601, WARN, "This 'loop' will {0} since this condition always returns '{1}'")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000700, ERROR, "Type '{0}' cannot be iterated over")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000701, ERROR, "Iterable of length '{0}' has no element at index '{1}'")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000800, ERROR, "Unary operator '{0}' cannot be applied to type '{1}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000801, ERROR, "Binary operator '{0}' cannot be applied to types '{1}' and '{2}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000802, ERROR, "Expected operator attribute '{0}' to be of type '{1}' not '{2}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000803, ERROR, "Value of type '{0}' cannot bind a '{1}' attribute hook")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000804, ERROR, "Cannot overload the '{0}' operator with value of type '{1}'")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000850, ERROR, "Expression of type '{0}' cannot be used as a decorator signature")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000851, WARN, "Variable of non-function type '{0}' cannot be targeted with feature '{1}'")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000900, ERROR, "A 'return' statement can only be used within a function")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000901, ERROR, "A function returning 'never' cannot have a reachable exit")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000902, ERROR, "A function with a non-voidish return-type must return a value")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3000950, ERROR, "Value of type '{0}' cannot be used with a 'panic' statement")
+
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3001000, ERROR, "Class '{0}' is referenced in its own base expression")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3001001, ERROR, "Class '{0}' cannot extend non-class type '{1}'")
+SABRE_XX_DIAGNOSTIC_ANALYSIS(3001002, ERROR, "Class '{0}' incorrectly implements interface type '{1}'")
+
+/// "Reference" Diagnostics Group 4_000_000
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000000, ERROR, "{0}")
+
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000200, ERROR, "Property '{0}' does not exist on '{1}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000201, ERROR, "Property '{0}' is not publicly accessible")
+
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000300, ERROR, "Cannot find type '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000301, ERROR, "Cannot find variable '{0}'")
+
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000400, ERROR, "Duplicate type '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000401, ERROR, "Duplicate variable '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000402, ERROR, "Cannot re-declare type '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000403, ERROR, "Cannot re-declare variable '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000404, ERROR, "Cannot re-declare property '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000405, ERROR, "Cannot re-declare enum variant '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000406, ERROR, "Class declaration overlaps with '{0}' declaration")
+
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000500, ERROR, "Enumeration has no variant with ordinal '{0}'")
+
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000900, HINT, "Unreachable code detected", Unnecessary)
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000901, HINT, "'{0}' is declared but its type is never used", Unnecessary)
+SABRE_XX_DIAGNOSTIC_REFERENCE(4000902, HINT, "'{0}' is declared but its value is never used", Unnecessary)
+
+/// "Runtime" Diagnostics Group 6_000_000
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000000, ERROR, "{0}")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000001, ERROR, "Uncaught anonymous exception")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000100, ERROR, "Future already fulfilled")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000101, ERROR, "Future timed out whilst executing")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000200, ERROR, "Value of type '{0}' is not callable")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000201, ERROR, "Value of type '{0}' is not spawnable")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000202, ERROR, "Class '{0}' is not constructible")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000203, ERROR, "Value of type '{0}' is not constructible")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000251, ERROR, "Expected at least {0} argument(s)")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000252, ERROR, "Expected at most {0} argument(s)")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000253, ERROR, "Expected '{0}' to be of type '{1}'")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000300, ERROR, "Value of type '{0}' has no field named '{1}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000301, ERROR, "Cannot assign to readonly property '{1}' of type '{0}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000302, ERROR, "Cannot bind operator '{0}' to value of type '{1}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000303, ERROR, "Cannot re-assign operator '{0}' for value of type '{1}'")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000400, ERROR, "Unsupported operand '{0}' for type '{1}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000401, ERROR, "Unsupported operand '{0}' for types '{1}' and '{2}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000402, ERROR, "Cannot concatenate '{0}' and '{1}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000403, ERROR, "Failed to format string. {0}")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000404, ERROR, "Could not parse '{0}' from '{1}'")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000500, ERROR, "List index out of viable range")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000501, ERROR, "Expected numeric value to be an integer")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000502, ERROR, "Value of type '{0}' is not iterable")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000503, ERROR, "Could not resolve 'Iterator' value")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000504, ERROR, "Cannot get '{0}' element of an empty list")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000505, ERROR, "Cannot pop a value from an empty list")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000506, ERROR, "Cannot yield when 'Generator' is already done")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000600, ERROR, "{0}() argument must be between 0 and 100")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000601, ERROR, "Numeric value must be less than {0}")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000602, ERROR, "Numeric value must be greater than {0}")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000603, ERROR, "Cannot create list from an infinite numeric range")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000700, ERROR, "{0}")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000701, ERROR, "Unwrapping 'Result' value failed")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000702, ERROR, "Unwrapping 'Result' error failed")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000800, ERROR, "Could not bind constructor to '{0}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000801, ERROR, "Cannot re-assign to property '{0}'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000802, ERROR, "Could not resolve super-class of value '{0}'")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6000900, ERROR, "'Todo' expression evaluated. {0}")
+
+SABRE_XX_DIAGNOSTIC_RUNTIME(6001000, ERROR, "Disposable operator not of type 'Function'")
+SABRE_XX_DIAGNOSTIC_RUNTIME(6001001, ERROR, "An error was supressed during disposal")
+
+/// "Assertion" Diagnostics Group 7_000_000
+SABRE_XX_DIAGNOSTIC_ASSERTION(7000000, ERROR, "{0}")
+SABRE_XX_DIAGNOSTIC_ASSERTION(7000001, ERROR, "Expression evaluated to a '{0}' value")
+SABRE_XX_DIAGNOSTIC_ASSERTION(7000002, ERROR, "No value passed to 'Assert.{0}()'")
+SABRE_XX_DIAGNOSTIC_ASSERTION(7000003, ERROR, "Expected inputs to be strictly equal")
+SABRE_XX_DIAGNOSTIC_ASSERTION(7000004, ERROR, "Expected inputs to not be strictly equal")
+SABRE_XX_DIAGNOSTIC_ASSERTION(7000005, ERROR, "Expected function to panic with an exception")
+
+/// "Import" Diagnostics Group 8_000_000
+SABRE_XX_DIAGNOSTIC_IMPORT(8000000, ERROR, "{0}")
+SABRE_XX_DIAGNOSTIC_IMPORT(8000001, ERROR, "Module '{0}' has '{1}' compilation errors")
+
+SABRE_XX_DIAGNOSTIC_IMPORT(8000100, ERROR, "Module '{0}' does not exist")
+SABRE_XX_DIAGNOSTIC_IMPORT(8000101, ERROR, "Expected a non-empty module path")
+SABRE_XX_DIAGNOSTIC_IMPORT(8000102, ERROR, "No loader available for module '{0}'")
+SABRE_XX_DIAGNOSTIC_IMPORT(8000103, ERROR, "Invalid import scheme '{0}'")
+
+SABRE_XX_DIAGNOSTIC_IMPORT(8000200, WARN, "Empty import does not declare any exports for use")
+SABRE_XX_DIAGNOSTIC_IMPORT(8000201, WARN, "Empty export does nothing and can be removed", Unnecessary)
+SABRE_XX_DIAGNOSTIC_IMPORT(8000202, ERROR, "{0} can only be declared at the top-level of a module/namespace")
+SABRE_XX_DIAGNOSTIC_IMPORT(8000203, ERROR, "Individual merged declarations '{0}' must be all exported or all local")
+
+SABRE_XX_DIAGNOSTIC_REFERENCE(8000300, ERROR, "Module has no exported member '{0}'")
+SABRE_XX_DIAGNOSTIC_REFERENCE(8000301, ERROR, "Module already exported member '{0}")
+SABRE_XX_DIAGNOSTIC_REFERENCE(8000302, ERROR, "Barrel exports overlaps with module exports")
+
+/// "Developer" Diagnostics Group 9_000_000
+SABRE_XX_DIAGNOSTIC_INTERNAL(9000000, ERROR, "{0}")
+SABRE_XX_DIAGNOSTIC_INTERNAL(9000001, ERROR, "Unreachable {0}")
+SABRE_XX_DIAGNOSTIC_INTERNAL(9000002, ERROR, "Unimplemented {0}")
+
+SABRE_XX_DIAGNOSTIC_CODE("Deprecated", 9000100, HINT, "{0}", Deprecated)
+SABRE_XX_DIAGNOSTIC_CODE("Deprecated", 9000101, HINT, "This declaration is marked as deprecated", Deprecated)
+
+SABRE_XX_DIAGNOSTIC_INTERNAL(9000200, ERROR, "Isolate was forcibly interrupted")
+
+SABRE_XX_DIAGNOSTIC_INTERNAL(9000900, ERROR, "Failed to imbue executable with bundled archive")
+SABRE_XX_DIAGNOSTIC_INTERNAL(9000901, ERROR, "Failed to infuse executable with fuse '{0}'")
+SABRE_XX_DIAGNOSTIC_INTERNAL(9000902, ERROR, "Failed to codesign executable '{0}'")
+
+/// "Linter" Diagnostics Group 10_000_000 (this allows for dynamic construction)
+SABRE_XX_DIAGNOSTIC_LINTER(NONE)
+SABRE_XX_DIAGNOSTIC_LINTER(HINT)
+SABRE_XX_DIAGNOSTIC_LINTER(INFO)
+SABRE_XX_DIAGNOSTIC_LINTER(WARN)
+SABRE_XX_DIAGNOSTIC_LINTER(ERROR)
+
+//  UNDEFINES  //
+
+#undef SABRE_XX_DIAGNOSTIC_CODE
+#undef SABRE_XX_DIAGNOSTIC_LEXER
+#undef SABRE_XX_DIAGNOSTIC_SYNTAX
+#undef SABRE_XX_DIAGNOSTIC_ANALYSIS
+#undef SABRE_XX_DIAGNOSTIC_RUNTIME
+#undef SABRE_XX_DIAGNOSTIC_REFERENCE
+#undef SABRE_XX_DIAGNOSTIC_ASSERTION
+#undef SABRE_XX_DIAGNOSTIC_IMPORT
+#undef SABRE_XX_DIAGNOSTIC_INTERNAL
+#undef SABRE_XX_DIAGNOSTIC_LINTER

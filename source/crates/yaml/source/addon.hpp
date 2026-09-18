@@ -2,7 +2,7 @@
 #define _CRATES_ADDON_YAML_HPP
 
 /// Addon Includes
-#include <talos/dylib/_inline/dylib.ipp>
+#include <sabre/dylib/_inline/dylib.ipp>
 
 //  X-MACROS  //
 
@@ -12,7 +12,7 @@
 
 //  NAMESPACES  //
 
-namespace Talos::Package {
+namespace Sabre::Package {
 
 /// @brief YAML Package Addon.
 struct YAML : public Dylib::Mixin<"yaml"> {
@@ -28,9 +28,9 @@ struct YAML : public Dylib::Mixin<"yaml"> {
 private:
   //  PRIVATE METHODS  //
 
-  CRATE_XX_YAML_METHODS(TALOS_MM_DYLIB_DEFINE)
+  CRATE_XX_YAML_METHODS(SABRE_MM_DYLIB_DEFINE)
 };
 
-} // namespace Talos::Package
+} // namespace Sabre::Package
 
 #endif

@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/lint",
-    "main": "library/_main.tal",
+    "name": "@sabre/lint",
+    "main": "library/_main.sabre",
     "describe": "Bindings for defining Linter plugins"
 }

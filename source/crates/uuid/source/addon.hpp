@@ -2,7 +2,7 @@
 #define _CRATES_PACKAGE_UUID_HPP
 
 /// Addon Includes
-#include <talos/dylib/_inline/dylib.ipp>
+#include <sabre/dylib/_inline/dylib.ipp>
 
 //  X-MACROS  //
 
@@ -16,7 +16,7 @@
 
 //  NAMESPACES  //
 
-namespace Talos::Package {
+namespace Sabre::Package {
 
 /// @brief UUID Package Addon.
 struct UUID : public Dylib::Mixin<"uuid"> {
@@ -32,7 +32,7 @@ struct UUID : public Dylib::Mixin<"uuid"> {
 private:
   //  PRIVATE METHODS  //
 
-  CRATE_XX_UUID_METHODS(TALOS_MM_DYLIB_DEFINE)
+  CRATE_XX_UUID_METHODS(SABRE_MM_DYLIB_DEFINE)
 
   /**
    * @brief Handles generating UUID values.
@@ -63,8 +63,8 @@ private:
     auto name = args.at(1, String::Any());
 
     // ensure our incoming values are both valid
-    TALOS_MM_ASSERT_TYPEOF(isolate, String::Any, seed);
-    TALOS_MM_ASSERT_TYPEOF(isolate, String::Any, name);
+    SABRE_MM_ASSERT_TYPEOF(isolate, String::Any, seed);
+    SABRE_MM_ASSERT_TYPEOF(isolate, String::Any, name);
 
     auto local_scope = isolate->scope(); // prepare scoping
     auto local_seed = local_scope(seed.as<String::Any>());
@@ -81,6 +81,6 @@ private:
   }
 };
 
-} // namespace Talos::Package
+} // namespace Sabre::Package
 
 #endif

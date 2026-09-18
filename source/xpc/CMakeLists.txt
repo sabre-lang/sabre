@@ -1,23 +1,23 @@
 # --  PACKAGE SETUP  -- #
 
 # Attempt requiring the desired packages
-talos_package_require(xtdlib)
+sabre_package_require(xtdlib)
 
 # --  PACKAGE PROPERTIES  -- #
 
 # Define the target to be used
-set(TALOS_TARGET_XPC "xpc" CACHE INTERNAL "")
+set(SABRE_TARGET_XPC "xpc" CACHE INTERNAL "")
 
 # Get all the sources for the runtime
-talos_sources_glob(TALOS_SOURCES_XPC)
+sabre_sources_glob(SABRE_SOURCES_XPC)
 
 # --  PACKAGE DEFINITIONS  -- #
 
 # Define the standard library project now
-project(${TALOS_TARGET_XPC} VERSION ${TALOS_VERSION_SHORT} LANGUAGES CXX)
+project(${SABRE_TARGET_XPC} VERSION ${SABRE_VERSION_SHORT} LANGUAGES CXX)
 
 # Define the runtime library now
-talos_library_declare(${TALOS_TARGET_XPC} PCH SOURCES ${TALOS_SOURCES_XPC} LIBRARIES
+sabre_library_declare(${SABRE_TARGET_XPC} PCH SOURCES ${SABRE_SOURCES_XPC} LIBRARIES
     mono::common
-    talos::xtdlib
+    sabre::xtdlib
 )

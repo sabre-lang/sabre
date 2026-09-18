@@ -1,0 +1,33 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(done)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Gets the current completion state of an `Iterator`.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(next)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Advances an `Iterator` to the next element of iteration.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(index)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the current iteration index of an `Iterator`.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(collect)
+SABRE_XX_FIELDS_TYPEDEF("fn -> List[T]")
+SABRE_XX_FIELDS_DESCRIBE("Transforms an iterator into a `List` collection.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

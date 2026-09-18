@@ -1,0 +1,33 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(async)
+SABRE_XX_STATICS_TYPEDEF("fn [F: Function](callback: F, ...args: Any) -> Any")
+SABRE_XX_STATICS_DESCRIBE("Spawns a `Future` from the given callback and arguments.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(delay)
+SABRE_XX_STATICS_TYPEDEF("fn (millis?: Number, callback?: fn -> Void) -> Future[Void]")
+SABRE_XX_STATICS_DESCRIBE("Spawns a `Future` that runs its callback after a given delay.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(resolve)
+SABRE_XX_STATICS_TYPEDEF("fn [T](value: T) -> Future[T]")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Future` already resolved with a value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(reject)
+SABRE_XX_STATICS_TYPEDEF("fn [T = Any](error?: Any) -> Future[T]")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Future` already rejected with an error.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

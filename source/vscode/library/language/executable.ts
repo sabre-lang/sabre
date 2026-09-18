@@ -20,7 +20,7 @@ export namespace Executable {
         path.resolve(__dirname, '..', 'bin', Product.executable),
 
         // prepare a valid location for the potential executable
-        path.resolve(os.homedir(), '.talos', 'bin', Product.executable),
+        path.resolve(os.homedir(), '.sabre', 'bin', Product.executable),
     ];
 
     //  PUBLIC METHODS  //
@@ -49,15 +49,15 @@ export namespace Executable {
     async function m_install() {
         // prepare the baseline details about the installation
         const location = vscode.ProgressLocation.Notification;
-        const title = `Installing "${Product.shortName}" from "https://talos.rroessler.io/"`;
+        const title = `Installing "${Product.shortName}" from "https://sabre.rroessler.io/"`;
 
         // and execute the installation with a progress display
         await vscode.window.withProgress({ title, location }, async (_, token) => {
             // prepare the installation command to be used
             const command =
                 process.platform === 'win32'
-                    ? 'powershell -c "irm https://talos.rroessler.io/install.ps1 | iex"'
-                    : 'curl -fsSL https://talos.rroessler.io/install.sh | bash';
+                    ? 'powershell -c "irm https://sabre.rroessler.io/install.ps1 | iex"'
+                    : 'curl -fsSL https://sabre.rroessler.io/install.sh | bash';
 
             // prepare the command we want to execute
             const execution = new vscode.ShellExecution(command);

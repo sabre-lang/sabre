@@ -1,5 +1,5 @@
-/// Talos Includes
-#include <talos/crate/registry.hpp>
+/// Sabre Includes
+#include <sabre/crate/registry.hpp>
 
 /// Shell Includes
 #include "shell/command/macros.hpp"
@@ -49,7 +49,7 @@ void Shell::Task::Action::m_delegate(const Branch &branch) const {
 
   /// TODO: execute the workspaces in parallel (currently sequential)
   for (const auto &workspace : workspaces) {
-    auto crate = Talos::Crate::Registry::view(workspace); // view
+    auto crate = Sabre::Crate::Registry::view(workspace); // view
     if (crate == nullptr || branch.execute(crate.get())) continue;
     throw CLI::RuntimeError(EXIT_FAILURE); // this is a failure
   }

@@ -5,7 +5,7 @@
 - [x] Improve JIT compilation by removing as many `Glue::*` callbacks as possible. Should also look into exposing the frame pointer to help with this as well (eg: get encoded isolate/interrupts)
 - [ ] Need to investigate a way to both streamline function/machine frame-stack generation so that construction is fast, similar for both and in a small memory footprint as well
 - [x] Split `Variable::Captures` into the parsing phase instead of the type-checking phase (this will enable typeless compilation whilst keep performance instead of adding additional visitor overhead)
-- [ ] Running `hyperfine "talos test"` sometimes leads to hangs/runtime blocking. This needs some investigation to see why this occurs (most likely something to do with the scheduler in `talos::xsio`)
+- [ ] Running `hyperfine "sabre test"` sometimes leads to hangs/runtime blocking. This needs some investigation to see why this occurs (most likely something to do with the scheduler in `sabre::xsio`)
     - Changed from using `$::Unique::Pointer` to `$::Shared::Pointer` in `XSIO::Virtual::Thread` for tasks. This does help but now the same race condition occurs more infrequently
 - [x] Currently there are issues with class inheritance that means we cannot reliably execute `? is ?` clauses. Specifically when we use `Object` as a guard (results in mismatched failures on runtime types)
 
@@ -35,7 +35,7 @@
     - Note: Can visually see improvement with `lint` command (~2x speedup)
 - [x] Bind Runtime to Linter
     - [x] Expose the runtime to all toolkit features
-    - [x] Expose the `talos:lint` crate for plugins
+    - [x] Expose the `sabre:lint` crate for plugins
     - Note: Yet to implement the crate bindings
 - [x] Match Statement
     - [x] Parsing `match` statements

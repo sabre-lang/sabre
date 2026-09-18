@@ -1,15 +1,15 @@
 ---
 title: Quick Start
 icon: Rocket
-description: Starting your first Talos project
+description: Starting your first Sabre project
 ---
 
 import { Callout, Icon, Step, Steps, Tree } from '@/website/components';
 
-After Talos has been successfully installed, the executable will be available for developing applications. So let's build a simple program!
+After Sabre has been successfully installed, the executable will be available for developing applications. So let's build a simple program!
 
 <Callout>
-    **Prerequisites**: Talos must be installed and available on your `$PATH`. See the [installation
+    **Prerequisites**: Sabre must be installed and available on your `$PATH`. See the [installation
     guide](/language/development/installation) for setup.
 </Callout>
 
@@ -19,17 +19,17 @@ After Talos has been successfully installed, the executable will be available fo
 
         ### Create Project
 
-        Initialize a new project with `talos cm init`.
+        Initialize a new project with `sabre cm init`.
 
         ```shell title="Terminal"
-        talos cm init my-app # creates project "my-app"
+        sabre cm init my-app # creates project "my-app"
         ```
 
         This will output a folder named `my-app` with the following layout.
 
         <Tree>
             <Tree.Branch name="library" defaultOpen>
-                <Tree.Leaf name="_main.tal"   />
+                <Tree.Leaf name="_main.sabre"   />
             </Tree.Branch>
 
             <Tree.Leaf name="_crate.jsonc"  />
@@ -45,15 +45,15 @@ After Talos has been successfully installed, the executable will be available fo
 
         ### Configuring `_crate.jsonc`
 
-        Similar to `package.json` for JavaScript, Talos utilizes `_crate.jsonc` configuration files. It contains project metadata for running Talos applications and for configuring the toolkit.
+        Similar to `package.json` for JavaScript, Sabre utilizes `_crate.jsonc` configuration files. It contains project metadata for running Sabre applications and for configuring the toolkit.
 
         ```json title="_crate.jsonc"
         {
             "name": "@user/my-app",
             "version": "1.0.0",
-            "main": "library/_main.tal",
+            "main": "library/_main.sabre",
             "tasks": {
-                "start": "talos run library/_main.tal"
+                "start": "sabre run library/_main.sabre"
             }
         }
         ```
@@ -66,11 +66,11 @@ After Talos has been successfully installed, the executable will be available fo
 
     <Step>
 
-        ### Editing `library/_main.tal`
+        ### Editing `library/_main.sabre`
 
-        Let's update the contents of `library/_main.tal` with the following code:
+        Let's update the contents of `library/_main.sabre` with the following code:
 
-        ```talos title="_main.tal"
+        ```sabre title="_main.sabre"
         Debug.println("Hello, World!");
         ```
 
@@ -78,24 +78,24 @@ After Talos has been successfully installed, the executable will be available fo
 
     <Step>
 
-        ### Running `library/_main.tal`
+        ### Running `library/_main.sabre`
 
         To now run our script, we can invoke the runtime a variety of ways:
 
         ```shell tab="Manual"
         # launch the script with an explicit path
-        talos run library/_main.tal
+        sabre run library/_main.sabre
         ```
 
         ```shell tab="Infer"
-        talos run _crate.jsonc  # run "main" script from configuration
-        talos run .             # search folder for "_crate.jsonc" to use
-        talos run               # use the default directory "." to search
+        sabre run _crate.jsonc  # run "main" script from configuration
+        sabre run .             # search folder for "_crate.jsonc" to use
+        sabre run               # use the default directory "." to search
         ```
 
         ```shell tab="Task"
         # or use the builtin "task" command to run the application
-        talos task start
+        sabre task start
         ```
 
     </Step>
@@ -104,7 +104,7 @@ After Talos has been successfully installed, the executable will be available fo
 
         ### What Next?
 
-        Congratulations! You've built your first Talos program. From here, the world is your oyster and you can build whatever your heart desires.
+        Congratulations! You've built your first Sabre program. From here, the world is your oyster and you can build whatever your heart desires.
 
     </Step>
 

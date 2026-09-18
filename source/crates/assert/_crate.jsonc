@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/assert",
-    "main": "library/_main.tal",
+    "name": "@sabre/assert",
+    "main": "library/_main.sabre",
     "describe": "Common assertion functions for invariants and testing"
 }

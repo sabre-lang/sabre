@@ -1,0 +1,39 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(print)
+SABRE_XX_FIELDS_TYPEDEF("fn (...args: Any) -> Void")
+SABRE_XX_FIELDS_DESCRIBE("Prints to the standard output stream.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(eprint)
+SABRE_XX_FIELDS_TYPEDEF("fn (...args: Any) -> Void")
+SABRE_XX_FIELDS_DESCRIBE("Prints to the standard error stream.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(println)
+SABRE_XX_FIELDS_TYPEDEF("fn (...args: Any) -> Void")
+SABRE_XX_FIELDS_DESCRIBE("Prints to the standard output stream, with a newline.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(eprintln)
+SABRE_XX_FIELDS_TYPEDEF("fn (...args: Any) -> Void")
+SABRE_XX_FIELDS_DESCRIBE("Prints to the standard error stream, with a newline.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(breakpoint)
+SABRE_XX_FIELDS_TYPEDEF("fn (...args: Any) -> Void")
+SABRE_XX_FIELDS_DESCRIBE("Attempts to pause execution and pass control to the debugger.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

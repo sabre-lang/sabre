@@ -1,0 +1,33 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(from)
+SABRE_XX_STATICS_TYPEDEF("fn [T](value: T) -> Iterator[Any]")
+SABRE_XX_STATICS_DESCRIBE("Creates an `Iterator` from a given value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(empty)
+SABRE_XX_STATICS_TYPEDEF("fn [T = Any] -> Iterator[T]")
+SABRE_XX_STATICS_DESCRIBE("Creates an empty `Iterator` value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(range)
+SABRE_XX_STATICS_TYPEDEF("fn (start?: Number, end?: Number, step?: Number) -> Iterator[Number]")
+SABRE_XX_STATICS_DESCRIBE("Creates a ranged `Iterator` value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(dynamic)
+SABRE_XX_STATICS_TYPEDEF("fn [T = Any](generator: Generator[T]) -> Iterator[T]")
+SABRE_XX_STATICS_DESCRIBE("Creates an `Iterator` from a generator context.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

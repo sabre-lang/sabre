@@ -1,23 +1,23 @@
 # --  PACKAGE SETUP  -- #
 
 # Attempt requiring the desired packages
-talos_package_require(xtdlib)
+sabre_package_require(xtdlib)
 
 # --  PACKAGE PROPERTIES  -- #
 
 # Define the target to be used
-set(TALOS_TARGET_XLSP "xlsp" CACHE INTERNAL "")
+set(SABRE_TARGET_XLSP "xlsp" CACHE INTERNAL "")
 
 # Get all the sources for the runtime
-talos_sources_glob(TALOS_SOURCES_XLSP)
+sabre_sources_glob(SABRE_SOURCES_XLSP)
 
 # --  PACKAGE DEFINITIONS  -- #
 
 # Define the standard library project now
-project(${TALOS_TARGET_XLSP} VERSION ${TALOS_VERSION_SHORT} LANGUAGES CXX)
+project(${SABRE_TARGET_XLSP} VERSION ${SABRE_VERSION_SHORT} LANGUAGES CXX)
 
 # Define the runtime library now
-talos_library_declare(${TALOS_TARGET_XLSP} PCH SOURCES ${TALOS_SOURCES_XLSP} LIBRARIES
+sabre_library_declare(${SABRE_TARGET_XLSP} PCH SOURCES ${SABRE_SOURCES_XLSP} LIBRARIES
     mono::common
-    talos::xtdlib
+    sabre::xtdlib
 )

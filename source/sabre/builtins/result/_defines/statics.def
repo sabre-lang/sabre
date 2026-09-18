@@ -1,0 +1,27 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(okay)
+SABRE_XX_STATICS_TYPEDEF("fn [T = Any, E = Any](value: T) => Result[T, E]")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Result` with a value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(error)
+SABRE_XX_STATICS_TYPEDEF("fn [T = Any, E = Any](error: E) => Result[T, E]")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Result` with an error.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(wrap)
+SABRE_XX_STATICS_TYPEDEF("fn [T: Future[Any]](future: T) -> Result[Any, Exception]")
+SABRE_XX_STATICS_DESCRIBE("Converts a `Future` into a `Result` value.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

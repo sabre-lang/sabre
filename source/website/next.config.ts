@@ -10,7 +10,7 @@ import PKG from '~/package.json';
 //  ENVIRONMENT VARIABLES  //
 
 /** The latest release version. */
-const TALOS_VERSION = m_version();
+const SABRE_VERSION = m_version();
 
 //  CONFIGURATION EXPORTS  //
 
@@ -18,14 +18,14 @@ const TALOS_VERSION = m_version();
 export default fumadocs.createMDX()({
     output: 'export',
     reactStrictMode: true,
-    env: { TALOS_VERSION },
+    env: { SABRE_VERSION },
 });
 
 //  PRIVATE METHODS  //
 
 function m_version() {
     // prepare the command to be used for getting current release version
-    const command = 'gh release view --repo rroessler/talos-lang --json tagName --jq .tagName';
+    const command = 'gh release view --repo rroessler/sabre-lang --json tagName --jq .tagName';
 
     try {
         return cp.execSync(command, { stdio: 'ignore' }).toString().trim();

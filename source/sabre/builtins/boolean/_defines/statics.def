@@ -1,0 +1,21 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(from)
+SABRE_XX_STATICS_TYPEDEF("fn (value: Any) -> Boolean")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Boolean` from a given value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(parse)
+SABRE_XX_STATICS_TYPEDEF("fn (input: String, case?: Boolean) -> Boolean")
+SABRE_XX_STATICS_DESCRIBE("Parses an input as an, optionally case-insensitive, boolean literal.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

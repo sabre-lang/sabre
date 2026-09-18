@@ -1,7 +1,7 @@
 ---
 icon: Map
 title: Roadmap
-description: A brief outline of the current bug-fixes, goals and other milestones for Talos
+description: A brief outline of the current bug-fixes, goals and other milestones for Sabre
 ---
 
 ### Legend
@@ -44,23 +44,23 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 
 | Status | Library        | Description                     | Todo                           |
 | :----: | -------------- | ------------------------------- | ------------------------------ |
-|   ✅   | `talos:assert` | Assertion library methods.      | Additional methods?            |
-|   ❌   | `talos:async`  | Asynchronous utilities.         | -                              |
-|   ❌   | `talos:chrono` | Temporal utilities.             | -                              |
-|   ❌   | `talos:codec`  | Encoding/decoding function.     | -                              |
-|   ❌   | `talos:ffi`    | Native library utilities.       | -                              |
-|   ❌   | `talos:fsys`   | Filesystem utilities.           | -                              |
-|   ✅   | `talos:gc`     | Garbage collection hooks.       | Additional statistics?         |
-|   🚀   | `talos:json`   | JSON/JSONC parsing/serializing. | -                              |
-|   ❌   | `talos:lint`   | Linting plugin bindings.        | -                              |
-|   ❌   | `talos:math`   | Mathematics utilities.          | -                              |
-|   ⚪   | `talos:mem`    | Virtual memory utilities.       | Buffers, allocators, ...       |
-|   ❌   | `talos:path`   | Filesystem path utilities.      | -                              |
-|   ❌   | `talos:rng`    | Random number generators.       | -                              |
-|   ⚪   | `talos:test`   | Testing suite framework.        | Skipping, lifecycle hooks, ... |
-|   🚀   | `talos:toml`   | TOML parsing/serializing.       | -                              |
-|   ✅   | `talos:uuid`   | UUID generators/validators.     | Should there be a validator?   |
-|   🚀   | `talos:yaml`   | YAML parsing/serializing.       | -                              |
+|   ✅   | `sabre:assert` | Assertion library methods.      | Additional methods?            |
+|   ❌   | `sabre:async`  | Asynchronous utilities.         | -                              |
+|   ❌   | `sabre:chrono` | Temporal utilities.             | -                              |
+|   ❌   | `sabre:codec`  | Encoding/decoding function.     | -                              |
+|   ❌   | `sabre:ffi`    | Native library utilities.       | -                              |
+|   ❌   | `sabre:fsys`   | Filesystem utilities.           | -                              |
+|   ✅   | `sabre:gc`     | Garbage collection hooks.       | Additional statistics?         |
+|   🚀   | `sabre:json`   | JSON/JSONC parsing/serializing. | -                              |
+|   ❌   | `sabre:lint`   | Linting plugin bindings.        | -                              |
+|   ❌   | `sabre:math`   | Mathematics utilities.          | -                              |
+|   ⚪   | `sabre:mem`    | Virtual memory utilities.       | Buffers, allocators, ...       |
+|   ❌   | `sabre:path`   | Filesystem path utilities.      | -                              |
+|   ❌   | `sabre:rng`    | Random number generators.       | -                              |
+|   ⚪   | `sabre:test`   | Testing suite framework.        | Skipping, lifecycle hooks, ... |
+|   🚀   | `sabre:toml`   | TOML parsing/serializing.       | -                              |
+|   ✅   | `sabre:uuid`   | UUID generators/validators.     | Should there be a validator?   |
+|   🚀   | `sabre:yaml`   | YAML parsing/serializing.       | -                              |
 
 ## Tooling
 
@@ -73,7 +73,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ⚪   | `bundle`  | Packages scripts/projects in executables. | Requires codesigning (Win32)  |
 |   ✅   | `format`  | Formats scripts with a builtin styler.    | More configurable options     |
 |   ✅   | `serve`   | Starts a language-server instance.        | Code completion is missing    |
-|   ✅   | `upgrade` | Upgrades to the latest version of Talos.  | Needs a release to fully test |
+|   ✅   | `upgrade` | Upgrades to the latest version of Sabre.  | Needs a release to fully test |
 
 ## Documentation
 

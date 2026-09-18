@@ -1,0 +1,42 @@
+///
+/// @crate "test"
+/// @describe Setup functions for testing suites.
+///
+
+// Dynamic Modules
+import "dylib:test" as test;
+
+// Sabre Modules
+import "sabre:_detail" as Detail;
+
+// - HELPERS - //
+
+//! @brief Internal helper to reduce bytecode output.
+let m_cast = Detail.Unsafe.cast;
+
+// - PUBLIC METHODS - //
+
+//! @brief Declares a test-case to be executed.
+//! @param name                 Testing case name.
+//! @param callback             Executor callback.
+export let case = m_cast[fn (name: String, callback?: Function) -> Void](test.case);
+
+//! @brief Declares a test-case to be skipped.
+//! @param name                 Testing case name.
+//! @param callback             Executor callback.
+export let skip = m_cast[fn (name: String, callback?: Function) -> Void](test.skip);
+
+//! @brief Declares a test-case to be implemented later.
+//! @param name                 Testing case name.
+//! @param callback             Executor callback.
+export let todo = m_cast[fn (name: String, callback?: Function) -> Void](test.todo);
+
+//! @brief Declares a test-benchmark to be executed.
+//! @param name                 Testing benchmark name.
+//! @param callback             Benchmark callback.
+export let bench = m_cast[fn (name: String, callback?: Function) -> Void](test.bench);
+
+//! @brief Groups tests into a singular section.
+//! @param name                 Testing suite name.
+//! @param callback             Registration callback.
+export let suite = m_cast[fn (name: String, callback?: Function) -> Void](test.suite);

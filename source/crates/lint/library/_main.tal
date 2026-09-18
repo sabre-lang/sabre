@@ -1,6 +1,0 @@
-///
-/// @crate "lint"
-/// @describe Bindings for defining linter plugins.
-///
-
-Todo("Unimplemented Crate - 'talos:lint'");

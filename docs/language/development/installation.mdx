@@ -1,50 +1,50 @@
 ---
 title: Installation
 icon: Download
-description: How to begin developing with Talos
+description: How to begin developing with Sabre
 ---
 
 import { Callout, Install } from '@/website/components';
 
-Talos ships as a single, dependency-free executable. It can be installed through the scripts below for Linux, Darwin and Windows.
+Sabre ships as a single, dependency-free executable. It can be installed through the scripts below for Linux, Darwin and Windows.
 
 <Install />
 
-To check that Talos was installed successfully, open a new terminal window and run:
+To check that Sabre was installed successfully, open a new terminal window and run:
 
 ```shell title="Terminal"
-talos --version # should output "vx.y.z-build"
+sabre --version # should output "vx.y.z-build"
 ```
 
 <Callout type="warning">
     **Note**: If you receive a `command not found` error, you may have to manually add the installation directory
-    (`~/.talos/bin`) to your `$PATH`.
+    (`~/.sabre/bin`) to your `$PATH`.
 </Callout>
 
 <Callout>
-    **Building Natively**: Talos can be built natively by following the [instructions available
+    **Building Natively**: Sabre can be built natively by following the [instructions available
     here](/project/development).
 </Callout>
 
 ## Upgrading / Removing
 
-Once installed, the Talos binary can upgrade or remove itself:
+Once installed, the Sabre binary can upgrade or remove itself:
 
 ```shell title="Terminal"
-talos upgrade --tag latest  # upgrades to the latest version
-talos upgrade --remove      # removes Talos from your system
+sabre upgrade --tag latest  # upgrades to the latest version
+sabre upgrade --remove      # removes Sabre from your system
 ```
 
 <Callout>
 
-    **Note**: To manually remove Talos:
+    **Note**: To manually remove Sabre:
 
     ```shell tab="Linux / Darwin"
-    rm -rf ~/.talos
+    rm -rf ~/.sabre
     ```
 
     ```batch tab="Windows"
-    rmdir /s /q $HOME\.talos
+    rmdir /s /q $HOME\.sabre
     ```
 
 </Callout>

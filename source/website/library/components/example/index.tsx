@@ -20,7 +20,7 @@ export async function Example({ href, lang, ...props }: Example) {
     const example = await fs.promises.readFile(Assets.examples(href), 'utf-8');
 
     // resolve a suitable icon as necessary now
-    const icon = lang === 'talos' ? <SwordIcon size="16" /> : undefined;
+    const icon = lang === 'sabre' ? <SwordIcon size="16" /> : undefined;
 
     // resolve a title as necessary now
     const title: any = href.includes('/') ? href : `examples/${href}`;

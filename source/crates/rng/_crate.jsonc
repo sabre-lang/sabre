@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/rng",
-    "main": "library/_main.tal",
+    "name": "@sabre/rng",
+    "main": "library/_main.sabre",
     "describe": "Utilities for generating random numbers"
 }

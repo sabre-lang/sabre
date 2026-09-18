@@ -1,0 +1,41 @@
+//  MACROS  //
+
+#ifndef SABRE_XX_FIELDS_HEADER
+#define SABRE_XX_FIELDS_HEADER(...)
+#endif
+
+#ifndef SABRE_XX_FIELDS_DEFINE
+#define SABRE_XX_FIELDS_DEFINE(N, ...)
+#endif
+
+#ifndef SABRE_XX_FIELDS_DESCRIBE
+#define SABRE_XX_FIELDS_DESCRIBE(...)
+#endif
+
+#ifndef SABRE_XX_FIELDS_TYPEDEF
+#define SABRE_XX_FIELDS_TYPEDEF(...)
+#endif
+
+#ifndef SABRE_XX_FIELDS_FOOTER
+#define SABRE_XX_FIELDS_FOOTER(...)
+#endif
+
+#ifndef SABRE_XX_STATICS_HEADER
+#define SABRE_XX_STATICS_HEADER(...)
+#endif
+
+#ifndef SABRE_XX_STATICS_DEFINE
+#define SABRE_XX_STATICS_DEFINE(N, ...)
+#endif
+
+#ifndef SABRE_XX_STATICS_DESCRIBE
+#define SABRE_XX_STATICS_DESCRIBE(...)
+#endif
+
+#ifndef SABRE_XX_STATICS_TYPEDEF
+#define SABRE_XX_STATICS_TYPEDEF(...)
+#endif
+
+#ifndef SABRE_XX_STATICS_FOOTER
+#define SABRE_XX_STATICS_FOOTER(...)
+#endif

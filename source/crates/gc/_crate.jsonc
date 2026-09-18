@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/gc",
-    "main": "library/_main.tal",
+    "name": "@sabre/gc",
+    "main": "library/_main.sabre",
     "describe": "Utility functions for interfacing with the garbage collector"
 }

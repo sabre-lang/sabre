@@ -27,11 +27,11 @@ export namespace Registry {
     /** Replacements factory to be used. */
     const m_replacements = (type: string): Replacer[] => [
         { re: `#include\\s*"[^"]+"`, pp: '' },
-        { re: `TALOS_XX_${type}_HEADER\\(\\)`, pp: '{' },
-        { re: `TALOS_XX_${type}_DEFINE\\((\\w+)\\)`, pp: '"name": "$1",' },
-        { re: `TALOS_XX_${type}_TYPEDEF\\("([^"]*)"\\)`, pp: '"typedef": "$1",' },
-        { re: `TALOS_XX_${type}_DESCRIBE\\("([^"]*)"\\)`, pp: '"describe": "$1",' },
-        { re: `TALOS_XX_${type}_FOOTER\\(\\)`, pp: '},' },
+        { re: `SABRE_XX_${type}_HEADER\\(\\)`, pp: '{' },
+        { re: `SABRE_XX_${type}_DEFINE\\((\\w+)\\)`, pp: '"name": "$1",' },
+        { re: `SABRE_XX_${type}_TYPEDEF\\("([^"]*)"\\)`, pp: '"typedef": "$1",' },
+        { re: `SABRE_XX_${type}_DESCRIBE\\("([^"]*)"\\)`, pp: '"describe": "$1",' },
+        { re: `SABRE_XX_${type}_FOOTER\\(\\)`, pp: '},' },
     ];
 
     //  PUBLIC METHODS  //

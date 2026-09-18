@@ -2,7 +2,7 @@
 title: 11. Types
 ---
 
-Talos exposes some additional intrinsic types. These are used to improve the type-system and aid in either causing deliberate or removing obselete compile-time errors. These include:
+Sabre exposes some additional intrinsic types. These are used to improve the type-system and aid in either causing deliberate or removing obselete compile-time errors. These include:
 
 | Type    | Description                                                 |
 | ------- | ----------------------------------------------------------- |
@@ -11,7 +11,7 @@ Talos exposes some additional intrinsic types. These are used to improve the typ
 
 The `type` statement can be used to either alias, or construct new types. These types are primarily used for reducing boilerplate, but can also be used alongside the utility type operators for better annotations.
 
-```talos
+```sabre
 type Nanoseconds = Number;
 type Inches = Number;
 

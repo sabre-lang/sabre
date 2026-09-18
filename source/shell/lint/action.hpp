@@ -7,7 +7,7 @@
 namespace Shell::Lint {
 
 /// @brief Linting Options.
-using Options = Talos::Runtime::Options;
+using Options = Sabre::Runtime::Options;
 
 /// @brief Lint Command.
 class Action : public Command::Abstract {

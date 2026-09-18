@@ -20,7 +20,7 @@ let g_grammar: Grammar | undefined = undefined;
 export type Grammar = shiki.LanguageInput;
 export function Grammar(): Grammar {
     try {
-        return (g_grammar ??= YAML.parse(fs.readFileSync(Assets.syntaxes('talos.tmLanguage.yaml'), 'utf-8')));
+        return (g_grammar ??= YAML.parse(fs.readFileSync(Assets.syntaxes('sabre.tmLanguage.yaml'), 'utf-8')));
     } catch {
         return { patterns: [], repository: {}, name: Product.identifier, scopeName: `source${Product.extension}` };
     }

@@ -1,4 +1,4 @@
-/// Talos Modules
+/// Sabre Modules
 import { Dependency, Disposable } from '../utilities';
 
 /** Extension Plugin Interface. */

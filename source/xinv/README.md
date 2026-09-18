@@ -1,3 +1,3 @@
 ## Dependency Injection - `xinv`
 
-A simplistic DI library that Talos uses for configuring slightly different runtime modes.
+A simplistic DI library that Sabre uses for configuring slightly different runtime modes.

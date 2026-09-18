@@ -1,0 +1,18 @@
+///
+/// @example "benchmarks/factorial.bench.sabre"
+/// @describe Traces different "factorial" benchmarks.
+///
+
+// Sabre Modules
+import "sabre:test" as Test;
+
+// - TEST SETUP - //
+
+export let factorial = fn (n: Number): Number {
+    if (n < 1) return 1;
+    return ^(n - 1) * n;
+};
+
+// - TEST CASES - //
+
+Test.bench("factorial", fn => factorial(10000));

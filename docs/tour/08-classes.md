@@ -4,7 +4,7 @@ title: 08. Classes
 
 Classes are general-purpose, flexible constructs that are the building blocks of a program's code. They declare various properties and methods that encapsulate a particular structure or interface.
 
-```talos
+```sabre
 // We can define a class-declaration with given arguments.
 class Person(a_name: String, a_age: Number) {
     //  PROPERTIES  //
@@ -19,19 +19,19 @@ class Person(a_name: String, a_age: Number) {
 };
 
 // And then instantiate a instance of the class as such.
-let person = Person("Talos", 25);
+let person = Person("Sabre", 25);
 ```
 
-All classes in Talos have a common super-class of `Object`. This is meant to describe classes as being objects that may exhibit inheritance.
+All classes in Sabre have a common super-class of `Object`. This is meant to describe classes as being objects that may exhibit inheritance.
 
-```talos
+```sabre
 class A {};         // Implicitly inherits from `Object`.
 class B => A {};    // Explicitly inherits from `A`.
 ```
 
 To declare an explicit super-class, we place it after the constructor declaration and then instantiate it using the super-constructor.
 
-```talos
+```sabre
 class Base(ii: Number) {};
 class Derived(ii: Number) => Base(ii) {};
 ```

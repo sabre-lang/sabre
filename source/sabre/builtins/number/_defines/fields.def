@@ -1,0 +1,81 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(sign)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the signum of a `Number`.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(abs)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the absolute value of a `Number`.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(ceil)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Rounds a `Number` up to its nearest integer value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(floor)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Rounds a `Number` down to its nearest integer value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(round)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Rounds a `Number` to its nearest integer value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(trunc)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Returns the integer part of a `Number` by removing any fractional digits.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(clamp)
+SABRE_XX_FIELDS_TYPEDEF("fn (minimum?: Number, maximum?: Number) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Ensures a `Number` is between two values, otherwise it returns the nearest boundary.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(is_nan)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `Number` is represented by a `NaN` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(is_fin)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `Number` is represented by a finite value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(is_inf)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `Number` is represented by an infinite value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(to_precision)
+SABRE_XX_FIELDS_TYPEDEF("fn (digits?: Number) -> String")
+SABRE_XX_FIELDS_DESCRIBE("Converts a `Number` to a `String` with an optional number of significant digits.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(to_scientific)
+SABRE_XX_FIELDS_TYPEDEF("fn (digits?: Number) -> String")
+SABRE_XX_FIELDS_DESCRIBE("Converts a `Number` to a scientific `String` with an optional number of significant digits.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"
