@@ -9,7 +9,7 @@ export namespace Aside {
     export function Rewrite() {
         return (
             <Callout>
-                The rewrite for Talos is currently being implemented privately to keep the current project state clean.
+                The rewrite for Sabre is currently being implemented privately to keep the current project state clean.
                 I have done this since some sections are being rewriten potentially from the ground-up, which will
                 simplify with the adoption of these substantial changes.
             </Callout>

@@ -1,5 +1,5 @@
 {
     "version": "0.3.0",
-    "name": "@talos/monorepo",
+    "name": "@sabre/monorepo",
     "main": "./examples"
 }

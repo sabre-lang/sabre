@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/uuid",
-    "main": "library/_main.tal",
+    "name": "@sabre/uuid",
+    "main": "library/_main.sabre",
     "describe": "Generators and validators for UUIDs"
 }

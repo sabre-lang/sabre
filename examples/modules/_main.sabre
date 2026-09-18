@@ -1,0 +1,10 @@
+///
+/// @example "modules/_main.sabre"
+/// @describe Barrel exports a variety of values.
+///
+
+// Firstly export the raw values.
+export "values.sabre";
+
+// Then export as a named value.
+export "values.sabre" as other;

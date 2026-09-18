@@ -10,14 +10,14 @@ During development, it is commonly necessary to structure code into separate sou
 
 By default, all variables declared within a source-file are considered to be private. To expose a module-scoped variable, the `export` modifier can be used.
 
-```talos tab="module.tal"
-// This value is available within this module and externally (see: "script.tal")
+```sabre tab="module.sabre"
+// This value is available within this module and externally (see: "script.sabre")
 export let value = 42;
 ```
 
-```talos tab="script.tal"
+```sabre tab="script.sabre"
 // And can safely be imported and consumed
-import "module.tal" as Module;
+import "module.sabre" as Module;
 
 // The value is now available for use
 Debug.println(Module.value);
@@ -25,34 +25,34 @@ Debug.println(Module.value);
 
 Alongside value exports, entire modules can be exported:
 
-```talos title="_exports.tal"
+```sabre title="_exports.sabre"
 // We can barrel the exports with this module
-export "module.tal";
+export "module.sabre";
 
 // Or we can explicitly rename them before exporting
-export "module.tal" as Module;
+export "module.sabre" as Module;
 ```
 
 ## Importing Modules
 
 Similar to other languages with import based modules, the `import` keyword can be used to expose variables from other sources.
 
-```talos title="script.tal"
+```sabre title="script.sabre"
 // We can run another source without imports
-import "module.tal";
+import "module.sabre";
 
 // Or we can explicit pull the variables available
-import "module.tal" as { value };
+import "module.sabre" as { value };
 
 // Or we can rename the incoming module for use
-import "module.tal" as Module;
+import "module.sabre" as Module;
 ```
 
 ## Namespace Declarations
 
 At the script-level, `namespace` declarations can be used to organize components. As an example, suppose we have a series of validators we would like to encapsulate together. This can be easily coordinating using a namespace.
 
-```talos
+```sabre
 // Define a namespace specifically for validators
 namespace Validation {
     // Allow the validation to use an interface

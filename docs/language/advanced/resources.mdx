@@ -6,13 +6,13 @@ description: Explicit resources management for simplified cleanup
 
 import { Callout } from '@/website/components';
 
-Talos supports explicitly handling disposable resources through the `use` declaration. This is a powerful feature that allows safe and readable interactions with resources that require some sort of "clean-up" handling. To understand how this works, let's start with a real-world example.
+Sabre supports explicitly handling disposable resources through the `use` declaration. This is a powerful feature that allows safe and readable interactions with resources that require some sort of "clean-up" handling. To understand how this works, let's start with a real-world example.
 
 ## Real-World Example
 
 Suppose that we want to process some work that requires us to create a temporary file, open that file, perform various operations, then close and delete it.
 
-```talos
+```sabre
 // Here is a worker that performs some operations.
 export let worker = fn (args...) {
     // We instantiate the temp-file.
@@ -34,7 +34,7 @@ export let worker = fn (args...) {
 
 For now this works well, however once we start adding early exit conditions, we also start to duplicate the clean-up code.
 
-```talos
+```sabre
 // Here is a worker that performs some operations.
 export let worker = fn (args...) {
     // We instantiate the temp-file.
@@ -59,13 +59,13 @@ export let worker = fn (args...) {
 };
 ```
 
-Since Talos does not natively provide a `try...catch...finally`, the solution to automatic disposal of resources is the `use` declaration.
+Since Sabre does not natively provide a `try...catch...finally`, the solution to automatic disposal of resources is the `use` declaration.
 
 ## Defining Resources
 
 To simplify our example, let's start by making a temporary file resource.
 
-```talos
+```sabre
 // We want our class to ensure it implements the disposable attribute.
 export class TempFile(path: String) implements Disposable {
     // - PROPERTIES - //
@@ -89,7 +89,7 @@ By declaring a class that implements the `Disposable` interface, and attaching a
 
 In conjunction with the `TempFile` class and the `use` declaration, we can now write our `worker` like so:
 
-```talos
+```sabre
 // Here is a worker that performs some operations.
 export let worker = fn (args...) {
     // We instantiate the temp-file.

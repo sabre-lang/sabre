@@ -6,62 +6,62 @@ description: Reference guide for the command-line interface
 
 import { Callout } from '@/website/components';
 
-Since Talos is a command-line program, functionality is invoked by it's various available subcommands.
+Since Sabre is a command-line program, functionality is invoked by it's various available subcommands.
 
-- [`run`](/language/toolkit/runtime) &nbsp;&mdash;&nbsp; Execute a script/project with Talos.
+- [`run`](/language/toolkit/runtime) &nbsp;&mdash;&nbsp; Execute a script/project with Sabre.
 - [`tasks`](/language/toolkit/tasks) &nbsp;&mdash;&nbsp; Runs pre-defined crate manifest tasks.
-- [`test`](/language/toolkit/testing) &nbsp;&mdash;&nbsp; Runs all available unit tests with Talos.
+- [`test`](/language/toolkit/testing) &nbsp;&mdash;&nbsp; Runs all available unit tests with Sabre.
 - [`bundle`](/language/toolkit/bundler) &nbsp;&mdash;&nbsp; Bundles scripts/projects into executables.
 - [`format`](/language/toolkit/formatter) &nbsp;&mdash;&nbsp; Formats scripts/projects with the builtin styler.
 - [`lint`](/language/toolkit/linting) &nbsp;&mdash;&nbsp; Lints scripts/projects for enhanced static analysis.
-- [`upgrade`](/language/toolkit/upgrade) &nbsp;&mdash;&nbsp; Upgrades to the latest version of Talos available.
+- [`upgrade`](/language/toolkit/upgrade) &nbsp;&mdash;&nbsp; Upgrades to the latest version of Sabre available.
 
 Additionally, the following flags retrieve additional information about the runtime.
 
 ```shell
-# Shows the usage prompt for Talos
-talos --help
+# Shows the usage prompt for Sabre
+sabre --help
 
 # Gets the current executable version
-talos --version
+sabre --version
 
-# Lists all the vendors used by Talos
-talos --vendors
+# Lists all the vendors used by Sabre
+sabre --vendors
 ```
 
 ## Environment Variables (Internal)
 
 The following environment variables are available across all subcommands.
 
-### `TALOS_LOGGING_LEVEL`
+### `SABRE_LOGGING_LEVEL`
 
 This variable allows setting the debug logging level, which can provide additional debugging information for the underlying runtime and subcommands. It can be one of theses levels: `trace`, `debug`, `warn`, `error`, `fatal` and is currently preset to `warn`.
 
-### `TALOS_HARDWARE_VPROCS`
+### `SABRE_HARDWARE_VPROCS`
 
-This variable allows declaring the total underlying virtual processors to be used. By default, Talos will use the maximum available hardware processors.
+This variable allows declaring the total underlying virtual processors to be used. By default, Sabre will use the maximum available hardware processors.
 
 ```shell title="Terminal"
 # A arbitrary number can be used.
-export TALOS_HARDWARE_VPROCS=8
+export SABRE_HARDWARE_VPROCS=8
 
-# This forces Talos into a "single-threaded" mode.
-export TALOS_HARDWARE_VPROCS=1
+# This forces Sabre into a "single-threaded" mode.
+export SABRE_HARDWARE_VPROCS=1
 
 # For when you want to ensure the maximum processors.
-export TALOS_HARDWARE_VPROCS=0
+export SABRE_HARDWARE_VPROCS=0
 ```
 
 <Callout title="Note:">
-    Although Talos can be ran in a single-threaded context, additional threads will still be used internally for
+    Although Sabre can be ran in a single-threaded context, additional threads will still be used internally for
     type-analysis and garbage collection.
 </Callout>
 
-### `TALOS_STACK_SIZE`
+### `SABRE_STACK_SIZE`
 
 This variable allows setting the stack size of user-space threads. The default value is set to 8MB.
 
-### `TALOS_STACK_LIMIT`
+### `SABRE_STACK_LIMIT`
 
 This variable allows setting the overflow limit for user-space threads. When the stack usage is below this value, the runtime will panic with a maximum recusion depth exception. The default value is set to 32KB.
 
@@ -69,8 +69,8 @@ This variable allows setting the overflow limit for user-space threads. When the
 
 ### `NO_COLOR`
 
-Talos is shipped with the informal [`NO_COLOR`](https://no-color.org/) standard. This environment variable can be assigned a value other than `0` to disable all colored outputs. Furthermore, this will also forcibly toggle the enablement of the builtin ANSI crate.
+Sabre is shipped with the informal [`NO_COLOR`](https://no-color.org/) standard. This environment variable can be assigned a value other than `0` to disable all colored outputs. Furthermore, this will also forcibly toggle the enablement of the builtin ANSI crate.
 
 ### `NO_PROGRESS`
 
-Talos is shipped with the informal [`NO_PROGRESS`](https://no-progress.org/) standard. This environment variable can be assigned a value other than `0` to disable all spinners and progress bars. This is particularly useful for logging testing results without distortions in non-terminal contexts.
+Sabre is shipped with the informal [`NO_PROGRESS`](https://no-progress.org/) standard. This environment variable can be assigned a value other than `0` to disable all spinners and progress bars. This is particularly useful for logging testing results without distortions in non-terminal contexts.

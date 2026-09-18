@@ -1,14 +1,14 @@
 ---
 icon: IdCard
 title: License
-description: Talos itself is MIT-licensed
+description: Sabre itself is MIT-licensed
 ---
 
-The license for Talos can be viewed [here](https://github.com/rroessler/talos-lang/blob/main/LICENSE).
+The license for Sabre can be viewed [here](https://github.com/rroessler/sabre-lang/blob/main/LICENSE).
 
 ## Linked Libraries
 
-Talos statically links these libraries:
+Sabre statically links these libraries:
 
 | Library                                                  | License                                                                   |
 | -------------------------------------------------------- | ------------------------------------------------------------------------- |

@@ -1,0 +1,33 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(is_okay)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `Result` contains a value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(is_error)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `Result` contains an error.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(unwrap_okay)
+SABRE_XX_FIELDS_TYPEDEF("fn (message?: String) -> T")
+SABRE_XX_FIELDS_DESCRIBE("Attempts getting an encapsulated value. If no value exists, the program will panic.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(unwrap_error)
+SABRE_XX_FIELDS_TYPEDEF("fn (message?: String) -> E")
+SABRE_XX_FIELDS_DESCRIBE("Attempts getting an encapsulated error. If no error exists, the program will panic.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

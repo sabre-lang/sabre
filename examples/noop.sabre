@@ -1,0 +1,4 @@
+///
+/// @example "noop.sabre"
+/// @describe A no-operation module for benchmarking startup.
+///

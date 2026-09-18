@@ -7,22 +7,22 @@ description: Runs and collates all configured test-runners
 ## Basic Usage
 
 ```shell title="Terminal"
-talos test [options...]
+sabre test [options...]
 ```
 
-Runs unit-tests using Talos' builtin test runner. When requested, any files that fulfill the `--pattern` are evaluated and the coinciding `talos:test` cases will be queued and executed.
+Runs unit-tests using Sabre' builtin test runner. When requested, any files that fulfill the `--pattern` are evaluated and the coinciding `sabre:test` cases will be queued and executed.
 
-For more information in regard to setting up tests, check out the [`talos:test`](/crates/test) crate.
+For more information in regard to setting up tests, check out the [`sabre:test`](/crates/test) crate.
 
 ## Common Options
 
 ### `--pattern`
 
-A globbing pattern used to match test file names. By default, `**/*.test.tal` is used and will find all files in the current-working subdirectories that end with `.test.tal`.
+A globbing pattern used to match test file names. By default, `**/*.test.sabre` is used and will find all files in the current-working subdirectories that end with `.test.sabre`.
 
 ### `--bailout` (Unimplemented)
 
-The `--bailout` option can be used to configure the maximum number of test-failures allowed. By default, Talos will run all tests and report all failures, however for some CI environments, it may be preferable to terminate earlier to reduce CPU usage.
+The `--bailout` option can be used to configure the maximum number of test-failures allowed. By default, Sabre will run all tests and report all failures, however for some CI environments, it may be preferable to terminate earlier to reduce CPU usage.
 
 ### `--timeout`
 

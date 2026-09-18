@@ -2,9 +2,9 @@
 title: 12. Casting
 ---
 
-Talos does not provide implicit conversions between primitive types. As such, casting to other types must either occur with a conversion function, or by using the cast operator.
+Sabre does not provide implicit conversions between primitive types. As such, casting to other types must either occur with a conversion function, or by using the cast operator.
 
-```talos
+```sabre
 // Start with an initial numeric value.
 let value = 65.4321;
 

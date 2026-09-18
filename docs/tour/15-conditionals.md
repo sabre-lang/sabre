@@ -2,9 +2,9 @@
 title: 15. Conditionals
 ---
 
-Talos features simple conditional `if` statements. These allow executing statements based on the result of given expressions.
+Sabre features simple conditional `if` statements. These allow executing statements based on the result of given expressions.
 
-```talos
+```sabre
 // Prepare a suitable condition to be checked against
 let value: Number = 5.5;
 

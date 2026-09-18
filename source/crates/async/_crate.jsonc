@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/async",
-    "main": "library/_main.tal",
+    "name": "@sabre/async",
+    "main": "library/_main.sabre",
     "describe": "Utilities for asynchronous operations, like atomics, or channels"
 }

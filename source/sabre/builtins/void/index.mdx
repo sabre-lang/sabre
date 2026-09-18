@@ -1,0 +1,23 @@
+---
+title: Void
+---
+
+import { Builtins } from '@/website/builtins';
+import { Callout } from '@/website/components';
+
+<Builtins.Component name="void">
+
+    A `Void` value represents the absense of a value. To help with type-safety, a variety of specialized operators are
+    available for working with `Void` values.
+
+    ```sabre
+    // Returns v1 if non-voidish, otherwise if `v1 == Void` returns v2
+    v1 ?? v2;
+
+    // Eventually the following syntax will allow optional chaining.
+    v3?.field();
+    ```
+
+</Builtins.Component>
+
+<Callout title="Note:">The optional chaining operator `?.` has not yet been implemented or decided.</Callout>

@@ -7,7 +7,7 @@
 namespace Shell::Serve {
 
 /// @brief Server Options.
-using Options = Talos::Runtime::Options;
+using Options = Sabre::Runtime::Options;
 
 /// @brief Serve Command.
 class Action : public Command::Abstract {

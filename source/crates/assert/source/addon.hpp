@@ -1,11 +1,11 @@
 #ifndef _CRATES_PACKAGE_ASSERT_HPP
 #define _CRATES_PACKAGE_ASSERT_HPP
 
-/// Talos Includes
-#include <talos/testing/service.hpp>
+/// Sabre Includes
+#include <sabre/testing/service.hpp>
 
 /// Addon Includes
-#include <talos/dylib/_inline/dylib.ipp>
+#include <sabre/dylib/_inline/dylib.ipp>
 
 //  X-MACROS  //
 
@@ -21,7 +21,7 @@
 
 //  NAMESPACES  //
 
-namespace Talos::Package {
+namespace Sabre::Package {
 
 /// @brief Assertion Package Addon.
 struct Assert : public Dylib::Mixin<"assert"> {
@@ -37,7 +37,7 @@ struct Assert : public Dylib::Mixin<"assert"> {
 private:
   //  PRIVATE METHODS  //
 
-  CRATE_XX_ASSERT_METHODS(TALOS_MM_DYLIB_DEFINE)
+  CRATE_XX_ASSERT_METHODS(SABRE_MM_DYLIB_DEFINE)
 
   /**
    * @brief Handles testing assertions.
@@ -69,6 +69,6 @@ private:
   }
 };
 
-} // namespace Talos::Package
+} // namespace Sabre::Package
 
 #endif

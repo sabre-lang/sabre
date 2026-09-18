@@ -1,6 +1,0 @@
-///
-/// @crate "codec"
-/// @describe Encoding/decoding utility functions.
-///
-
-Todo("Unimplemented Crate - 'talos:codec'");

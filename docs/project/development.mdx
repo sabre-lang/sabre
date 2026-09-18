@@ -1,14 +1,14 @@
 ---
 icon: Code
 title: Development
-description: Setting up your development environment for building Talos
+description: Setting up your development environment for building Sabre
 ---
 
 import { Callout, Tree } from '@/website/components';
 
 ## Required Dependencies
 
-Talos requires the following dependencies to be installed.
+Sabre requires the following dependencies to be installed.
 
 ```zsh tab="Darwin"
 # Homebrew can install all required dependencies
@@ -34,7 +34,7 @@ choco git cmake ninja llvm
 <Callout>
 
     **Note (Windows)**: [Visual Studio](https://visualstudio.microsoft.com/) with the "Desktop Development with C++" workload is required to
-    build Talos. This can be installed using the appropriate wizard or through WinGet:
+    build Sabre. This can be installed using the appropriate wizard or through WinGet:
 
     ```powershell
     winget install "Visual Studio Community 2022" --override "--add Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.Git " -s msstore
@@ -57,7 +57,7 @@ sudo apt install sccache
 choco install sccache
 ```
 
-Talos optionally requires [`bun`](https://bun.com/) for building the VSC extension, and enabling better scripting tools (until Talos can do so).
+Sabre optionally requires [`bun`](https://bun.com/) for building the VSC extension, and enabling better scripting tools (until Sabre can do so).
 
 ```bash tab="Darwin / Linux"
 curl -fsSL https://bun.sh/install | bash
@@ -69,7 +69,7 @@ powershell -c "irm https://bun.sh/install.ps1 | iex"
 
 ## Building Natively
 
-After cloning the [Talos repository](https://github.com/rroessler/talos-lang), the project can be built natively visually or programmatically.
+After cloning the [Sabre repository](https://github.com/rroessler/sabre-lang), the project can be built natively visually or programmatically.
 
 ### Visually
 
@@ -83,27 +83,27 @@ To build the project programmatically, the following command can be invoked:
 bun run compile
 ```
 
-```shell tab="Talos"
-talos task compile
+```shell tab="Sabre"
+sabre task compile
 ```
 
 ## Project Structure
 
-The Talos language consists of multiple working components. It can be more simply described with the underlying project-structure:
+The Sabre language consists of multiple working components. It can be more simply described with the underlying project-structure:
 
 ```text
 <project>/
 ├── cmake/          - CMake Configurations
 │   ├── mono/           - Monorepo CMake Utilities
-│   └── talos/          - Talos CMake Utilities
+│   └── sabre/          - Sabre CMake Utilities
 ├── configs/        - Various Configuration Files
 ├── docs/           - Core Documentation Markdown
 ├── examples/       - Brief Examples Directory
 ├── scripts/        - Platform Specific Scripts
 ├── source/         - Monorepo Source Directory
-│   ├── crates/         - Talos Standard Libraries
-│   ├── shell/          - Talos Command-Line Executable
-│   ├── talos/          - Talos Runtime/Compiler Library
+│   ├── crates/         - Sabre Standard Libraries
+│   ├── shell/          - Sabre Command-Line Executable
+│   ├── sabre/          - Sabre Runtime/Compiler Library
 │   ├── testing/        - C++ Testing Entry-Point
 │   ├── vscode/         - Visual Studio Code Extension
 │   ├── website/        - Static Website Generator
@@ -120,4 +120,4 @@ The Talos language consists of multiple working components. It can be more simpl
 └── tools/          - Extraneous Project Tooling
 ```
 
-In particular, the `source/` folder contains all the C++ monorepos packages necessary to construct the `source/talos/` runtime library and the `source/shell/` command-line executable for Talos. All packages that begin with a `x...`, such as `xtdlib` and `xsio`, are standalone monorepo packages used by the core runtime. The project was implemented this way to allow other developers to consume these packages as dependencies to other potential projects.
+In particular, the `source/` folder contains all the C++ monorepos packages necessary to construct the `source/sabre/` runtime library and the `source/shell/` command-line executable for Sabre. All packages that begin with a `x...`, such as `xtdlib` and `xsio`, are standalone monorepo packages used by the core runtime. The project was implemented this way to allow other developers to consume these packages as dependencies to other potential projects.

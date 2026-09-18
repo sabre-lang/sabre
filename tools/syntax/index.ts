@@ -14,9 +14,9 @@ import { Assets } from '~/tools/assets/index';
     const dst = Assets.vscode('syntaxes');
 
     // prepare the names of the items to move
-    const json = 'talos.tmLanguage.json';
-    const yaml = 'talos.tmLanguage.yaml';
-    const inject = 'talos.injection.json';
+    const json = 'sabre.tmLanguage.json';
+    const yaml = 'sabre.tmLanguage.yaml';
+    const inject = 'sabre.injection.json';
 
     // get the underlying content to be emitted
     const content = YAML.parse(await fs.promises.readFile(Assets.syntaxes(yaml), 'utf-8'));

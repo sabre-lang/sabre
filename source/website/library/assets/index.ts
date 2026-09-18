@@ -15,7 +15,7 @@ export namespace Assets {
     const m_examples = path.resolve(/* turbopackIgnore: true */ m_root, 'examples');
     const m_syntaxes = path.resolve(/* turbopackIgnore: true */ m_root, 'syntaxes');
     const m_crates = path.resolve(/* turbopackIgnore: true */ m_source, 'crates');
-    const m_builtins = path.resolve(/* turbopackIgnore: true */ m_source, 'talos', 'builtins');
+    const m_builtins = path.resolve(/* turbopackIgnore: true */ m_source, 'sabre', 'builtins');
 
     //  PUBLIC METHODS  //
 

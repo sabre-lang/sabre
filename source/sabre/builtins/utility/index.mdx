@@ -1,0 +1,50 @@
+---
+title: Utility
+---
+
+import { Builtins } from '@/website/builtins';
+import { Callout } from '@/website/components';
+
+<Builtins.Component name="utility">
+
+    Sabre provides several utility types to help facilitate type transformations and advanced type checking.
+
+     ### `Any`
+
+    The top type `Any` can be used to represent any possible type. It can be used powerfully to disable type-checking, but comes at the cost of losing type-safety, and as such should be used wisely and sparingly.
+
+    ```sabre
+    // A function that can receive a value of any type.
+    let show = fn (value: Any) => Debug.eprintln("Value:", value);
+
+    show(123456);       // Outputs: 'Value: 123456'
+    show("String");     // Outputs: 'Value: String'
+    ```
+
+    ### `Never`
+
+    The bottom type `Never` is assignable to any other type, but no type is assignable to `Never` (except itself). The primary use-case for `Never` is to express impossible conditions, such as an infinite loop or function that panics.
+
+    ```sabre
+    // A function that will never return.
+    let fatal = fn: Never => panic "Fatal Error!";
+
+    // A function the will loop infinitely.
+    let infinite = fn: Never {
+        loop {}; // never concludes
+    };
+    ```
+
+    ### `Maybe`
+
+    The nullish type `Maybe` is a utility type that conveniently allows annotating optional types. It is equivalent to the union between a type `T` and `Void`. The typical usage is with the voidish coalescing operator:
+
+    ```sabre
+    // A type/function pair that creates a closure that defaults optional values.
+    type Resolver = fn [T](value?: T) -> T;
+    let Resolver = fn [T](default: T): Resolver[T] {
+        return fn (value?) => value ?? default;
+    };
+    ```
+
+</Builtins.Component>

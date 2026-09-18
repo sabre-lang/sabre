@@ -1,5 +1,5 @@
 name: Publish VSCE
-description: Workflow for publishing the Talos VSC extension
+description: Workflow for publishing the Sabre VSC extension
 on: [workflow_dispatch, workflow_call]
 
 permissions:

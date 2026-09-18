@@ -1,5 +1,5 @@
-/// Talos Includes
-#include <talos/toolchain/launch.hpp>
+/// Sabre Includes
+#include <sabre/toolchain/launch.hpp>
 
 /// Shell Includes
 #include "shell/command/macros.hpp"
@@ -34,7 +34,7 @@ void Shell::Launch::Action::m_execute() {
   if (dashes != end) m_runtime.script.argv.erase(begin, dashes + 1);
 
   // attempt running the runtime now
-  auto exit_code = Talos::Toolchain::launch(m_runtime);
+  auto exit_code = Sabre::Toolchain::launch(m_runtime);
   if (exit_code) throw CLI::RuntimeError(exit_code);
 }
 
@@ -49,7 +49,7 @@ void Shell::Launch::Action::m_subscribe(CLI::App *command) {
   command->add_flag("--verbose", m_runtime.flags.verbose);
 
   // prepare the positionals that will be available now
-  command->add_option("script.tal", m_runtime.script.entry);
+  command->add_option("script.sabre", m_runtime.script.entry);
   command->add_option("argv", m_runtime.script.argv);
 
   // set the necessary callback to run the instance now

@@ -2,11 +2,11 @@
 title: 16. Loops
 ---
 
-Talos provides two available loop statements, `loop` and `for`.
+Sabre provides two available loop statements, `loop` and `for`.
 
 The `loop` statements, iterates indefinitely until an internally scoped exit occurs. Alternatively, an explicit exit-condition can be given in which `loop` acts like a traditional `while` loop.
 
-```talos
+```sabre
 // Prepare a potential condition variable
 let condition = Todo();
 
@@ -20,7 +20,7 @@ loop { ... }
 
 The `for` statement is instead used to iterate over potentially iterable values.
 
-```talos
+```sabre
 // We could iterate over a range of numbers
 for (nn in Number.range(0, 5)) Debug.println(n);
 

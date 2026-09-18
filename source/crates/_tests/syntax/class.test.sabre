@@ -1,0 +1,35 @@
+///
+/// @testing Syntax "class" Declaration.
+/// @describe Coordinates testing the builtin "class" declaration.
+///
+
+// Sabre Modules
+import "sabre:test" as Test;
+import "sabre:assert" as Assert;
+
+// - TEST MOCKS - //
+
+namespace Mock {
+    //! @brief Base Class Mock.
+    export class Base {};
+
+    //! @brief Derived Class Mock.
+    export class Derived => Base {};
+};
+
+// - TEST CASES - //
+
+Test.suite("Syntax", fn {
+    Test.case("Call 'Mock.One'", fn {
+        let instance = Mock.Base();
+        Assert.okay(instance is Object);
+        Assert.okay(instance is Mock.Base);
+    });
+
+    Test.case("Call 'Mock.Two'", fn {
+        let instance = Mock.Derived();
+        Assert.okay(instance is Object);
+        Assert.okay(instance is Mock.Base);
+        Assert.okay(instance is Mock.Derived);
+    });
+});

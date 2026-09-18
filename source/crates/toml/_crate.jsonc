@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/toml",
-    "main": "library/_main.tal",
+    "name": "@sabre/toml",
+    "main": "library/_main.sabre",
     "describe": "Utilities for parsing and serializing TOML"
 }

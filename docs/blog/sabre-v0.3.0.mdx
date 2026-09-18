@@ -1,0 +1,103 @@
+---
+date: 2026-09-14
+author: Reuben Roessler
+title: Sabre v0.3.0
+---
+
+import { Callout } from '@/website/components';
+
+## Improved Ranges
+
+With this release comes a minor improvements to how numeric ranges are constructed in Sabre. Previously the `List.range` factory could be used to construct an `Iterator[Number]` that would generate ranged numerics on the fly. This was counter-intuitive to the other `List` factory methods which all produced lists.
+
+To address this, the previous functionality for `List.range` was replicated with the `Iterator.range` factory and `List.range` now produces _finite_ `List[Number]` ranges.
+
+```sabre
+let list = List.range(42);          // Will create a `List[Number]`
+let iterator = Iterator.range(42);  // Will create a `Iterator[Number]`
+
+// Both items are still accepted by for-loops.
+for (nn in list) { ... }
+for (nn in iterator) { ... }
+```
+
+In terms of performance, although `List.range` will incur a minor performance cost to construction, they should be faster in iteration to an `Iterator.range` which does its computation on the fly. Conversely, a `List.range` will require more memory than that produced by an `Iterator.range` value.
+
+<Callout title="Note:">
+    Since `List.range` needs to build the range on construction, infinite lists are impossible to be defined as a `List`
+    value.
+</Callout>
+
+## Collection Erasure
+
+Whilst adding further testing for the `List` builtin, a reasonable upheaval of its methods was done. More specifically for breaking changes, the `List.erase` overloads were split into three distinct methods.
+
+- `List.clear` &nbsp;&mdash;&nbsp; Removes all elements from a `List` collection.
+- `List.drop` &nbsp;&mdash;&nbsp; Removes an element by index from a `List` collection.
+- `List.erase` &nbsp;&mdash;&nbsp; Removes elements from a `List` indicated by a given range.
+
+## Numeric Constants
+
+Whilst updating the testing cases for builtin `Number` values, the following constants were added for completeness:
+
+- `NaN` &nbsp;&mdash;&nbsp; A quiet "not-a-number" numeric.
+- `Infinity` &nbsp;&mdash;&nbsp; The numeric "infinity" value.
+
+## Further Testing
+
+This release came with a major upgrade to the baseline testing for Sabre syntax and builtins. By dogfooding these tests directly in Sabre (using the `sabre:assert` and `sabre:test` internal crates), we ensure the hardening of the language. It allows us to catch edge cases when desiging language support, validate the type-system ahead of releases and track regressions by standardizing the expected functionality for Sabre. Additionally, it allows us to play with the developer experience of Sabre to make the language better for developers.
+
+The following tests have now been implemented:
+
+- `List` &nbsp;&mdash;&nbsp; Builtin methods and statics.
+- `Number` &nbsp;&mdash;&nbsp; Builtin methods and statics.
+- `Result` &nbsp;&mdash;&nbsp; Builtin statics only.
+- `String` &nbsp;&mdash;&nbsp; Builtin methods and statics.
+- `@...` &nbsp;&mdash;&nbsp; Simple decorator transform.
+- `use` &nbsp;&mdash;&nbsp; Basic resource disposal.
+- `class` &nbsp;&mdash;&nbsp; Basic construction tests.
+- `match` &nbsp;&mdash;&nbsp; Basic pattern matching.
+
+Although this is substantial, further tests will be added over time to ensure correctness of both the type-system and runtime. The current testing suites can be [found inside the source-code](https://github.com/rroessler/sabre-lang/tree/main/source/crates/_tests) with internal crate definitions.
+
+## Upcoming Work
+
+With this release comes improvements and further checks for correctness, however more testing is still needed to ensure all edge-cases are handled. The next release will also begin looking at tidying up various `Todo()` sections across the project, as well as begin scoping out work for the internal crates for Sabre.
+
+---
+
+## Bug Fixes
+
+<h4>Package / website</h4>
+
+- Added: All documentation files can be declared as drafts with the `draft` metadata field.
+- Fixed: The icon used for the [`Iterator`](docs/language/advanced/iterators) language documentation has been updated.
+
+<h4>Toolkit / sabre run</h4>
+
+- Fixed: Removed an erroneous print condition that was evident in the runtime.
+- Added: New `Iterator.range` factory that mimics previous releases `List.range` method.
+- Fixed: Changed `List.range` to now produce a `List[Number]` instead of an `Iterator[Number]` for clarity.
+- Added: New `Iterator.collect` method that allows the conversion of an iterator to the corresponding `List[T]` value.
+- Fixed: The typings for the `List.from` factory were incorrect. It now receives an `Iterator[T]` value.
+- Fixed: Split overloads of `List.erase` into seperate methods. `List.clear` now removes all elements, and `List.drop` removes a single element by index.
+- Fixed: Numeric stringification of `to_precision` without arguments returns the base numeric representation.
+- Fixed: Numeric stringification of `to_scientific` without arguments returns the base scientific representation.
+- Added: New numeric constants of `NaN` and `Infinity` have been added for further completeness of basic numeric representations.
+- Fixed: The `Result.wrap` factory would never return as the internal future was awaited on ad finitum.
+- Fixed: The `String.to_lower` and `String.to_upper` methods did not work for UTF-8 characters. Now the current locale is respected.
+- Fixed: Previously, there was no logic to handle unescaping `String` literals. Now they are unescaped correctly before interning.
+- Fixed: The numerical ordering of `Number` values did not work when comparing negatives to positives. This has been corrected.
+- Fixed: An issue with the destruction of `Engine::Frame` for non-awaited `Future` values has been resolved by moving `Async::Worker` trace handling.
+- Fixed: Constructor calls now uses the correct internal attribute lookup for invocation. Previously it was using the `dispose` attribute lookup.
+- Fixed: There was a major issue with inferrence expressions for classes. The subtype check now properly checks that the guard matches the value instead of the other way around.
+- Added: Included the builtin typeclass for `Object` values. This was previously omitted but will be necessary in future versions for `Object` reflection methods.
+- Moved: The internal `Globals::Service` is now instantiated immediately. This was done to ensure these types/values are always available on startup before loggable services.
+- Moved: The `.shape()` method for the internal `Value::Any` wrapper has been moved to the base `Pointer::Tagged` value. This simplifies abstractions using these shapes as they are expected to always be builtin shapes only.
+- Fixed: When inside a `match` query, the `return` statement always expected a value. Now the choice to have no value (similar to the `panic` statement) is allowed.
+- Fixed: The default query `*` for `match` statements if declared before other clauses would immediately match values. This has now been changed to always be the last check.
+
+<h4>Toolkit / sabre serve</h4>
+
+- Fixed: The LSP now shows the full revision version for Sabre. This is helpful in development to ensure not using a stale executable.
+- Added: The LSP now shows the executable path in debug outputs. This is helpful in development to ensure not using a stale executable.

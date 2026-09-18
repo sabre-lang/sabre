@@ -2,7 +2,7 @@
     "private": true,
     "license": "MIT",
     "version": "0.3.0",
-    "name": "@talos/monorepo",
+    "name": "@sabre/monorepo",
     "workspaces": [
         "source/*"
     ],
@@ -16,7 +16,7 @@
         "tools:version": "bun run ./tools/version",
         "--  CLEAN  --": "",
         "clean": "run-p clean:*",
-        "clean:talos": "rimraf dist",
+        "clean:sabre": "rimraf dist",
         "clean:vscode": "bun vscode clean",
         "clean:website": "bun website clean"
     },

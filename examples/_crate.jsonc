@@ -1,9 +1,9 @@
 {
     "version": "0.3.0",
-    "name": "@talos/sandbox",
-    "main": "sandbox.tal",
+    "name": "@sabre/sandbox",
+    "main": "sandbox.sabre",
     "tasks": {
-        "start": "talos run ./sandbox.tal",
-        "test:bench": "talos test --benchmarks --pattern *.bench.tal"
+        "start": "sabre run ./sandbox.sabre",
+        "test:bench": "sabre test --benchmarks --pattern *.bench.sabre"
     }
 }

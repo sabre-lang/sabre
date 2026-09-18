@@ -20,13 +20,13 @@ export function Install({}: Install) {
             lang: 'bash',
             href: '/install.sh',
             title: 'Linux / Darwin',
-            content: 'curl -fsSL https://talos.rroessler.io/install.sh | bash',
+            content: 'curl -fsSL https://sabre.rroessler.io/install.sh | bash',
         },
         {
             lang: 'powershell',
             href: '/install.ps1',
             title: 'Windows',
-            content: 'powershell -c "irm https://talos.rroessler.io/install.ps1 | iex"',
+            content: 'powershell -c "irm https://sabre.rroessler.io/install.ps1 | iex"',
         },
     ];
 

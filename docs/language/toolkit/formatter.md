@@ -7,10 +7,10 @@ description: Ensure a consistent coding style across projects
 ## Basic Usage
 
 ```shell title="Terminal"
-talos format [options...] [targets...]
+sabre format [options...] [targets...]
 ```
 
-The builtin formatter handles auto-formatting any given Talos scripts.
+The builtin formatter handles auto-formatting any given Sabre scripts.
 
 ## Common Options
 

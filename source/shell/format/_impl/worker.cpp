@@ -1,5 +1,5 @@
-/// Talos Includes
-#include <talos/toolchain/format.hpp>
+/// Sabre Includes
+#include <sabre/toolchain/format.hpp>
 
 /// Shell Includes
 #include "shell/format/action.hpp"
@@ -7,8 +7,8 @@
 //  PRIVATE METHODS  //
 
 Shell::Format::Result Shell::Format::Action::m_worker(const $::URI::Buffer &resource) const {
-  auto buffer = Talos::Document::Buffer(resource);
-  return Talos::Toolchain::format(buffer, m_options);
+  auto buffer = Sabre::Document::Buffer(resource);
+  return Sabre::Toolchain::format(buffer, m_options);
 }
 
 void Shell::Format::Action::m_overwrite(const $::URI::View &resource, const Result &result) const {

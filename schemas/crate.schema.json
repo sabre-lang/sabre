@@ -2,8 +2,8 @@
     "$schema": "https://json-schema.org/draft-07/schema#",
 
     "type": "object",
-    "title": "Talos Crate File",
-    "description": "Talos Crate Manifest Schema",
+    "title": "Sabre Crate File",
+    "description": "Sabre Crate Manifest Schema",
 
     "$defs": {
         "test.reporter": { "type": "string", "default": "console", "enum": ["tap", "xml", "json", "junit", "console"] },
@@ -45,7 +45,7 @@
         "test": {
             "type": "object",
             "properties": {
-                "pattern": { "type": "string", "default": "**/*.test.tal" },
+                "pattern": { "type": "string", "default": "**/*.test.sabre" },
                 "filters": { "type": "array", "items": { "type": "string" }, "default": [] },
 
                 "bailout": { "type": "integer", "minimum": 1, "default": 0 },

@@ -2,9 +2,9 @@
 title: 05. Operators
 ---
 
-The operators and their precedence in Talos are similar to that of other [C-like languages](https://en.wikipedia.org/wiki/Operator_precedence#Programming_languages).
+The operators and their precedence in Sabre are similar to that of other [C-like languages](https://en.wikipedia.org/wiki/Operator_precedence#Programming_languages).
 
-```talos
+```sabre
 // Numeric operations
 Debug.println("1 + 2 = {}", 1 + 2);
 Debug.println("1 - 2 = {}", 1 - 2);

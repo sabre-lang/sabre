@@ -4,7 +4,7 @@ title: 06. Lists
 
 A list is a dynamic collection of values of the same type. Lists can be constructed using brackets `[]`, and has a type signature of `List[T]`. To have a dynamic list of any-typing, the `List` type signature can be used.
 
-```talos
+```sabre
 // Create a list (type signature is superfluous)
 let list: List[Number] = [1, 2, 3, 4, 5];
 

@@ -1,0 +1,20 @@
+---
+title: Iterator
+---
+
+import { Builtins } from '@/website/builtins';
+
+<Builtins.Component name="iterator">
+
+    The `Iterator` object is used as an interface for iterating over a sequence of values, specialized for the `for-in`
+    loop statement. This typical usage of an `Iterator` is as follows:
+
+    ```sabre
+    // We start with any contructed iterator.
+    let iterator = Iterator.from([0, 1, 2]);
+
+    // And can safely be iterated over with a for-in loop.
+    for (nn in iterator) Debug.println(nn);
+    ```
+
+</Builtins.Component>

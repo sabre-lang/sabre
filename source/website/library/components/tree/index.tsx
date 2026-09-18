@@ -23,7 +23,7 @@ export namespace Tree {
 
     /** Available pre-built icons. */
     const m_icons: Record<string, _Icon> = {
-        '.tal': 'sword',
+        '.sabre': 'sword',
         '.json': 'braces',
         '.jsonc': 'braces',
     };

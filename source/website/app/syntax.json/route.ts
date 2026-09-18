@@ -13,7 +13,7 @@ export const revalidate = false;
 
 /** Gets the "install.sh" script. */
 export async function GET() {
-    const body = await fs.promises.readFile(Assets.syntaxes('talos.tmLanguage.yaml'), 'utf-8'); // resolve now
+    const body = await fs.promises.readFile(Assets.syntaxes('sabre.tmLanguage.yaml'), 'utf-8'); // resolve now
     const headers = { 'Content-Disposition': 'inline; filename="syntax.json"', 'Content-Type': 'application/json' };
     return new NextResponse(JSON.stringify(YAML.parse(body), undefined, 4), { headers }); // and construct now
 }

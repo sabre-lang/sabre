@@ -1,0 +1,13 @@
+//  X-MACROS  //
+
+#ifndef SABRE_XX_RELINT_ALIAS
+#define SABRE_XX_RELINT_ALIAS(N, C, ...)
+#endif
+
+//  MACROS  //
+
+SABRE_XX_RELINT_ALIAS("sabre/no-unsafe-casts", 3000360)
+
+//  UNDEFINES  //
+
+#undef SABRE_XX_RELINT_ALIAS

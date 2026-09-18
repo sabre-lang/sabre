@@ -1,0 +1,6 @@
+///
+/// @crate "rng"
+/// @describe Utilities for generating random numbers.
+///
+
+Todo("Unimplemented Crate - 'sabre:rng'");

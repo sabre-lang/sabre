@@ -1,8 +1,8 @@
 /// Vendor Includes
 #include <xpc/xpc.hpp>
 
-/// Talos Includes
-#include <talos/product/details.hpp>
+/// Sabre Includes
+#include <sabre/product/details.hpp>
 
 /// Shell Includes
 #include "shell/command/macros.hpp"
@@ -15,7 +15,7 @@
   X("--tag", "The version tag to upgrade/downgrade (default: latest)") \
   X("--force", "Forcefully replace the current executable")            \
   X("--quiet", "Hide all verbose diagnostics whilst upgrading")        \
-  X("--remove", "Removes the Talos installation instance")             \
+  X("--remove", "Removes the Sabre installation instance")             \
   X("", "")                                                            \
   SHELL_XX_OPTIONS_COMMON(X)
 
@@ -35,7 +35,7 @@ $::FS::Path Shell::Upgrade::Action::m_installation() const {
 
 void Shell::Upgrade::Action::m_execute() {
   // prepare the script to be used for re-installation now
-  auto script = Talos::Product::scripts() / "install.sh";
+  auto script = Sabre::Product::scripts() / "install.sh";
   if ($_PLATFORM_WINDOWS) script.replace_extension(".ps1");
 
   // define the necessary binary and arguments based on the platform
@@ -77,7 +77,7 @@ void Shell::Upgrade::Action::m_subscribe(CLI::App *command) {
     m_remove();
 
     std::cout << $::Dye::green("Removing") << ": "; // show success result
-    std::cout << $::Dye::dim("Successfully uninstalled Talos!") << std::endl;
+    std::cout << $::Dye::dim("Successfully uninstalled Sabre!") << std::endl;
 
     // ensure we exit the current upgrade sequence
     throw CLI::Success();

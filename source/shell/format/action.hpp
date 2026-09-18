@@ -1,8 +1,8 @@
 #ifndef _SHELL_FORMAT_ACTION_HPP
 #define _SHELL_FORMAT_ACTION_HPP
 
-/// Talos Includes
-#include <talos/format/options.hpp>
+/// Sabre Includes
+#include <sabre/format/options.hpp>
 
 /// Shell Includes
 #include "shell/command/abstract.hpp"
@@ -10,10 +10,10 @@
 namespace Shell::Format {
 
 /// @brief Format Result Typing.
-using Result = Talos::Format::Result;
+using Result = Sabre::Format::Result;
 
 /// @brief Available Format Options.
-using Options = Talos::Format::Options;
+using Options = Sabre::Format::Options;
 
 /// @brief Format Command.
 class Action : public Command::Abstract {

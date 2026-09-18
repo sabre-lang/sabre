@@ -2,6 +2,6 @@
     "root": true,
     "icon": "Package",
     "title": "Crates",
-    "description": "Builtin package references for Talos",
+    "description": "Builtin package references for Sabre",
     "pages": ["index", "---Standard Library---", "..."]
 }

@@ -8,10 +8,10 @@ description: Diagnose additional problems and ensure clean, consistent coding pr
 
 ```shell title="Terminal"
 # To run analysis only for a script.
-talos lint [options...] [script]
+sabre lint [options...] [script]
 
 # Run linting before executing scripts.
-talos run --lint [script]
+sabre run --lint [script]
 ```
 
 The linter enables additional diagnostic checks
@@ -49,13 +49,13 @@ Any available rules can be have their diagnostic severity altered through this p
     "lint": {
         "rules": {
             // setting a linter rule to "none" disables to rule
-            "talos/no-unsafe-assignments": "none",
+            "sabre/no-unsafe-assignments": "none",
 
             // rules can be forcibly set to "error", effectively forcing their compilance
-            "talos/no-unsafe-calls": "error",
+            "sabre/no-unsafe-calls": "error",
 
             // rules can also be made to just show hints/information within editors or through the "--hints" flag
-            "talos/no-unsafe-returns": "hint",
+            "sabre/no-unsafe-returns": "hint",
         },
     },
 }
@@ -63,4 +63,4 @@ Any available rules can be have their diagnostic severity altered through this p
 
 ### `plugins` (Unimplemented)
 
-Althrough Talos ships within many linting rules out-of-the-box, this property allows specifying custom linting plugins.
+Althrough Sabre ships within many linting rules out-of-the-box, this property allows specifying custom linting plugins.

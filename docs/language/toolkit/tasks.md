@@ -7,7 +7,7 @@ description: Run pre-defined crate configuration tasks
 ## Basic Usage
 
 ```shell title="Terminal"
-talos task [options...] <tasks>
+sabre task [options...] <tasks>
 ```
 
 ## Glob Patterns
@@ -30,10 +30,10 @@ Runs all the following tasks in sequential order.
 
 ```shell title="Terminal"
 # The following task request...
-talos task clean lint build
+sabre task clean lint build
 
 # ...would be similar to this!
-talos task clean && talos task lint && talos task build
+sabre task clean && sabre task lint && sabre task build
 ```
 
 ### `-p`, `--par` or `--parallel`
@@ -42,14 +42,14 @@ Runs all the following tasks in parallel order.
 
 ```shell title="Terminal"
 # The following task request...
-talos task --parallel clean lint build
+sabre task --parallel clean lint build
 
 # ...would be similar to this!
-talos task clean & talos task lint & talos task build
+sabre task clean & sabre task lint & sabre task build
 ```
 
 It also entails that we can run tasks sequentially _and_ in parallel like so:
 
 ```shell title="Terminal"
-talos task clean -p build:* -s start:*
+sabre task clean -p build:* -s start:*
 ```

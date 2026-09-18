@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/ffi",
-    "main": "library/_main.tal",
-    "describe": "Bindings to call native libraries from Talos"
+    "name": "@sabre/ffi",
+    "main": "library/_main.sabre",
+    "describe": "Bindings to call native libraries from Sabre"
 }

@@ -1,0 +1,16 @@
+///
+/// @testing Builtin "Void" Functionality.
+/// @describe Coordinates testing the "Void" builtin.
+///
+
+// Sabre Modules
+import "sabre:test" as Test;
+import "sabre:assert" as Assert;
+
+// - TEST CASES - //
+
+Test.suite("Traits", fn {
+    Test.case("Operator '!'", fn => Assert.equals(!Void, True));
+    Test.case("Equality '=='", fn => Assert.equals(Void, Void));
+    Test.case("Coalesce '??'", fn => Assert.equals(Void ?? True, True));
+});

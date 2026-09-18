@@ -1,0 +1,30 @@
+{
+    "fileTypes": [],
+    "scopeName": "markdown.sabre.codeblock",
+    "injectionSelector": "L:text.html.markdown",
+    "patterns": [{ "include": "#sabre-code-block" }],
+    "repository": {
+        "sabre-code-block": {
+            "begin": "(^|\\G)(\\s*)(\\`{3,}|~{3,})\\s*(?i:(sabre)((\\s+|:|,|\\{|\\?)[^`]*)?$)",
+            "name": "markup.fenced_code.block.markdown",
+            "end": "(^|\\G)(\\2|\\s{0,3})(\\3)\\s*$",
+            "beginCaptures": {
+                "3": { "name": "punctuation.definition.markdown" },
+                "4": { "name": "fenced_code.block.language" },
+                "7": { "name": "punctuation.definition.markdown" },
+                "8": { "name": "fenced_code.block.language.attributes" }
+            },
+            "endCaptures": {
+                "3": { "name": "punctuation.definition.markdown" }
+            },
+            "patterns": [
+                {
+                    "begin": "(^|\\G)(\\s*)(.*)",
+                    "while": "(^|\\G)(?!\\s*([`~]{3,})\\s*$)",
+                    "contentName": "meta.embedded.block.sabre",
+                    "patterns": [{ "include": "source.sabre" }]
+                }
+            ]
+        }
+    }
+}

@@ -4,15 +4,15 @@ title: Exceptions
 description: Modern error handling for recoverable/unrecoverable states
 ---
 
-Talos inherently aims to catch [errors at compile-time](/language/toolkit/linting), however this is not always possible for programs working with external inputs. For example, suppose that an input given to a program references a non-existent file. Since this could not be known during compilation, the act of dealing with this failure is called error handling.
+Sabre inherently aims to catch [errors at compile-time](/language/toolkit/linting), however this is not always possible for programs working with external inputs. For example, suppose that an input given to a program references a non-existent file. Since this could not be known during compilation, the act of dealing with this failure is called error handling.
 
-There are a couple of ways that Talos allows developers deal with errors. At the language level, these include the `panic` keyword and the `Todo` object. For runtime handling of exceptions, a `Maybe` or `Result` value should be used.
+There are a couple of ways that Sabre allows developers deal with errors. At the language level, these include the `panic` keyword and the `Todo` object. For runtime handling of exceptions, a `Maybe` or `Result` value should be used.
 
 ## Program Panics
 
 When a program encounters an unrecoverable state, the `panic` keyword can be used to throw an exception.
 
-```talos
+```sabre
 // This function checks given scores for some condition.
 let check_score = fn (value: Number) {
     if (score > 90) Debug.println("High Score!");
@@ -35,7 +35,7 @@ Any exceptions that are thrown this way will cause the parent `Future` to exit. 
 
 Since the `panic` statement is used for unrecoverable errors, it is not intended to be caught. However, any functions that are invoked asynchronously as futures expose a `fails` transform to handle exceptions.
 
-```talos
+```sabre
 // Prepare a future that may fail.
 let callback = fn (value: Number) => value < ? panic : True;
 
@@ -49,7 +49,7 @@ callback::async(-1)
 
 The `Todo` object can be used both to annotate types and code that has not yet been implemented. During compile-time, these annotations will show warnings about their incompleteness, whilst at runtime will instead crash with an exception.
 
-```talos
+```sabre
 // If we have some code that has not yet been finished.
 let incomplete_code = fn: Todo {
     Todo("Unimplemented ...");
@@ -61,13 +61,13 @@ incomplete_code();
 
 ## Safe Returns
 
-Instead of panicking with unrecoverable errors, it is recommended in Talos to instead make use of the `Maybe` and the `Result` types.
+Instead of panicking with unrecoverable errors, it is recommended in Sabre to instead make use of the `Maybe` and the `Result` types.
 
 ### Nullish Values
 
 Using the `Maybe[T]` type, or the `?: T` syntax for variables, tells the compiler that a value could be voidish (or more colloquially nullish). This means that a value could be of type `T` or `Void`.
 
-```talos
+```sabre
 // We could have a function that has an optional argument.
 let coalesce = fn (value?: Number): Number => value ?? 0;
 
@@ -80,7 +80,7 @@ Debug.println("Value: {0}".fmt(coalesce(42)));
 
 The `Result[T, E]` type can be used to encapsulate return values that may have a value or a typed exception.
 
-```talos
+```sabre
 // Suppose we have an explicit division handler.
 let divide = fn (a: Number, b: Number): Result[Number] {
     if (b != 0) return Result.okay(a / b);

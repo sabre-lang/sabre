@@ -1,6 +1,6 @@
 {
     "extends": "./configs/tsconfig.base.json",
-    "include": ["configs", "docs", "source/vscode", "source/talos/builtins/index.mdx", "tools"],
+    "include": ["configs", "docs", "source/vscode", "source/sabre/builtins/index.mdx", "tools"],
     "exclude": ["dist", "node_modules", "source/website"],
 
     "compilerOptions": {

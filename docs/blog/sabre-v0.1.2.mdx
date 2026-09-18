@@ -1,0 +1,111 @@
+---
+date: 2026-06-04
+author: Reuben Roessler
+title: Sabre v0.1.2
+---
+
+import { Callout } from '@/website/components';
+
+## Runtime Decorators
+
+To coincide with the previous release of [compile-time attributes](/language/fundamentals/attributes), Sabre now provides support for decorators, which annotate variable declarations at runtime.
+
+For example, an application may require logging when a function is called. This pattern could be implemented simply with:
+
+```sabre
+// Some task that requires logging.
+let task = fn {
+    Debug.println("LOG: Entering 'task'");
+    Debug.println("Executing the current task...");
+    Debug.println("LOG: Exiting 'task'");
+};
+```
+
+However, if we try to apply the same pattern to other functions, especially those with early exit conditions, we find that it will pollute the codespace quickly with logging calls.
+
+Let's instead use the new `@expression` decorator syntax:
+
+```sabre
+// A decorator factory for logging function scopes.
+let log_fn = fn (label: String): Any {
+    return fn (target: Function): Function {
+        return fn (...args: Any): Any {
+            Debug.println("LOG: Entering '{0}'".fmt(label));
+            let result = Function.apply(target, args);
+            Debug.println("LOG: Exiting '{0}'".fmt(label));
+            return result; // ensure the result is returned
+        };
+    };
+};
+
+// A task that has the above decorator attached.
+@log_fn("task")
+let task = fn {
+    Debug.println("Executing my task...");
+};
+
+// Calling the task will also invoke the output that log_fn" generates.
+task();
+```
+
+As seen above, we could take the `@log_fn(label)` decorator and apply this to any function variable that we want to add scoped logging to. For more information regarding specifics for using decorators, see the [decorator fundamentals](/language/fundamentals/decorators) section.
+
+<Callout title="Note:">
+    Currently, there are no typings available for runtime decorators. These are planned to be added in the future with
+    support for declaration metadata, factory generation and additional library support.
+</Callout>
+
+## Language Server
+
+Alongside feature updates, there has been numerous work in providing better developer tooling. In particular, the underlying language server has received some new foundational capabilities.
+
+- Document Symbols
+- Variable/Type References
+- Variable/Type Definitions
+
+To get started using the language server, see how to [set up your environment](/language/development/environment) to enable it in your editor or IDE of choice or see more information regarding the capabilities of the [current language server](/language/advanced/language-server) implementation.
+
+---
+
+## Bug Fixes
+
+<h4>Package / website</h4>
+
+- Added: Foundations for [builtin language features](/builtins), documenting their use cases, types and fields. These currently contain stub pages so will be further updated with the progression of Sabre.
+
+<h4>Toolkit / sabre run</h4>
+
+- Added: Exposed more underlying runtime options for setting stack size and overflow limits (eg: `SABRE_STACK_SIZE` and `SABRE_STACK_LIMIT` environment variables).
+- Fixed: Updated the default thread stack-size from 1MB to 8MB. This now matches what (libuv)[https://github.com/libuv/libuv] uses for Node JS and other runtimes.
+- Fixed: Can now safely barrel exports and imports. Previously this syntax crashed during compilation as a variable pattern was expected for these statements.
+- Fixed: Backtraces now are limited to a fixed size that will in future be available for configuration through the command-line.
+- Fixed: Previously generic functions would crash the type-checker due to their contextual type not being resolved properly. This has now been addressed.
+- Added: Laid the foundations for runtime decorator annotations. This includes: basic type-checking, and instantiation alongside compile-time attributes.
+- Fixed: Generic `type` declarations failed to be instantiated correctly. This was due to the use of an internal type-transform not resolving lazy generic instantiation.
+- Fixed: Type and value declarations did not merge their variable flags and were superseded by the last-most declaration. Now these flags are merged correctly and sanity-checked for potential mismatches (eg: when using `export` it must apply to both declarations or neither).
+- Fixed: Values that were captured as upvalues in `class` declarations were not flagged as such. Now the correct depths are used within type-analysis to fix this.
+- Fixed: Recursive checking for crate-files accidentally became recursive if none were found and as such has been fixed.
+- Fixed: `Future.delay` duration value was not converted correctly from milliseconds into nanoseconds. Now all durations for delays are converted correctly.
+
+<h4>Toolkit / sabre bundle</h4>
+
+- Fixed: Bundling on Linux would previously result in a segfault due to invalid ELF note construction. The required flags and constructors to do so have been added.
+
+<h4>Toolkit / sabre serve</h4>
+
+- Fixed: When type-checking accessors, fields now have their inferred types properly cached to enable linting tools.
+- Fixed: There was an issue decoding `$/cancel` request identifiers. These are now properly decoded depending on whether they are a string or number value.
+- Added: Implemented the foundations for variable/type definitions, references, document symbols and other language-server features.
+
+<h4>Toolkit / sabre upgrade</h4>
+
+- Fixed: Previously the wrong version branch (eg: `-main` instead of `-stable`) was used for determining the current Sabre installation. This resulted in upgrades not properly identifying when the latest version was the same as the current one. This has now been resolved for this release of Sabre.
+
+<h4>Internal / sabre::xlsp</h4>
+
+- Fixed: Previously the `XLSP::Range` structure was 20-bytes due to not being able to correctly apply EBO to it's `XLSP::Position` properties. This has been fixed by abstracting these into an EBO friendly `XLSP::Cursor` value that the `XLSP::Position` and `XLSP::Range` now utilize. This has now reduced ranges to 16-bytes which is also more cache friendly.
+- Added: Prepared stub definitions for more language feature requests such as `textDocument/definition`, `textDocument/typeDefinition`, `textDocument/references`, `textDocument/documentSymbol` and more.
+
+<h4>Crate / sabre:mem</h4>
+
+- Added: Exposed thread-memory namespace with stack-usage details similar to heap-memory namespace.

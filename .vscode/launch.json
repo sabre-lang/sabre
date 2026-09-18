@@ -4,14 +4,14 @@
         {
             "request": "launch",
             "type": "extensionHost",
-            "name": "Talos: VSC Extension",
+            "name": "Sabre: VSC Extension",
             "outFiles": ["${workspaceFolder}/dist/vscode/**/*.js"],
             "args": ["${workspaceFolder}/examples", "--extensionDevelopmentPath=${workspaceFolder}/dist/vscode"]
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Talos: Test Natives",
+            "name": "Sabre: Test Natives",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/build/source/tests/tests",
             "windows": {
@@ -21,56 +21,56 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Talos: Test Builtins",
+            "name": "Sabre: Test Builtins",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/dist/bin/talos",
+            "program": "${workspaceFolder}/dist/bin/sabre",
             "args": ["test"],
-            "windows": { "program": "${workspaceFolder}/dist/bin/talos.exe" }
+            "windows": { "program": "${workspaceFolder}/dist/bin/sabre.exe" }
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Talos: Task 'build'",
+            "name": "Sabre: Task 'build'",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/dist/bin/talos",
+            "program": "${workspaceFolder}/dist/bin/sabre",
             "args": ["task", "build"],
-            "windows": { "program": "${workspaceFolder}/dist/bin/talos.exe" }
+            "windows": { "program": "${workspaceFolder}/dist/bin/sabre.exe" }
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Talos: Lint Sandbox",
+            "name": "Sabre: Lint Sandbox",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/dist/bin/talos",
+            "program": "${workspaceFolder}/dist/bin/sabre",
             "args": ["lint", "${workspaceFolder}"],
-            "windows": { "program": "${workspaceFolder}/dist/bin/talos.exe" }
+            "windows": { "program": "${workspaceFolder}/dist/bin/sabre.exe" }
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Talos: Format Sandbox",
+            "name": "Sabre: Format Sandbox",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/dist/bin/talos",
-            "args": ["format", "${workspaceFolder}/examples/sandbox.tal"],
-            "windows": { "program": "${workspaceFolder}/dist/bin/talos.exe" }
+            "program": "${workspaceFolder}/dist/bin/sabre",
+            "args": ["format", "${workspaceFolder}/examples/sandbox.sabre"],
+            "windows": { "program": "${workspaceFolder}/dist/bin/sabre.exe" }
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Talos: Bundle Sandbox",
+            "name": "Sabre: Bundle Sandbox",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/dist/bin/talos",
-            "args": ["bundle", "${workspaceFolder}/examples/sandbox.tal"],
-            "windows": { "program": "${workspaceFolder}/dist/bin/talos.exe" }
+            "program": "${workspaceFolder}/dist/bin/sabre",
+            "args": ["bundle", "${workspaceFolder}/examples/sandbox.sabre"],
+            "windows": { "program": "${workspaceFolder}/dist/bin/sabre.exe" }
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Talos: Launch Sandbox",
+            "name": "Sabre: Launch Sandbox",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/dist/bin/talos",
-            "args": ["run", "${workspaceFolder}/examples/sandbox.tal"],
-            "windows": { "program": "${workspaceFolder}/dist/bin/talos.exe" }
+            "program": "${workspaceFolder}/dist/bin/sabre",
+            "args": ["run", "${workspaceFolder}/examples/sandbox.sabre"],
+            "windows": { "program": "${workspaceFolder}/dist/bin/sabre.exe" }
         }
     ]
 }

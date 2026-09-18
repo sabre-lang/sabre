@@ -1,7 +1,7 @@
 /// Vendor Modules
 import * as vscode from 'vscode';
 
-/// Talos Modules
+/// Sabre Modules
 import { Product } from '@/vscode/product';
 
 /** Output Channel Factory. */

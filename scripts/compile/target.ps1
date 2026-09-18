@@ -30,8 +30,8 @@ if (Test-Path -Path $target_cache -PathType Leaf) {
 
 # configure the cmake project we require now
 cmake -S (Get-Location).Path -B $target_dir -G Ninja `
-    -DTALOS_OPTION_CANARY:BOOL=$target_canary `
-    -DTALOS_OPTION_POSTBUILD:BOOL=$target_post `
+    -DSABRE_OPTION_CANARY:BOOL=$target_canary `
+    -DSABRE_OPTION_POSTBUILD:BOOL=$target_post `
     -DFETCHCONTENT_BASE_DIR="build/_deps" `
     -DCMAKE_BUILD_TYPE:STRING=Release `
     -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$target_toolchain

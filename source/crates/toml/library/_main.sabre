@@ -1,0 +1,25 @@
+///
+/// @crate "toml"
+/// @describe Helpers for parsing and serializing TOML.
+///
+
+// Dynamic Modules
+import "dylib:toml" as toml;
+
+// Sabre Modules
+import "sabre:_detail" as Detail;
+
+// - HELPERS - //
+
+//! @brief Internal helper to reduce bytecode output.
+let m_cast = Detail.Unsafe.cast;
+
+// - PUBLIC METHODS - //
+
+//! @brief Stringifies Sabre values into a TOML output.
+//! @param value                Value to stringify.
+export let encode = m_cast[fn (value: Any) -> String](toml.encode);
+
+//! @brief Parses TOML inputs to a Sabre value.
+//! @param input                Input to parse.
+export let decode = m_cast[fn [T = Any](input: String) -> T](toml.decode);

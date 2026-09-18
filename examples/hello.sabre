@@ -1,0 +1,6 @@
+///
+/// @example "hello.sabre"
+/// @describe Prints "Hello, World!" to `stdout`.
+///
+
+Debug.println("Hello, World!");

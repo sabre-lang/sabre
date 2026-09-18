@@ -1,5 +1,5 @@
-/// Talos Includes
-#include <talos/toolchain/bundle.hpp>
+/// Sabre Includes
+#include <sabre/toolchain/bundle.hpp>
 
 /// Shell Includes
 #include "shell/command/macros.hpp"
@@ -28,7 +28,7 @@ Shell::Lint::Action::Action() : Abstract("lint") {
 //  PRIVATE METHODS  //
 
 void Shell::Lint::Action::m_execute() const {
-  auto exit_code = Talos::Toolchain::lint(m_runtime);
+  auto exit_code = Sabre::Toolchain::lint(m_runtime);
   if (exit_code) throw CLI::RuntimeError(exit_code);
 }
 
@@ -41,10 +41,10 @@ void Shell::Lint::Action::m_subscribe(CLI::App *command) {
 
   // prepare the callback flags to be used now
   command->add_flag_callback("--quiet", [&] { m_runtime.flags.verbose = false; });
-  command->add_flag_callback("--hints", [&] { m_runtime.diagnostics.severity = Talos::Diagnostic::Severity::HINT; });
+  command->add_flag_callback("--hints", [&] { m_runtime.diagnostics.severity = Sabre::Diagnostic::Severity::HINT; });
 
   // prepare the positionsal the will be available now
-  command->add_option("script.tal", m_runtime.script);
+  command->add_option("script.sabre", m_runtime.script);
 
   // set the necessary callback to run the instance now
   command->callback(std::bind(&Action::m_execute, this));

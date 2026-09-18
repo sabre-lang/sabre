@@ -1,5 +1,5 @@
-/// Talos Includes
-#include <talos/testing/inspect.hpp>
+/// Sabre Includes
+#include <sabre/testing/inspect.hpp>
 
 /// Crate Includes
 #include "crates/assert/source/addon.hpp"
@@ -7,20 +7,20 @@
 //  PROPERTIES  //
 
 /// @brief The underlying assertion addon installer.
-TALOS_MM_DYLIB_ADDON(Assert, CRATE_XX_ASSERT_METHODS)
+SABRE_MM_DYLIB_ADDON(Assert, CRATE_XX_ASSERT_METHODS)
 
 /// @brief Explicit failed string.
-static auto g_failed = Talos::String::Small("Failed");
+static auto g_failed = Sabre::String::Small("Failed");
 
 //  ADDON METHODS  //
 
-TALOS_MM_DYLIB_METHOD(Assert, okay, isolate, args) { return m_test(isolate, args, true, "okay"); }
-TALOS_MM_DYLIB_METHOD(Assert, fail, isolate, args) { return m_panic(isolate, 7000000, args.at(0, g_failed)); }
+SABRE_MM_DYLIB_METHOD(Assert, okay, isolate, args) { return m_test(isolate, args, true, "okay"); }
+SABRE_MM_DYLIB_METHOD(Assert, fail, isolate, args) { return m_panic(isolate, 7000000, args.at(0, g_failed)); }
 
-TALOS_MM_DYLIB_METHOD(Assert, truthy, isolate, args) { return m_test(isolate, args, true, "falsey"); }
-TALOS_MM_DYLIB_METHOD(Assert, falsey, isolate, args) { return m_test(isolate, args, false, "truthy"); }
+SABRE_MM_DYLIB_METHOD(Assert, truthy, isolate, args) { return m_test(isolate, args, true, "falsey"); }
+SABRE_MM_DYLIB_METHOD(Assert, falsey, isolate, args) { return m_test(isolate, args, false, "truthy"); }
 
-TALOS_MM_DYLIB_METHOD(Assert, exists, isolate, args) {
+SABRE_MM_DYLIB_METHOD(Assert, exists, isolate, args) {
   // ensure we immediately fail if there are no arguments
   if (args.empty()) return isolate->panic(7000002, "exists");
 
@@ -35,9 +35,9 @@ TALOS_MM_DYLIB_METHOD(Assert, exists, isolate, args) {
   return m_panic(isolate, 7000001, Value::Inspect<Value::Void>::name());
 }
 
-TALOS_MM_DYLIB_METHOD(Assert, equals, isolate, args) {
+SABRE_MM_DYLIB_METHOD(Assert, equals, isolate, args) {
   // ensure we have the correct number of arguments
-  TALOS_MM_ASSERT_ARGC(isolate, args.size(), 2);
+  SABRE_MM_ASSERT_ARGC(isolate, args.size(), 2);
 
   // validate the incoming arguments now
   auto actual = args.at(0), expected = args.at(1);
@@ -50,9 +50,9 @@ TALOS_MM_DYLIB_METHOD(Assert, equals, isolate, args) {
   return message.is<String::Any>() ? m_panic(isolate, 7000000, message) : m_panic(isolate, 7000003);
 }
 
-TALOS_MM_DYLIB_METHOD(Assert, differs, isolate, args) {
+SABRE_MM_DYLIB_METHOD(Assert, differs, isolate, args) {
   // ensure we have the correct number of arguments
-  TALOS_MM_ASSERT_ARGC(isolate, args.size(), 2);
+  SABRE_MM_ASSERT_ARGC(isolate, args.size(), 2);
 
   // validate the incoming arguments now
   auto actual = args.at(0), expected = args.at(1);
@@ -65,12 +65,12 @@ TALOS_MM_DYLIB_METHOD(Assert, differs, isolate, args) {
   return message.is<String::Any>() ? m_panic(isolate, 7000000, message) : m_panic(isolate, 7000004);
 }
 
-TALOS_MM_DYLIB_METHOD(Assert, panics, isolate, args) {
+SABRE_MM_DYLIB_METHOD(Assert, panics, isolate, args) {
   // ensure we immediately fail if there are no arguments
   if (args.empty()) return isolate->panic(7000002, "exists");
 
   // ensure the leading argument is a function
-  TALOS_MM_ASSERT_TYPEOF(isolate, Function::Any, args[0]);
+  SABRE_MM_ASSERT_TYPEOF(isolate, Function::Any, args[0]);
 
   // get the incoming function to be called now
   auto result = isolate->spawn(args.at(0));
@@ -87,7 +87,7 @@ TALOS_MM_DYLIB_METHOD(Assert, panics, isolate, args) {
 
 //  PRIVATE METHODS  //
 
-Talos::Value::Any Talos::Package::Assert::m_test(
+Sabre::Value::Any Sabre::Package::Assert::m_test(
     Runtime::Isolate *isolate, const Function::Args &args, bool state, const $::String::View &method
 ) {
   // fail if there are no arguments given at all
@@ -104,7 +104,7 @@ Talos::Value::Any Talos::Package::Assert::m_test(
   return m_panic(isolate, 7000001, state ? "falsey" : "truthy"); // reason
 }
 
-Talos::Value::Any Talos::Package::Assert::m_panic(Runtime::Isolate *isolate, const Object::Exception &exception) {
+Sabre::Value::Any Sabre::Package::Assert::m_panic(Runtime::Isolate *isolate, const Object::Exception &exception) {
   auto *services = isolate->service<XI::Container>();
   auto *service = services->when<Testing::Service>();
   if (service == nullptr) return isolate->panic(exception);

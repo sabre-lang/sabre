@@ -3,16 +3,16 @@
 
 //  PRIVATE METHODS  //
 
-void Shell::Command::Abstract::m_common(CLI::App *command, Talos::Runtime::Options *options, bool runtime) {
+void Shell::Command::Abstract::m_common(CLI::App *command, Sabre::Runtime::Options *options, bool runtime) {
   // prepare some common environment/internal items now
   auto &stack_size = options->async.thread.stack_size;
   auto &stack_limit = options->async.thread.stack_limit;
   auto &hardware_limit = options->async.vprocs.hardware_limit;
 
   // prepare all the hidden command line options
-  command->add_option("--internal-stack-size", stack_size)->envname("TALOS_STACK_SIZE");
-  command->add_option("--internal-stack-limit", stack_limit)->envname("TALOS_STACK_LIMIT");
-  command->add_option("--internal-hardware-vprocs", hardware_limit)->envname("TALOS_HARDWARE_VPROCS");
+  command->add_option("--internal-stack-size", stack_size)->envname("SABRE_STACK_SIZE");
+  command->add_option("--internal-stack-limit", stack_limit)->envname("SABRE_STACK_LIMIT");
+  command->add_option("--internal-hardware-vprocs", hardware_limit)->envname("SABRE_HARDWARE_VPROCS");
 
   // if not if runtime mode, then stop handling
   if (!runtime) return;
@@ -20,7 +20,7 @@ void Shell::Command::Abstract::m_common(CLI::App *command, Talos::Runtime::Optio
   // add the linting flag to be used now
   command->add_flag("--lint", options->flags.lint);
 
-  auto hints = [severity = &options->diagnostics.severity] { *severity = Talos::Diagnostic::Severity::HINT; };
+  auto hints = [severity = &options->diagnostics.severity] { *severity = Sabre::Diagnostic::Severity::HINT; };
   command->add_flag_callback("--hints", hints); // allows showing additional linting details where possible
 
   // prepare the baseline runtime flags

@@ -18,7 +18,7 @@ export function Property({ name, parent, describe, typedef, ancillary }: Propert
     return (
         <div className="mb-4">
             <Heading as="h3" id={href.slice(1)} children={title} />
-            {typedef && <Code.Dynamic lang="talos" code={typedef} />}
+            {typedef && <Code.Dynamic lang="sabre" code={typedef} />}
             <Markdown.Dynamic markdown={describe} />
             {ancillary /** additional details */}
         </div>

@@ -2,6 +2,6 @@
     "root": true,
     "icon": "BrickWall",
     "title": "Builtins",
-    "description": "The native langauge components for Talos",
+    "description": "The native langauge components for Sabre",
     "pages": ["index", "---Components---", "..."]
 }

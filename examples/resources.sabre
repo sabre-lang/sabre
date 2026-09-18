@@ -1,0 +1,35 @@
+///
+/// @example "resources.sabre"
+/// @describe Showcases explicit resource management through 'use' statements.
+///
+
+// Let's define a resource generator.
+let scoped = fn (label: String): Any {
+    // Show when the resource is created.
+    Debug.println("Created '{0}'".fmt(label));
+
+    // An anonymous resource (see below note).
+    let resource = {};
+
+    // Attaching a disposal callback to the resource directly.
+    #[Operator.dispose resource]
+    let callback = fn {
+        Debug.println("Disposed '{0}'".fmt(label));
+    };
+
+    // Return the constructed resource.
+    return resource;
+};
+
+// Let's create some base resources.
+use a = scoped("A");
+use b = scoped("B");
+
+// And then scope some values to see that they are destroyed first.
+{
+    use c = scoped("C");
+    use d = scoped("D");
+}
+
+// Then a value after the previous scope to see destruction order.
+use e = scoped("E");

@@ -4,11 +4,11 @@ icon: SquareFunction
 description: Defining reusable blocks of code that execute procedural steps
 ---
 
-During development, it is often required to reuse common parts of code. The capability to do so is the through use of functions. In Talos, functions are both first-class objects, and always declared anonymously, similar to lambdas in other programming languages.
+During development, it is often required to reuse common parts of code. The capability to do so is the through use of functions. In Sabre, functions are both first-class objects, and always declared anonymously, similar to lambdas in other programming languages.
 
 ## Declaring Lambdas
 
-To declare a function in Talos, they require the following ordered components:
+To declare a function in Sabre, they require the following ordered components:
 
 - Start with the `fn` keyword (required)
 - Specify generics with `[]` (optional)
@@ -18,7 +18,7 @@ To declare a function in Talos, they require the following ordered components:
 
 For example:
 
-```talos
+```sabre
 // This declares a function that has one parameter, 'x' of type 'Number', and a return value also of type 'Number'
 let double = fn (x: Number): Number {
     return 2 * x;
@@ -32,8 +32,8 @@ let square = fn (x: Number): Number => x * x;
 
 Functions can optionally be declared with generic parameters enclosed within brackets.
 
-```talos
-// Talos will infer the type-parameter 'T' to what is called
+```sabre
+// Sabre will infer the type-parameter 'T' to what is called
 let generic = fn [T](item: T): Any => ...;
 ```
 
@@ -41,14 +41,14 @@ let generic = fn [T](item: T): Any => ...;
 
 Within function declarations, parameters are declared using the `name: Type` notation. By default, all function parameters are immutable (implicitly declare as `let`), but can be made mutable by explicitly declaring parameters with the `mut` keyword.
 
-```talos
+```sabre
 // Declaring 'value' with the 'mut` keyword allows reassignment within the function scope
 let mutate = fn (mut value: Any) => ...;
 ```
 
 When a function is declared without parameters, it can be written with either of the following syntaxes:
 
-```talos
+```sabre
 // With an explicitly empty set of parameters
 let explicit = fn () => ...;
 
@@ -58,7 +58,7 @@ let implicit = fn => ...;
 
 Parameters can also be made optional, either at the type-level or by assigning a default value.
 
-```talos
+```sabre
 // When called without arguments, this will default 'value' to '0'
 let defaulted = fn (value: Number = 0) { ... };
 
@@ -68,9 +68,9 @@ let optional = fn (value?: Number) { ... };
 
 ### Variadics
 
-Talos also supports functions with a variadic number of arguments. For these cases, the rest parameter syntax is used and must be placed before the variadic parameter. There can only be one variadic parameter per function, which then passes an array of arguments to the function when called.
+Sabre also supports functions with a variadic number of arguments. For these cases, the rest parameter syntax is used and must be placed before the variadic parameter. There can only be one variadic parameter per function, which then passes an array of arguments to the function when called.
 
-```talos
+```sabre
 // This function accumulates a sum of the given numbers
 let sum = fn (...items: Number): Number {
     // prepare a summation result
@@ -91,9 +91,9 @@ Debug.println(sum(1, 2, 3, 4, 5));
 
 When declaring a function, the return-type can be contextually dependent on the type of block body that is defined. Unless explicitly specified, the return-type is infered to be `Any` for functions using arrow-syntax, or infered to be `Void` for functions using curly brace blocks.
 
-Talos currently does not infer return-types based on the block bodies due to the complexity of their flow control, and how their type inference appears unclear both to readers and sometimes to the compiler. As such, using a standardized inference scheme simplifies both these aspects for the reader and the compiler.
+Sabre currently does not infer return-types based on the block bodies due to the complexity of their flow control, and how their type inference appears unclear both to readers and sometimes to the compiler. As such, using a standardized inference scheme simplifies both these aspects for the reader and the compiler.
 
-```talos
+```sabre
 let foo = fn => ...;    // Always implicitly infered as 'Any'
 let bar = fn { ... };   // Always implicitly infered as 'Void'
 
@@ -105,14 +105,14 @@ let qux = fn: String { return ""; };  // Explicitly declared as 'String'
 
 Once a function is created, it can be called using the standard approach:
 
-```talos
+```sabre
 // This invokes the function with the default calling policy
 let result = double(5);
 ```
 
 For generic functions, type-arguments can be specified after the variable name, or omitted entirely so that they can be infered from the context.
 
-```talos
+```sabre
 // Explicitly giving type-arguments to a generic
 generic<Number>(42);
 
@@ -120,9 +120,9 @@ generic<Number>(42);
 generic(42);
 ```
 
-Functions can also be called with different conventions, through named "execution policies". This uses the following syntax specific to Talos:
+Functions can also be called with different conventions, through named "execution policies". This uses the following syntax specific to Sabre:
 
-```talos
+```sabre
 // This will call the function using the 'async' execution policy which returns a 'Future[Number]'
 let future = double::async(5);
 ```
@@ -133,7 +133,7 @@ For more information, see the [concurrency](/language/advanced/concurrency) and 
 
 Since functions are considered to be [first-class citizens](https://en.wikipedia.org/wiki/First-class_citizen), in which it is possible to pass functions as arguments and to also return functions.
 
-```talos
+```sabre
 // Declaring a multiplier factory type and function
 type Multiplier = fn (value: Number) -> Number;
 let Multiplier = fn (factor: Number): Multiplier {

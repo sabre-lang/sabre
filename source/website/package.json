@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "license": "MIT",
-    "name": "@talos/website",
+    "name": "@sabre/website",
     "description": "A forward-thinking programming language that puts developers first",
     "scripts": {
         "--  START  --": "",

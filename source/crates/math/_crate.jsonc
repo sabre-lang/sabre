@@ -1,6 +1,6 @@
 {
     "version": "0.3.0",
-    "name": "@talos/math",
-    "main": "library/_main.tal",
+    "name": "@sabre/math",
+    "main": "library/_main.sabre",
     "describe": "Mathematics library for complex algorithms"
 }

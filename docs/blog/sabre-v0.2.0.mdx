@@ -1,0 +1,111 @@
+---
+date: 2026-08-22
+author: Reuben Roessler
+title: Sabre v0.2.0
+---
+
+import { Callout } from '@/website/components';
+
+## Runtime Updates
+
+As the past few months of work comes to pass, various wide-sweeping updates have been applied to the Sabre runtime. Looking back at the [initial progress report](/blog/2026-05-progress) in May, only tasks related to testing are still to be addressed. Without further ado, here are the newest features to Sabre:
+
+## Match Statements
+
+This release introduces the foundations for the `match` statement, which evaluates an expression and matches it to a selection of given guards.
+
+```sabre
+// Suppose that `value` could be the `String` type.
+match (value) {
+    "a": Debug.println("First latin character"),
+    "z": Debug.println("Last latin character"),
+    *: Debug.println("Some other character"),
+}
+```
+
+If `value` contained the letter "z" it would then print "Last latin character" then continue execution _after_ the `match` statement. Unlike other languages, cases do not fall-through to the next after completion and should be treated as separate. However, multiple guards can be grouped together:
+
+```sabre
+match (value) {
+    "a", "A": Debug.println("Found letter 'a'"),
+    *: Debug.println("Value was not the letter 'a' or 'A'"),
+}
+```
+
+Values can also be matched against their builtin classes as type-guards.
+
+```sabre
+match (value) {
+    String: Debug.println("Value was a string"),
+    Number: Debug.println("Value was a number"),
+    *: Debug.println("Did not match a valid type"),
+}
+```
+
+However, some care should be taken with this as `match` statements attempt their matches greedily from top-to-bottom.
+
+```sabre
+match (True) {
+    Boolean: Debug.println("Value is a boolean"), // Matched first in declaration order
+    True: Debug.println("Value is boolean true"), // Ignored when declared after above guard
+}
+```
+
+<Callout title="Note:">
+    Declaration order of `match` statements currently matters, though this may change with future versions of Sabre.
+</Callout>
+
+## Faster Functions
+
+Along with updating the runtime, an opt-in attribute was added to allow compilation to machine-code for faster performance.
+
+```sabre
+// This function will be compiled to an equivalent version of the `ret Number(42)` shorthand.
+#[Internal.Optimize]
+let foo = fn => 42;
+```
+
+This has been made opt-in as compilation to machine-code will take up more memory than that of regular bytecode functions, so care should be taken when applying this attribute. The core reasoning for exposing this feature is for the future work to the builtin crates which will allow improving the performance of critical code sections.
+
+## Upcoming Work
+
+Following on from this release will be the improvements to testing. This next goal is to improve the currently available testing to ensure stability before releases. It will also hopefully include the foundations for more builtin crates for Sabre.
+
+---
+
+## Bug Fixes
+
+<h4>Package / sabre</h4>
+
+- Fixed: Updated the current CI infrastructure to now be independent of a release script.
+- Fixed: Stablized naming for all releases and artifacts. Now using `v{semver}-{branch}` format.
+- Fixed: CMake infrastructure had some minor modifications made to improve compile-times.
+- Fixed: All crates for Sabre have been reworked to now feature documentation friendly comments.
+
+<h4>Package / website</h4>
+
+- Moved: All content for the website can now be found in the `/docs` folder of the monorepo.
+- Fixed: Headings for the `builtins` and `crates` sections are now constructed dynamically.
+
+<h4>Package / vscode</h4>
+
+- Added: Allow users to install Sabre when the executable cannot be found.
+- Fixed: Restarting the language server now does not error if it had not already been started.
+
+<h4>Toolkit / sabre run</h4>
+
+- Fixed: The equality operator `==` was ill-formed for `String` values. Now these compare values correctly.
+- Added: Implemented constant load propagation to further optimize bytecode. This effectively speeds up variable loads.
+- Moved: Changed typing of `Function.bind` to be a static field for `Function` instead of an instance field.
+- Fixed: Improved the internal AST design to use lexical tokens to describe ranges/bounds for source code.
+- Moved: The bytecode interpreter now uses tail-calls instead of direct-threading with `goto*` statements.
+- Added: Fully completed a baseline JIT compiler. This is now exposed via the
+- Added: Implemented the `match` statement as described in this blog-post. For now it is just a basic implementation.
+
+<h4>Crate / sabre:jit</h4>
+
+- Moved: The JIT compilation library was removed in lieu of the `#[Internal.Optimize]` attribute.
+
+<h4>Crate / sabre:lint</h4>
+
+- Added: Prepare the stub-definitions for the `sabre:lint` crate. This will be for eventual linting plugins.

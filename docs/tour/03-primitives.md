@@ -2,7 +2,7 @@
 title: 03. Primitives
 ---
 
-Talos provides a variety of typed primitives. These include:
+Sabre provides a variety of typed primitives. These include:
 
 | Type      | Description                     |
 | --------- | ------------------------------- |

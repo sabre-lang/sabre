@@ -1,0 +1,27 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(name)
+SABRE_XX_STATICS_TYPEDEF("fn [E](enumeration: E, variant: Number) -> String")
+SABRE_XX_STATICS_DESCRIBE("Gets the name of an enum variant.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(label)
+SABRE_XX_STATICS_TYPEDEF("fn [E](enumeration: E, variant: Number) -> String")
+SABRE_XX_STATICS_DESCRIBE("Gets the label of an enum variant.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(value)
+SABRE_XX_STATICS_TYPEDEF("fn [E](enumeration: E, variant: Number) -> Number")
+SABRE_XX_STATICS_DESCRIBE("Gets the value of an enum variant.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

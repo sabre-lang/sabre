@@ -11,8 +11,8 @@ import { Assets } from '~/tools/assets/index';
     // prepare some paths to be used now
     const outdir = path.resolve(__dirname);
     const prefix = path.resolve(outdir, `callgrind.out.`);
-    const script = Assets.examples('sandbox.tal');
-    const executable = Assets.root('dist', 'bin', 'talos');
+    const script = Assets.examples('sandbox.sabre');
+    const executable = Assets.root('dist', 'bin', 'sabre');
     const argv = process.argv.slice(2).reduce((acc, argn) => acc + `${argn} `, '');
     const visualizer = `${process.platform === 'linux' ? 'k' : 'q'}cachegrind`;
 

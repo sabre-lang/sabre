@@ -1,0 +1,286 @@
+name: sabre
+displayName: Sabre
+scopeName: source.sabre
+
+patterns:
+  - include: "#comments"
+  - include: "#punctuation"
+  - include: "#directives"
+  - include: "#declarations"
+  - include: "#statements"
+  - include: "#expressions"
+
+repository:
+  # Directive Syntax.
+  directives:
+    patterns:
+      - include: "#module-directives"
+      - include: "#decorator-directives"
+
+  # Declaration Syntax.
+  declarations:
+    patterns:
+      - include: "#function-declaration"
+      - include: "#enum-declaration"
+      - include: "#class-declaration"
+      - include: "#storage-modifiers"
+
+  # Statement Syntax.
+  statements:
+    patterns:
+      - include: "#loop-statement"
+      - include: "#for-statement"
+      - include: "#match-statement"
+      - include: "#conditional-statement"
+      - include: "#return-statement"
+      - include: "#control-statement"
+      - include: "#exception-statement"
+
+  # Expression Syntax.
+  expressions:
+    patterns:
+      - include: "#operators"
+      - include: "#literals"
+      - include: "#identifiers"
+      - include: "#annotations"
+      - include: "#executors"
+
+  punctuation:
+    patterns:
+      - include: "#end-of-expression"
+      - include: "#punctuation-comma"
+      - include: "#punctuation-accessor"
+      - include: "#punctuation-separator"
+      - include: "#punctuation-arrow-bold"
+      - include: "#punctuation-arrow-thin"
+
+  literals:
+    patterns:
+      - include: "#self-literal"
+      - include: "#super-literal"
+      - include: "#void-literal"
+      - include: "#boolean-literal"
+      - include: "#numeric-literal"
+      - include: "#string-literal"
+
+  ##  Directives  ##
+
+  module-directives:
+    match: (?<!\.)\b(?:(import)|(export)|(namespace)|(as))\b
+    captures:
+      1: { name: keyword.other.import.sabre }
+      2: { name: keyword.other.export.sabre }
+      3: { name: keyword.other.namespace.sabre }
+      4: { name: keyword.other.as.sabre }
+
+  decorator-directives:
+    match: \@
+    name: keyword.operator.decorator.sabre
+
+  ##  Declarations  ##
+
+  storage-modifiers:
+    name: storage.modifier.sabre
+    match: (?<!\.)\b(let|mut|use|type|public|private|protected|abstract)\b
+
+  function-declaration:
+    match: (?<!\.)\b(?:(fn))\b
+    captures:
+      1: { name: storage.type.function.sabre }
+
+  enum-declaration:
+    name: keyword.other.enum.sabre
+    match: (?<!\.)\b(enum)\b
+
+  class-declaration:
+    match: (?<!\.)\b(?:(struct)|(class)|(implements))\b
+    captures:
+      1: { name: keyword.other.class.sabre }
+      2: { name: keyword.other.class.sabre }
+      3: { name: keyword.other.impl.sabre }
+
+  ##  Statements  ##
+
+  return-statement:
+    match: (?<!\.)\b(?:(return))\b
+    captures:
+      1: { name: keyword.control.flow.return.sabre }
+
+  control-statement:
+    match: (?<!\.)\b(?:(break)|(continue)|(panic))\b
+    captures:
+      1: { name: keyword.control.flow.break.sabre }
+      2: { name: keyword.control.flow.continue.sabre }
+      3: { name: keyword.control.flow.panic.sabre }
+
+  conditional-statement:
+    match: (?<!\.)\b(?:(if)|(else))\b
+    captures:
+      1: { name: keyword.control.conditional.if.sabre }
+      2: { name: keyword.control.conditional.else.sabre }
+
+  loop-statement:
+    match: (?<!\.)\b(loop)\b
+    captures:
+      1: { name: keyword.control.loop.sabre }
+
+  for-statement:
+    match: (?<!\.)\b(for)\b
+    captures:
+      1: { name: keyword.control.loop.for.sabre }
+
+  match-statement:
+    match: (?<!\.)\b(match)\b
+    captures:
+      1: { name: keyword.control.switch.match.sabre }
+
+  exception-statement:
+    match: (?<!\.)\b(throw)\b,
+    captures:
+      1: { name: keyword.control.flow.throw.sabre }
+
+  ##  Operators  ##
+
+  operators:
+    patterns:
+      - {
+          name: keyword.operator.assignment.compound.sabre,
+          match: \*=|/=|%=|\*\*=|\+=|-=,
+        }
+      - {
+          name: keyword.operator.assignment.compound.bitwise.sabre,
+          match: \&=|\|=|\^=|<<=|>>=,
+        }
+      - { name: keyword.operator.bitwise.shift.sabre, match: <<|>> }
+      - { name: keyword.operator.comparison.sabre, match: ==|!= }
+      - { name: keyword.operator.relational.sabre, match: <=|>=|<|> }
+      - { name: keyword.operator.logical.sabre, match: \!|\|\||&&\b }
+      - { name: keyword.operator.bitwise.sabre, match: \&|~|\^|\| }
+      - { name: keyword.operator.assignment.sabre, match: = }
+      - { name: keyword.operator.coalesce.sabre, match: "\\?:" }
+      - { name: keyword.operator.arithmetic.sabre, match: \*|\*\*|%|%|/|-|\+ }
+      - match: (?<!\.)\b(?:(is)|(in))\b
+        captures:
+          1: { name: keyword.other.is.sabre }
+          2: { name: keyword.other.int.sabre }
+
+  ##  Punctuation  ##
+
+  end-of-expression:
+    name: punctuation.terminator.statement.sabre
+    match: ";"
+
+  punctuation-accessor:
+    name: punctuation.accessor.sabre
+    match: \.
+
+  punctuation-comma:
+    name: punctuation.separator.comma.sabre
+    match: ","
+
+  punctuation-arrow-thin:
+    name: keyword.operator.arrow_thin.sabre
+    match: "->"
+
+  punctuation-arrow-bold:
+    name: keyword.operator.arrow_bold.sabre
+    match: "=>"
+
+  punctuation-separator:
+    name: punctuation.separator.colon.sabre
+    match: "(<?!:):"
+
+  ##  Annotations  ##
+
+  annotations:
+    name: storage.type.intrinsic.sabre
+    match: (?<!\.)\b(Any|Never|Todo)\b
+
+  ##  Execution Policies  ##
+
+  executors:
+    match: (?<=::)\s*\b(\w+)\b
+    captures: { 1: { name: keyword.control.policy.sabre } }
+
+  ##  Literals  ##
+
+  self-literal:
+    name: keyword.other.self.sabre
+    match: (?<!\.)\bSelf\b
+
+  super-literal:
+    name: keyword.other.super.sabre
+    match: (?<!\.)\bSuper\b
+
+  void-literal:
+    name: constant.language.void.sabre
+    match: (?<!\.)\bVoid\b
+
+  boolean-literal:
+    patterns:
+      - { name: constant.language.boolean.true.sabre, match: (?<!\.)\bTrue\b }
+      - { name: constant.language.boolean.false.sabre, match: (?<!\.)\bFalse\b }
+
+  numeric-literal:
+    match: (?<!\w)\d[0-9a-zA-Z\.]*
+    captures:
+      0:
+        patterns:
+          - {
+              begin: (?=.),
+              end: $,
+              patterns:
+                [
+                  {
+                    match: "0[xX][0-9a-fA-F]*",
+                    name: constant.numeric.hex.sabre,
+                  },
+                  { match: "0[bB][01]*", name: constant.numeric.binary.sabre },
+                  {
+                    match: "(?!\\.$)(?:\\d*\\.?\\d*)",
+                    name: constant.numeric.decimal.sabre,
+                  },
+                  {
+                    match: "[0-9a-zA-Z\\.]+",
+                    name: "invalid.illegal.constant.numeric.sabre",
+                  },
+                ],
+            }
+
+  string-literal:
+    patterns:
+      - include: "#string-literal-double"
+
+  string-literal-double:
+    name: string.quoted.double.sabre
+    begin: (")
+    end: (")|((?:[\\\n])$)
+    beginCaptures: { 0: { name: punctuation.definition.string.begin.sabre } }
+    endCaptures:
+      1: { name: punctuation.definition.string.end.sabre }
+      2: { name: invalid.illegal.newline.sabre }
+    patterns: [include: "#string-character-escape"]
+
+  string-character-escape:
+    name: constant.charater.escape.sabre
+    match: \\(['"\\0abfnrtv]|x[0-9a-fA-F]{1,4}|U[0-9a-fA-F]{8}|u[0-9a-fA-F]{4})
+
+  identifier:
+    name: variable.other.sabre
+    match: "[_[:alpha:]][_[:alnum:]]*"
+
+  ##  Comments  ##
+
+  comments:
+    patterns:
+      - include: "#comments-documentation"
+      - include: "#comments-inline"
+
+  comments-documentation:
+    name: comment.block.documentation.sabre
+    begin: ///
+    while: ^\s*///
+
+  comments-inline:
+    match: ((//).*)$
+    captures: { 1: { name: comment.line.double-slash.sabre } }

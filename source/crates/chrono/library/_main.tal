@@ -1,6 +1,0 @@
-///
-/// @crate "chrono"
-/// @describe Date and time manipulation library.
-///
-
-Todo("Unimplemented Crate - 'talos:chrono'");

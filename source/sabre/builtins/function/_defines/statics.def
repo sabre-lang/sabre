@@ -1,0 +1,33 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(bind)
+SABRE_XX_STATICS_TYPEDEF("fn [F: Function](callback: F, receiver: Any) -> F")
+SABRE_XX_STATICS_DESCRIBE("Binds a `Function` with the given context receiver.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(call)
+SABRE_XX_STATICS_TYPEDEF("fn [F: Function](callback: F, ...args: Any) -> Any")
+SABRE_XX_STATICS_DESCRIBE("Invokes the callback function with the given arguments.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(apply)
+SABRE_XX_STATICS_TYPEDEF("fn [F: Function](callback: F, args: List[Any]) -> Any")
+SABRE_XX_STATICS_DESCRIBE("Invokes the callback function with the given arguments list.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(vlimit)
+SABRE_XX_STATICS_TYPEDEF("fn -> Number")
+SABRE_XX_STATICS_DESCRIBE("Gets the maximum fixed variadic arguments adicity.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

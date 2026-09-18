@@ -1,10 +1,10 @@
 ---
 title: Syntax
 icon: WholeWord
-description: The fundamental syntax of the Talos programming language
+description: The fundamental syntax of the Sabre programming language
 ---
 
-This document describes the syntax design of the Talos programming language. Much of this is provisional until a version `1.0.0` can be produced.
+This document describes the syntax design of the Sabre programming language. Much of this is provisional until a version `1.0.0` can be produced.
 
 The language is designed to be familiar, whilst also streamlining some elements to simplify readability, usability and internal development. For example, by purposefully designing the syntax, we can more efficiently parse programs (eg: types annotated after identifiers), or we can improve developer experience (eg: module file-names before the imports).
 
@@ -12,13 +12,13 @@ The language is designed to be familiar, whilst also streamlining some elements 
 
 Line comments start with `//` and end at newlines.
 
-```talos
+```sabre
 // This is a comment.
 ```
 
-Talos does not support block-comments, but instead features doc-comments that are denoted by `//!` instead.
+Sabre does not support block-comments, but instead features doc-comments that are denoted by `//!` instead.
 
-```talos
+```sabre
 //! This is a documentation comment.
 ```
 
@@ -37,7 +37,7 @@ The following numeric literals are supported:
 
 Strings are supported as single-line and as blocks.
 
-```talos
+```sabre
 "example"; // single-line literal
 ```
 
@@ -54,9 +54,9 @@ Within a string literal, the following escape sequences are recognized:
 
 #### Interpolation
 
-Talos does not yet explicitly allow string interpolation. This can however be achieved with format strings:
+Sabre does not yet explicitly allow string interpolation. This can however be achieved with format strings:
 
-```talos
+```sabre
 Debug.println("Hello, {}!".fmt("World"));
 ```
 
@@ -64,7 +64,7 @@ Format strings use the underlying [`fmt`](https://fmt.dev/) library syntax.
 
 ### Tokens
 
-The following is the current symbolic tokens/operators list recognized in Talos (in order from HIGHEST to LOWEST):
+The following is the current symbolic tokens/operators list recognized in Sabre (in order from HIGHEST to LOWEST):
 
 | Operator          | Description                                           |
 | ----------------- | ----------------------------------------------------- |
@@ -93,7 +93,7 @@ Naming rules are similar to other programming languages. They may start with a v
 
 Some keywords cannot be used as identifiers and as such are considered reserved. These are:
 
-```talos
+```sabre
 let mut
 in is as
 import export
@@ -107,7 +107,7 @@ for loop break continue
 
 #### Conventions
 
-For idiomatic Talos code, these conventions are recommended:
+For idiomatic Sabre code, these conventions are recommended:
 
 | Item              | Convention         |
 | ----------------- | ------------------ |
@@ -124,9 +124,9 @@ For idiomatic Talos code, these conventions are recommended:
 
 ### Variables
 
-Variables declare a named value that can be used within Talos code. They are required to denote their immutability, and can optionally contain a type-annotation. If no typing is given, then their type is auto-inferred.
+Variables declare a named value that can be used within Sabre code. They are required to denote their immutability, and can optionally contain a type-annotation. If no typing is given, then their type is auto-inferred.
 
-```talos
+```sabre
 let x: Number = 42;     // Immutable, explicitely typed (Number).
 mut y = x;              // Mutable, typing-inferred (Number).
 let z: Any = y;         // Immutable, dynamicly typed.
@@ -134,14 +134,14 @@ let z: Any = y;         // Immutable, dynamicly typed.
 
 ### Functions
 
-Functions are a core structural unit within Talos. For example:
+Functions are a core structural unit within Sabre. For example:
 
-```talos
+```sabre
 let add = fn (a: Number, b: Number): Number { return a + b; };
 let sub = fn (a, b: Any) => a + b;
 ```
 
-The first thing to note is that functions are values. As such, they must be explicitly bound to a variable. The reasoning for this is part of how Talos aims to be [colorless](/language/advanced/colorless) in calling conventions and concurrency.
+The first thing to note is that functions are values. As such, they must be explicitly bound to a variable. The reasoning for this is part of how Sabre aims to be [colorless](/language/advanced/colorless) in calling conventions and concurrency.
 
 Breaking apart `add` we can see that:
 
@@ -167,7 +167,7 @@ Control flow consists of the sequence in which _statements_ are executed. They u
 
 The `if` and `else` statements provide conditional execution of blocks. These are constructed similarly to other C-like languages.
 
-```talos
+```sabre
 if (initial_condition) { ... }
 else if (other_condition) { ... }
 ```
@@ -178,14 +178,14 @@ There are two available loop statements, `loop` and `for`.
 
 The `loop` statement can be used to construct finite/infinite loops. This is dependent on the condition, if given.
 
-```talos
+```sabre
 loop (condition) { ... }    // similar to a while loop
 loop { ... }                // auto-inferred as infinite
 ```
 
 The `for` statement supports range-based looping over iterables.
 
-```talos
+```sabre
 for (ch, ii in "abc") Debug.println(ii, ch);
 ```
 
@@ -195,7 +195,7 @@ The utility statements `break` and `continue` can be used for additional control
 
 The `return` statement ends the flow of execution within a function, returning execution to the caller. A value can optionally be provided (dependent on the function context).
 
-```talos
+```sabre
 let sign = fn (n: Number): Number {
   if (i > 0) return 1;
   if (i < 0) return -1;
@@ -211,7 +211,7 @@ Although usable as an expression, the `panic` operator throws an immediate excep
 
 A `match` statement mirrors that of the `switch` statement in other languages, however it also allows for additional `case` patterns.
 
-```talos
+```sabre
 let value = "abc";
 let guard = (value) => value == "ab";
 
@@ -224,17 +224,17 @@ match (value) {
 };
 ```
 
-Unlike other `switch` statements, Talos' `match` statement allows checking values against their runtime types (eg: `String`), or through a _guard_ function.
+Unlike other `switch` statements, Sabre' `match` statement allows checking values against their runtime types (eg: `String`), or through a _guard_ function.
 
 ### Classes
 
-A `class` in Talos is a user-defined record type. All fields are referenced by their names and classes are the primary mechanism for users to construct more complex typings. Talos supports both named - "nominal" and anonymous - "structural", class types. Nominal classes are all distinct, however structural types are equal if they possess the same fields/types.
+A `class` in Sabre is a user-defined record type. All fields are referenced by their names and classes are the primary mechanism for users to construct more complex typings. Sabre supports both named - "nominal" and anonymous - "structural", class types. Nominal classes are all distinct, however structural types are equal if they possess the same fields/types.
 
 #### Nominal
 
 A declaration for a nominal class type could be:
 
-```talos
+```sabre
 class Position {
     public let x: Number = 0;
     public let y: Number = 0;
@@ -252,7 +252,7 @@ Where breaking apart `Position` gets us:
 
 Classes can be annotated with a _limited_ function signature to denote their construction.
 
-```talos
+```sabre
 // Defines a class with constructor arguments.
 class Position(a_x?: Number, a_y?: Number) {
     public let x = a_x ?? 0;
@@ -264,7 +264,7 @@ class Position(a_x?: Number, a_y?: Number) {
 
 For inheritance, we can have a `class` that extends another. This gives us the following declaration:
 
-```talos
+```sabre
 class Base(_: Any) {};
 class Derived => Base("...") {};
 ```
@@ -275,7 +275,7 @@ As can also be seen, we can pass the arguments from the child constructor to the
 
 Classes can also inherit from structural types.
 
-```talos
+```sabre
 type Labeled = {
     label: String;
 };
@@ -301,7 +301,7 @@ printer(Derived("another"));    // Valid!
 
 ### Attributes
 
-During compile-time, there are some additional properties that a developer may want to declare. To do this, Talos introduces attributes with the `#[...]` syntax above a declaration.
+During compile-time, there are some additional properties that a developer may want to declare. To do this, Sabre introduces attributes with the `#[...]` syntax above a declaration.
 
 This allows us to alter certain properties of values. The current attributes available are:
 
@@ -319,9 +319,9 @@ Alternatively to attributes are decorators. These instead are applied at runtime
 
 ### Namespaces
 
-Similar to TypeScript, Talos allows wrapping variables within a parent `namespace`.
+Similar to TypeScript, Sabre allows wrapping variables within a parent `namespace`.
 
-```talos
+```sabre
 namespace Validation {
     // Note: To access variables outside of the namespace
     // scoping, they must be declared as an export.
@@ -331,28 +331,28 @@ namespace Validation {
 
 ### Modules
 
-Talos includes a file-based module system for multi-file programs. Variables can be exposed to other files by declaring them via the `export` keyword.
+Sabre includes a file-based module system for multi-file programs. Variables can be exposed to other files by declaring them via the `export` keyword.
 
-```talos
-// File: "a.tal"
+```sabre
+// File: "a.sabre"
 export let value = 42;
 ```
 
 To then access `value` from another file, it can be imported with the `import` keyword.
 
-```talos
-// File: "b.tal"
-import "a.tal" as { value };
+```sabre
+// File: "b.sabre"
+import "a.sabre" as { value };
 Debug.println("V:", value);
 ```
 
 Imports can either destructure the incoming exports, or rename them entirely.
 
-```talos
-import "a.tal" as A;
+```sabre
+import "a.sabre" as A;
 ```
 
-Since `import` paths are internally contained as [URLs](https://en.wikipedia.org/wiki/URL), this gives Talos the best option for exposing internal and external crates.
+Since `import` paths are internally contained as [URLs](https://en.wikipedia.org/wiki/URL), this gives Sabre the best option for exposing internal and external crates.
 
 #### Schemes
 
@@ -360,10 +360,10 @@ Since `import` paths are internally contained as [URLs](https://en.wikipedia.org
 | --------- | --------------------- |
 | `<empty>` | Defaults to `file`    |
 | `file`    | Filesystem import     |
-| `talos`   | Talos library crates  |
-| `dylib`   | Talos dynamic crates  |
+| `sabre`   | Sabre library crates  |
+| `dylib`   | Sabre dynamic crates  |
 | `crate`   | User installed crates |
 
 #### Crates
 
-To accomodate complex internal/external dependencies, Talos implements this similarly to other languages by exposing libraries with a `_crate.jsonc` file. For more information, see the [configuration](../development/configuration) guide.
+To accomodate complex internal/external dependencies, Sabre implements this similarly to other languages by exposing libraries with a `_crate.jsonc` file. For more information, see the [configuration](../development/configuration) guide.

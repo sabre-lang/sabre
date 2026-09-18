@@ -1,13 +1,13 @@
 {
     "$schema": "vscode://schemas/vscode-extensions",
 
-    "name": "talos-lang",
-    "publisher": "talos",
-    "icon": "icons/talos.png",
+    "name": "sabre-lang",
+    "publisher": "sabre",
+    "icon": "icons/sabre.png",
     "author": "Reuben Roessler",
-    "displayName": "Talos Programming Language",
-    "repository": "https://github.com/rroessler/talos-lang",
-    "description": "Support for the Talos programming language",
+    "displayName": "Sabre Programming Language",
+    "repository": "https://github.com/rroessler/sabre-lang",
+    "description": "Support for the Sabre programming language",
 
     "activationEvents": [],
     "engines": { "vscode": "^1.22.0" },
@@ -15,21 +15,21 @@
 
     "contributes": {
         "commands": [
-            { "category": "Talos", "command": "talos.restart", "title": "Restart Language Server" },
-            { "category": "Talos", "command": "talos.settings", "title": "Open Extension Settings" }
+            { "category": "Sabre", "command": "sabre.restart", "title": "Restart Language Server" },
+            { "category": "Sabre", "command": "sabre.settings", "title": "Open Extension Settings" }
         ],
 
-        "configurationDefaults": { "[talos]": { "editor.formatOnSave": true } },
+        "configurationDefaults": { "[sabre]": { "editor.formatOnSave": true } },
         "configuration": {
-            "title": "Talos",
+            "title": "Sabre",
             "properties": {
-                "talos.server.executablePath": {
+                "sabre.server.executablePath": {
                     "default": "",
                     "type": "string",
                     "scope": "machine",
-                    "description": "A path to the Talos executable."
+                    "description": "A path to the Sabre executable."
                 },
-                "talos.server.loggingLevel": {
+                "sabre.server.loggingLevel": {
                     "default": "warn",
                     "type": "string",
                     "scope": "machine",
@@ -41,25 +41,25 @@
 
         "languages": [
             {
-                "id": "talos",
-                "extensions": [".tal"],
-                "aliases": ["Talos", "tal"],
+                "id": "sabre",
+                "extensions": [".sabre"],
+                "aliases": ["Sabre", "sabre"],
                 "configuration": "./language-configuration.json",
-                "icon": { "light": "icons/talos.svg", "dark": "icons/talos.svg" }
+                "icon": { "light": "icons/sabre.svg", "dark": "icons/sabre.svg" }
             }
         ],
 
         "grammars": [
             {
-                "language": "talos",
-                "scopeName": "source.tal",
-                "path": "./syntaxes/talos.tmLanguage.json"
+                "language": "sabre",
+                "scopeName": "source.sabre",
+                "path": "./syntaxes/sabre.tmLanguage.json"
             },
             {
                 "injectTo": ["text.html.markdown"],
-                "scopeName": "markdown.talos.codeblock",
-                "path": "./syntaxes/talos.injection.json",
-                "embeddedLanguages": { "meta.embedded.block.talos": "talos" }
+                "scopeName": "markdown.sabre.codeblock",
+                "path": "./syntaxes/sabre.injection.json",
+                "embeddedLanguages": { "meta.embedded.block.sabre": "sabre" }
             }
         ],
 

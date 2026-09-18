@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@talos/vscode",
+    "name": "@sabre/vscode",
     "scripts": {
         "--  BUNDLE  --": "",
         "bundle": "npm-run-all clean lint --parallel bundle:*",

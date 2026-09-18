@@ -4,8 +4,8 @@
 /// Vendor Includes
 #include <CLI/CLI.hpp>
 
-/// Talos Includes
-#include <talos/runtime/options.hpp>
+/// Sabre Includes
+#include <sabre/runtime/options.hpp>
 
 /// Shell Includes
 #include "shell/command/usage.hpp"
@@ -60,7 +60,7 @@ protected:
    * @param options                   Runtime options.
    * @param runtime                   Flag for extra.
    */
-  void m_common(CLI::App *command, Talos::Runtime::Options *options, bool runtime);
+  void m_common(CLI::App *command, Sabre::Runtime::Options *options, bool runtime);
 
   /**
    * @brief Handles throwing immediate failures.

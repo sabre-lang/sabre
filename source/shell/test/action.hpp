@@ -7,7 +7,7 @@
 namespace Shell::Test {
 
 /// @brief Testing Options.
-using Options = Talos::Runtime::Options;
+using Options = Sabre::Runtime::Options;
 
 /// @brief Test Command.
 class Action : public Command::Abstract {

@@ -4,8 +4,8 @@
 /// Vendor Includes
 #include <xpc/xpc.hpp>
 
-/// Talos Includes
-#include <talos/crate/manifest.hpp>
+/// Sabre Includes
+#include <sabre/crate/manifest.hpp>
 
 /// Shell Includes
 #include "shell/command/abstract.hpp"
@@ -66,13 +66,13 @@ public:
    * @brief Handles executing a branch instance against a crate.
    * @param crate                 Crate to spawn against.
    */
-  bool execute(const Talos::Crate::Manifest *crate) const;
+  bool execute(const Sabre::Crate::Manifest *crate) const;
 
   /**
    * @brief Resolves tasks against a crate.
    * @param crate                 Crate to resolve against.
    */
-  $::Map::Dict<$::String::Buffer> tasks(const Talos::Crate::Manifest *crate) const;
+  $::Map::Dict<$::String::Buffer> tasks(const Sabre::Crate::Manifest *crate) const;
 
 protected:
   //  PRIVATE METHODS  //
@@ -87,8 +87,8 @@ protected:
    * @brief Handles executing processes sequentially or concurrently.
    * @param crate                 Crate workspace.
    */
-  bool m_sequential(const Talos::Crate::Manifest *crate) const;
-  bool m_concurrent(const Talos::Crate::Manifest *crate) const;
+  bool m_sequential(const Sabre::Crate::Manifest *crate) const;
+  bool m_concurrent(const Sabre::Crate::Manifest *crate) const;
 
   /**
    * @brief Handles declaring a failure.
@@ -102,7 +102,7 @@ protected:
    * @param script                Task script.
    * @param crate                 Crate workspace.
    */
-  XPC::Process::Child m_spawn($::String::Buffer script, const Talos::Crate::Manifest *crate) const;
+  XPC::Process::Child m_spawn($::String::Buffer script, const Sabre::Crate::Manifest *crate) const;
 
   /**
    * @brief Handles printing branches.

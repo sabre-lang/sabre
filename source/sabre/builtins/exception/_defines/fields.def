@@ -1,0 +1,21 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(name)
+SABRE_XX_FIELDS_TYPEDEF("fn -> String")
+SABRE_XX_FIELDS_DESCRIBE("Gets the name of the exception.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(message)
+SABRE_XX_FIELDS_TYPEDEF("fn -> String")
+SABRE_XX_FIELDS_DESCRIBE("Gets the human-readable description of the exception.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

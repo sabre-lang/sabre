@@ -1,5 +1,5 @@
 name: Build Runtime
-description: Workflow for building Talos artifacts
+description: Workflow for building Sabre artifacts
 
 on:
     workflow_call:
@@ -40,19 +40,19 @@ jobs:
             - name: Testing '${{ matrix.label }}-${{ matrix.arch }}'
               timeout-minutes: 1 # should never go longer than this
               run: |
-                  ${{ github.workspace }}/dist/bin/talos --revision
-                  ${{ github.workspace }}/dist/bin/talos test
+                  ${{ github.workspace }}/dist/bin/sabre --revision
+                  ${{ github.workspace }}/dist/bin/sabre test
 
             - name: Compress Artifacts
               uses: thedoctor0/zip-release@0.7.5
               with:
                   type: zip
                   directory: dist
-                  filename: ../talos-${{ matrix.label }}-${{ matrix.arch }}.zip
+                  filename: ../sabre-${{ matrix.label }}-${{ matrix.arch }}.zip
 
             - name: Upload Artifacts
               uses: actions/upload-artifact@v7
               with:
                   overwrite: true
-                  name: talos-${{ matrix.label }}-${{ matrix.arch }}
-                  path: talos-${{ matrix.label }}-${{ matrix.arch }}.zip
+                  name: sabre-${{ matrix.label }}-${{ matrix.arch }}
+                  path: sabre-${{ matrix.label }}-${{ matrix.arch }}.zip

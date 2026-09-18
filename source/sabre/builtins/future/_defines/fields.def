@@ -1,0 +1,33 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(then)
+SABRE_XX_FIELDS_TYPEDEF("fn [V = Any](callback: fn (T) -> V | Future[V]) -> Future[V]")
+SABRE_XX_FIELDS_DESCRIBE("Registers a callback to be called when this future is resolved.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(fails)
+SABRE_XX_FIELDS_TYPEDEF("fn (callback: fn (Any?) -> T | Future[T]) -> Future[T]")
+SABRE_XX_FIELDS_DESCRIBE("Registers a callback to be called when this future is rejected.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(await)
+SABRE_XX_FIELDS_TYPEDEF("fn -> T")
+SABRE_XX_FIELDS_DESCRIBE("Pauses execution of the current thread isolate until the future is fulfilled.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(state)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the current state of a `Future`.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

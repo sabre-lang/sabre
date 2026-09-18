@@ -1,0 +1,18 @@
+///
+/// @example "benchmarks/fibonacci.bench.sabre"
+/// @describe Traces different "fibonacci" benchmarks.
+///
+
+// Sabre Modules
+import "sabre:test" as Test;
+
+// - TEST SETUP - //
+
+export let fibonacci = fn (n: Number): Number {
+    if (n < 2) return n;
+    return ^(n - 2) + ^(n - 1);
+};
+
+// - TEST CASES - //
+
+Test.bench("fibonacci", fn => fibonacci(25));

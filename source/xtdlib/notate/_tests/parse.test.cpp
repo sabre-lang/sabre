@@ -9,7 +9,7 @@ $_FWD(Mock, $::String::Buffer merge($::String::Buffer, const $::String::Buffer &
 #define MM_HEADER                                          \
   "This is a header section with\n"                        \
   "an additional fenced description.\n\n"                  \
-  "```talos\nDebug.println::async(\"Hello, World!\")\n```"
+  "```sabre\nDebug.println::async(\"Hello, World!\")\n```"
 
 //  X-MACROS  //
 
