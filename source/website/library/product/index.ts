@@ -1,13 +1,13 @@
 /// JSON Modules
 import { description as d } from '../../package.json';
-import { publisher, displayName } from '~/configs/extension.json';
+import { name, displayName } from '~/configs/extension.json';
 
 /** The Product Details. */
 export namespace Product {
     //  PROPERTIES  //
 
     /** Underlying product identifier. */
-    export const identifier = publisher;
+    export const identifier = name;
 
     /** Available extension typing. */
     export const extension = '.sabre';
