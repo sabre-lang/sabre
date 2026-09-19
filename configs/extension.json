@@ -1,8 +1,8 @@
 {
     "$schema": "vscode://schemas/vscode-extensions",
 
-    "name": "sabre-lang",
-    "publisher": "sabre",
+    "name": "sabre",
+    "publisher": "sabre-lang",
     "icon": "icons/sabre.png",
     "author": "Reuben Roessler",
     "displayName": "Sabre Programming Language",
