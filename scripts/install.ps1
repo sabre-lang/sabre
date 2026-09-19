@@ -6,7 +6,6 @@ param(
     [String]$Tag = "latest", # The incoming version.
     [Switch]$Dry = $false, # Whether to write outputs.
     [Switch]$Force = $false, # Forces writing of outputs.
-    [String]$Archive = $false # Enables accessing Talos.
 );
 
 # -  PROPERTIES  - #
@@ -199,8 +198,8 @@ function Install-Sabre-Main {
     # resolve the incoming details about the installation
     $arch = "x64";
     $validated = $false;
+    $target = "sabre-windows-$arch";
     $version = if ($Tag -match "^\d+\.\d+\.\d+") { "v$Tag"; } else { $Tag; };
-    $target = if ($Archive) { "talos-windows-$arch"; } else { "sabre-windows-$arch" };
 
     # check if the requested tag actually exists firstly
     if ($version -eq "latest") {

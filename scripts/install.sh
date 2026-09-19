@@ -42,7 +42,7 @@ exit_success() {
 
 # Handles failure exits.
 exit_failure() {
-    echo -e "${C_RED}Exception.$1$C_RESET: $2" >&2
+    echo -e "${C_RED}Exception.$1$C_RESET: ${@:2}" >&2
     exit 1 # ensure we forcefully exit
 }
 
@@ -238,7 +238,6 @@ main_parse() {
         case $1 in
         --dry) OPT_DRY=true ;;
         --force) OPT_FORCE=true ;;
-        --archive) sabre_target="talos-" ;;
         --tag)
             OPT_TAG=$2
             shift
