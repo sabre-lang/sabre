@@ -18,6 +18,7 @@ Sabre statically links these libraries:
 | [`boost`](https://github.com/boostorg/boost)             | [BSL-1.0](https://github.com/boostorg/boost/blob/main/LICENSE)            |
 | [`CLI11`](https://github.com/CLIUtils/CLI11)             | [BSD 3-Clause](https://github.com/CLIUtils/CLI11/blob/main/LICENSE)       |
 | [`fmt`](https://github.com/fmtlib/fmt)                   | [MIT](https://github.com/fmtlib/fmt/blob/main/LICENSE)                    |
+| [`function2`](https://github.com/naios/function2.git)    | [BSL-1.0](https://github.com/boostorg/boost/blob/main/LICENSE)            |
 | [`glaze`](https://github.com/stephenberry/glaze)         | [MIT](https://github.com/stephenberry/glaze/blob/main/LICENSE)            |
 | [`lief`](https://github.com/lief-project/LIEF)           | [Apache 2.0](https://github.com/lief-project/LIEF/blob/main/LICENSE)      |
 | [`modern-uuid`](https://github.com/gershnik/modern-uuid) | [BSD 3-Clause](https://github.com/gershnik/modern-uuid/blob/main/LICENSE) |
