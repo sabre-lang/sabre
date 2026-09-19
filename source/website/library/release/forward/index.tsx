@@ -2,12 +2,15 @@
 import { Details, Registry } from '../registry';
 
 /// Markdown Modules
+import Rename from './_rename.mdx';
 import Snippet from './_snippet.mdx';
 
 /** Preview Component. */
 export interface Forward extends Forward.Props {}
 export function Forward({ page }: Forward) {
-    return Registry.validate(page) ? <Snippet /> : null;
+    if (!Registry.validate(page)) return;
+    const rename = Registry.rename(page);
+    return rename ? <Rename /> : <Snippet />;
 }
 
 export namespace Forward {

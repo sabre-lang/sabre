@@ -1,5 +1,5 @@
 {
-    "version": "0.3.0",
+    "version": "0.3.1",
     "name": "@sabre/json",
     "main": "library/_main.sabre",
     "describe": "Utilities for parsing and serializing JSON/JSONC"

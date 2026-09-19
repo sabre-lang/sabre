@@ -1,5 +1,5 @@
 {
-    "version": "0.3.0",
+    "version": "0.3.1",
     "name": "@sabre/async",
     "main": "library/_main.sabre",
     "describe": "Utilities for asynchronous operations, like atomics, or channels"

@@ -21,6 +21,7 @@ export namespace Executable {
 
         // prepare a valid location for the potential executable
         path.resolve(os.homedir(), '.sabre', 'bin', Product.executable),
+        path.resolve(os.homedir(), '.talos', 'bin', `talos${process.platform === 'win32' ? '.exe' : ''}`),
     ];
 
     //  PUBLIC METHODS  //

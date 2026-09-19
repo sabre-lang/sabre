@@ -1,5 +1,5 @@
 {
-    "version": "0.3.0",
+    "version": "0.3.1",
     "name": "@sabre/chrono",
     "main": "library/_main.sabre",
     "describe": "Support for date and time manipulation"

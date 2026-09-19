@@ -26,7 +26,15 @@ export namespace Registry {
      * Handles validating pages.
      * @param page                  Page to validate.
      */
-    export function validate(page?: Details) {
+    export function validate(page?: Details): page is Details {
         return !!page?.data.title.startsWith(prefix);
+    }
+
+    /**
+     * Handles validating renames.
+     * @param page                  Page to validate.
+     */
+    export function rename(page: Details) {
+        return page.data.title.slice(prefix.length) < '0.3.1';
     }
 }

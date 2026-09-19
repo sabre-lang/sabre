@@ -1,5 +1,5 @@
 {
-    "version": "0.3.0",
+    "version": "0.3.1",
     "name": "@sabre/test",
     "main": "library/_main.sabre",
     "describe": "Tools for describing and mocking testing files"
