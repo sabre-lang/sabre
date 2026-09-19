@@ -16,7 +16,7 @@
 namespace Sabre::Runtime {
 
 /// @brief Runtime Thread Isolate.
-class $_ABSTRACT Isolate {
+class $_ALIGNAS(64) $_ABSTRACT Isolate {
   //  TYPEDEFS  //
 
   /// @brief Allow the allocator internal access.
