@@ -42,4 +42,4 @@ Realistically, this release contains the baseline implementation of Sabre and sh
 
 ## Want More...
 
-Check out [the documentation](/language) for Sabre, or view the project on [GitHub](https://github.com/rroessler/sabre-lang).
+Check out [the documentation](/language) for Sabre, or view the project on [GitHub](https://github.com/sabre-lang/sabre).

@@ -6,7 +6,7 @@
     "icon": "icons/sabre.png",
     "author": "Reuben Roessler",
     "displayName": "Sabre Programming Language",
-    "repository": "https://github.com/rroessler/sabre-lang",
+    "repository": "https://github.com/sabre-lang/sabre",
     "description": "Support for the Sabre programming language",
 
     "activationEvents": [],

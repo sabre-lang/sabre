@@ -48,7 +48,7 @@ export function Hero({ className, ...props }: Hero) {
         <div {...props} className={className}>
             <div className="flex flex-col col-span-8 sm:col-span-5 px-6 py-8 z-10 sm:h-full">
                 <h1 className="text-4xl sm:text-5xl mb-1! sm:mb-2 font-mono italic">{Product.shortName}</h1>
-                <h2 className="text-2xl block sm:hidden font-mono my-0!">{Product.version}</h2>
+                <h2 className="text-2xl block sm:hidden font-mono my-0!">v{Product.version}</h2>
                 <h2 className="text-3xl hidden sm:block">{Product.description}</h2>
             </div>
 

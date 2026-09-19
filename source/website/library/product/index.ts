@@ -13,7 +13,7 @@ export namespace Product {
     export const extension = '.sabre';
 
     /** The baseline github URL. */
-    export const github = 'https://github.com/rroessler/sabre-lang';
+    export const github = 'https://github.com/sabre-lang/sabre';
 
     /** Assign the associated website description. */
     export const description = d;

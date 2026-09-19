@@ -18,7 +18,7 @@ FetchContent_Declare(
     sabre
     GIT_SHALLOW ON
     GIT_TAG "latest"
-    GIT_REPOSITORY "https://github.com/rroessler/sabre-lang.git"
+    GIT_REPOSITORY "https://github.com/sabre-lang/sabre.git"
 )
 
 # Make the content available

@@ -5,7 +5,7 @@ set -euo pipefail
 
 # get some incoming details about sabre
 sabre_target="sabre-"
-sabre_repo="rroessler/sabre-lang"
+sabre_repo="sabre-lang/sabre"
 sabre_binary=$(command -v sabre 2>&1 || true)
 sabre_dest=${SABRE_DIRECTORY_ROOT:-$HOME/.sabre}
 sabre_upgrade=$([ -z $sabre_binary ] && echo false || echo true)

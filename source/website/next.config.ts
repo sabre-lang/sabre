@@ -25,11 +25,12 @@ export default fumadocs.createMDX()({
 
 function m_version() {
     // prepare the command to be used for getting current release version
-    const command = 'gh release view --repo rroessler/sabre-lang --json tagName --jq .tagName';
+    const command = 'gh release view --repo sabre-lang/sabre --json tagName --jq .tagName';
 
     try {
-        return cp.execSync(command, { stdio: 'ignore' }).toString().trim();
-    } catch {
-        return PKG.version;
+        const output = cp.execSync(command, { stdio: 'pipe' });
+        return output.toString().split('-')[0].trim();
+    } catch (error) {
+        return `v${PKG.version}`;
     }
 }

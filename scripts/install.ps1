@@ -20,7 +20,7 @@ $C_RED = if ($C_NONE) { "" } else { [char]27 + "[1;31m"; };
 $C_GREEN = if ($C_NONE) { "" } else { [char]27 + "[32m"; };
 
 # check if Sabre already exists currently
-$SabreRepo = "rroessler/sabre-lang";
+$SabreRepo = "sabre-lang/sabre";
 $SabreBinary = try { (Get-Command "sabre" -ErrorAction Stop).Path; } catch {};
 $SabreVersion = try { & $SabreBinary --version } catch {};
 $SabreUpgrade = $SabreBinary.Count -ne 0; # denote if we are upgrading

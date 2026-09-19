@@ -4,7 +4,7 @@ title: License
 description: Sabre itself is MIT-licensed
 ---
 
-The license for Sabre can be viewed [here](https://github.com/rroessler/sabre-lang/blob/main/LICENSE).
+The license for Sabre can be viewed [here](https://github.com/sabre-lang/sabre/blob/main/LICENSE).
 
 ## Linked Libraries
 
