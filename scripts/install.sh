@@ -238,6 +238,7 @@ main_parse() {
         case $1 in
         --dry) OPT_DRY=true ;;
         --force) OPT_FORCE=true ;;
+        --archive) sabre_target="talos-" ;;
         --tag)
             OPT_TAG=$2
             shift
