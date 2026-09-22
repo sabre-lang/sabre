@@ -48,6 +48,7 @@ public:
 
     // destructure some items
     const auto &stats = m_stats();
+    const auto &ordering = m_runner->options()->ordering;
 
     // get the final totals to be used
     auto total = stats.total();
@@ -60,8 +61,12 @@ public:
       m_stream << ' ' << stats.skipped() << " skipped\n\n";
     }
 
+    // show if we used randomization or not
+    m_stream << "Randomization: " << (ordering.randomize ? "Enabled " : "Disabled") << std::string(10, ' ');
+    m_stream << $::Dye::dim("[Input Seed: {0}]", ordering.randomize ? fmt::to_string(ordering.seed) : "unset");
+
     // show the final result as necessary now
-    m_stream << "Ran " << total << " test" << (total == 1 ? "" : "s");
+    m_stream << std::endl << "Ran " << total << " test" << (total == 1 ? "" : "s");
     m_stream << " across " << sections << " section" << (sections == 1 ? "" : "s");
     m_stream << ' ' << $::Dye::dim("[R: {0}, T: {1}]", real, elapsed) << std::endl;
   }

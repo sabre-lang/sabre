@@ -54,8 +54,9 @@ void Shell::Test::Action::m_subscribe(CLI::App *command) {
   m_common(command, &m_runtime, true);
 
   // prepare all the baseline flags to be used
-  command->add_flag("--randomize", m_runtime.testing.randomize);
   command->add_flag("--benchmarks", m_runtime.testing.bench.enabled);
+  command->add_flag("--randomize", m_runtime.testing.ordering.randomize);
+  command->add_flag("--seed", m_runtime.testing.ordering.seed)->default_val(XT::Session::Seed());
 
   // prepare all the necessary testing options
   command->add_option("--pattern", m_runtime.testing.pattern);

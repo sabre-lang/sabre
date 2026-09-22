@@ -10,14 +10,14 @@ namespace Sabre::Testing {
 struct Options {
   //  PROPERTIES  //
 
-  /// @brief Denotes if randomizing testing.
-  bool randomize = false;
-
   /// @brief Bailout total for testing.
   size_t bailout = 0;
 
   /// @brief Benchmarking options available.
   XT::Bench::Options bench = {};
+
+  /// @brief Randomization ordering.
+  XT::Session::Ordering ordering = {};
 
   /// @brief Reporter options available.
   XT::Reporter::Options reporter = {};

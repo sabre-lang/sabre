@@ -3,8 +3,8 @@
 
 /// Testing Includes
 #include "xtest/bench/options.hpp"
-#include "xtest/forward/session.hpp"
 #include "xtest/reporter/options.hpp"
+#include "xtest/session/ordering.hpp"
 
 namespace XT::Session {
 
@@ -14,6 +14,9 @@ struct Options {
 
   /// @brief Benchmarking options.
   Bench::Options bench = {};
+
+  /// @brief Randomization ordering.
+  Ordering ordering = {};
 
   /// @brief Core Testing title.
   $::String::Buffer title = "xtest/anonymous";

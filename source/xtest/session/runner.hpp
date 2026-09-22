@@ -16,6 +16,9 @@ class Runner {
   /// @brief The bound options to use.
   const Options *m_options = nullptr;
 
+  /// @brief The random number generator to be used.
+  $::Unique::Pointer<Generator> m_rng = nullptr;
+
   /// @brief The assertion interface.
   $::Unique::Pointer<Assert::That> m_asserts = nullptr;
 
@@ -39,6 +42,9 @@ public:
 
   /// @brief Gets the associated options.
   inline constexpr const Options *options() const noexcept { return m_options; }
+
+  /// @brief Gets the random number generator.
+  inline constexpr Generator *rng() const noexcept { return m_rng.get(); }
 
   /// @brief Gets the assertion inteface.
   inline constexpr Assert::That *asserts() const noexcept { return m_asserts.get(); }

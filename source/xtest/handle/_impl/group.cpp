@@ -17,8 +17,11 @@ void XT::Handle::Group::m_execute(Session::Runner *runner) const {
   // determine if skipping this group at all
   auto skip = !m_initialize(runner) || trivia()->skip || trivia()->todo;
 
+  // shuffle the tests to potentially be run
+  auto shuffled = skip ? std::vector<const Base *>() : runner->rng()->shuffle(m_tests);
+
   // allow testing if the group is not skipped or unimplemented
-  for (size_t ii = 0; !skip && ii < m_tests.size(); ++ii) m_tests[ii]->execute(runner);
+  for (const auto *test : shuffled) test->execute(runner);
 
   // close the group section
   reporter->group_closed(this);

@@ -35,7 +35,8 @@ public:
   inline constexpr double entropy() const noexcept { return 0; }
 
   /// @brief Available numeric limits.
-  inline constexpr auto limits() const noexcept { return std::numeric_limits<Output>(); }
+  inline constexpr Output min() const noexcept { return std::numeric_limits<Output>().min(); }
+  inline constexpr Output max() const noexcept { return std::numeric_limits<Output>().max(); }
 };
 
 // ensure the simple device is a valid instance

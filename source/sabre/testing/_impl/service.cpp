@@ -20,6 +20,7 @@ int32_t Sabre::Testing::Service::m_invoke(const Options &options) {
   // prepare the testing options to be bound (we allow some overrides)
   XT::Session::Options passthrough = {
       .bench = options.bench,
+      .ordering = options.ordering,
       .title = SABRE_MM_IDENTIFIER "/testing",
       .reporter = {
           .output = std::cerr,

@@ -86,8 +86,10 @@
 #include "xtdlib/pointer/unique.hpp"
 
 /// Random Includes
+#include "xtdlib/random/engine.hpp"
 #include "xtdlib/random/interface.hpp"
 #include "xtdlib/random/simple.hpp"
+#include "xtdlib/random/standard.hpp"
 
 /// RTTI Includes
 #include "xtdlib/rtti/hash.hpp"

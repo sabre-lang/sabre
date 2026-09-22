@@ -29,10 +29,13 @@ int32_t XT::Bootstrap::launch(Session::Runner *runner, const $::Map::Dict<Handle
   // ensure that the reporter is actually valid
   $_ASSERT(reporter, "Unknown testing reporter '{0}'", options->reporter.label);
 
+  // prepare the shuffled sections to be used now
+  auto shuffled = runner->rng()->shuffle($::Ranges::To(sections | std::views::values), true);
+
   // iterate over the sections now to be execute with a count as well
   auto start = (reporter->before_running(total, options), $::Chrono::Point());
-  for (const auto &section : sections | std::views::values) section->execute(runner);
-  reporter->after_running(total, $::Chrono::Point() - start); // finished execution
+  for (const auto &section : shuffled) section->execute(runner);
+  reporter->after_running(total, $::Chrono::Point() - start);
 
   // get the final success result to be returned
   return runner->statistics()->success() ? EXIT_SUCCESS : EXIT_FAILURE;

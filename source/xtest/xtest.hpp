@@ -29,6 +29,7 @@
 
 /// Session Includes
 #include "xtest/session/options.hpp"
+#include "xtest/session/ordering.hpp"
 #include "xtest/session/runner.hpp"
 #include "xtest/session/storage.hpp"
 

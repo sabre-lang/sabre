@@ -28,11 +28,11 @@ The `--bailout` option can be used to configure the maximum number of test-failu
 
 Sets the per-test timeout in milliseconds. If a test times out, it will be canceled and marked as a failure.
 
-### `--seed` (Unimplemented)
+### `--seed`
 
 Sets the random number generator seed. This will ensure all calls that require randomness produce the same sequence of _random_ behaviour.
 
-### `--randomize` (Unimplemented)
+### `--randomize`
 
 Sets the randomization flag or seed for test ordering. When enabled without a value, tests will be executed in a randomized order. If a seed is instead given, tests will have a reproducible randomized order.
 

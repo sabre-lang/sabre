@@ -8,5 +8,6 @@
 $_FWD(XT::Session, class Runner)
 $_FWD(XT::Session, class Storage)
 $_FWD(XT::Session, struct Options)
+$_FWD(XT::Session, struct Ordering)
 
 #endif
