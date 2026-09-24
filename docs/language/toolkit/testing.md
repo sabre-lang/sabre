@@ -30,7 +30,7 @@ Sets the per-test timeout in milliseconds. If a test times out, it will be cance
 
 ### `--seed`
 
-Sets the random number generator seed. This will ensure all calls that require randomness produce the same sequence of _random_ behaviour.
+Sets the random number generator seed. This will ensure all calls that require randomness produce the same sequence of _random_ behaviour. By setting a manual seed, this also automatically applies the `--randomize` flag.
 
 ### `--randomize`
 
