@@ -62,7 +62,10 @@ public:
   constexpr Deferred(U &&value) : m_result(std::move(value)) {}
 
   /// @brief Handles safely removing deferreds.
-  constexpr ~Deferred() { m_queue = m_release(m_queue); }
+  constexpr ~Deferred() {
+    $_UNUSED $_AUTO = $::Lock::guard(m_mutex);
+    m_queue = m_release(m_queue); // and release
+  }
 
   //  PUBLIC METHODS  //
 
