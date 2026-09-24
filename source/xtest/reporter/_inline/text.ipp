@@ -52,23 +52,37 @@ public:
 
     // get the final totals to be used
     auto total = stats.total();
+    auto failed = stats.failed();
     auto real = $::Chrono::Duration(stats.elapsed());
 
     // show the immediate results now if there was a total
     if (total) {
       m_stream << ' ' << stats.passed() << " passed\n";
-      m_stream << ' ' << stats.failed() << " failed\n";
+      m_stream << ' ' << failed << " failed\n";
       m_stream << ' ' << stats.skipped() << " skipped\n\n";
     }
 
-    // show if we used randomization or not
-    m_stream << "Randomization: " << (ordering.randomize ? "Enabled " : "Disabled") << std::string(10, ' ');
-    m_stream << $::Dye::dim("[Input Seed: {0}]", ordering.randomize ? fmt::to_string(ordering.seed) : "unset");
+    // prepare a function to pluralize values
+    static auto s_pad = [](const $::String::View &input, size_t size) { return fmt::format("{0:{1}}", input, size); };
+    static auto s_plural = [](size_t value, const $::String::View &input = "") -> $::String::Buffer {
+      return fmt::to_string(value) + input + (value == 1 ? "" : "s");
+    };
+
+    // get the expected formatting padding to be used
+    auto seed = ordering.randomize ? fmt::to_string(ordering.seed) : "unset";
+    auto randomize = fmt::format("Randomization: {0}", (ordering.randomize ? "Enabled " : "Disabled"));
+    auto header = fmt::format("Ran {0} across {1} ", total, s_plural(total, " test"), s_plural(sections, " section"));
+    auto padding = std::max(header.size(), randomize.size()); // determine a suitable padding to be used
+
+    // show bailout statistics if necessary to be shown
+    if (m_runner->bailout()) {
+      m_stream << $::Dye::red("{0:{1}}", "Bailed out!", padding);
+      m_stream << $::Dye::dim("[After {0}]", s_plural(failed, " failure")) << '\n';
+    }
 
     // show the final result as necessary now
-    m_stream << std::endl << "Ran " << total << " test" << (total == 1 ? "" : "s");
-    m_stream << " across " << sections << " section" << (sections == 1 ? "" : "s");
-    m_stream << ' ' << $::Dye::dim("[R: {0}, T: {1}]", real, elapsed) << std::endl;
+    m_stream << s_pad(randomize, padding) << $::Dye::dim("[Input Seed: {0}]", seed);
+    m_stream << std::endl << s_pad(header, padding) << $::Dye::dim("[R: {0}, T: {1}]", real, elapsed) << std::endl;
   }
 
   /**
@@ -121,11 +135,23 @@ public:
     // ensure that there are no active tests
     $_ASSERT(m_spinner == nullptr, "Expected no active tests");
 
+    // get the incoming runner options to be used
+    auto *options = m_runner->options();
+
+    // determine if we have a suitable output to show spinner details to
+    if (!$::Spinner::Enabled(*options->reporter.output)) return;
+
     // prepare a suffix and prefix to be used
     auto prefix = m_before(), suffix = fmt::to_string($::Dye::dim(test->trivia()->title));
 
     // construct the current spinner instance
-    m_spinner = m_runner->options()->reporter.spinner($::Spinner::Options{.prefix = prefix, .suffix = suffix});
+    m_spinner = options->reporter.spinner(
+        $::Spinner::Options{
+            .prefix = prefix,
+            .suffix = suffix,
+            .output = *options->reporter.output,
+        }
+    );
   }
 
   /**
@@ -179,7 +205,7 @@ public:
    * @param progress          Progress update.
    */
   inline void test_progress(const Handle::Base *test, const Trivia::Progress &progress) final {
-    $_ASSERT(m_spinner, "Expected an active test"); // ensure existence
+    if (m_spinner == nullptr) return; // ensure existence before showing progress
     auto percentage = 100 * progress.iter / static_cast<double>(progress.total);
     m_spinner->suffix($::Dye::dim("{0} ({1}) - {2:.2}%", test->trivia()->title, progress.label, percentage));
   }
@@ -238,7 +264,7 @@ private:
    * @param suffix            Additional suffix text.
    */
   inline void m_finalize(const Handle::Base *test, const $::Color::ANSI &status, const $::String::View &suffix = "") {
-    $_ASSERT(m_spinner, "Expected an active test"), m_spinner->dismiss();
+    if (m_spinner != nullptr) m_spinner->dismiss(); // dismiss the spinner instance
     m_stream << m_before() << status << ' ' << $::Dye::dim(test->trivia()->title);
     if (suffix.size()) m_stream << ' ' << $::Dye::dim("[{0}]", suffix);
     m_stream << std::endl; // and show the suffix as well

@@ -8,7 +8,7 @@
 
 /// @brief Available Reporter Types.
 #define XTEST_XX_REPORTER_LABELS(X) \
-  X(TEXT, "test")                   \
+  X(TEXT, "text")                   \
   X(TAP, "tap")                     \
   X(XML, "xml")                     \
   X(JSON, "json")                   \

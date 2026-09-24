@@ -19,13 +19,16 @@ struct Options {
   /// @brief Randomization ordering.
   XT::Session::Ordering ordering = {};
 
-  /// @brief Reporter options available.
-  XT::Reporter::Options reporter = {};
+  /// @brief Reporter output file value.
+  $::String::Buffer outfile = {};
 
-  /// @brief The baseline pattern to use.
+  /// @brief The baseline file pattern to use.
   $::String::Buffer pattern = "**/*.test.sabre";
 
-  /// @brief Available filters to apply to files.
+  /// @brief Reporter options available.
+  $::String::Buffer reporter = XT::Reporter::Label::DEFAULT;
+
+  /// @brief Available filters to apply to testing names.
   std::vector<$::String::Buffer> filters = {};
 };
 

@@ -20,7 +20,7 @@ For more information in regard to setting up tests, check out the [`sabre:test`]
 
 A globbing pattern used to match test file names. By default, `**/*.test.sabre` is used and will find all files in the current-working subdirectories that end with `.test.sabre`.
 
-### `--bailout` (Unimplemented)
+### `--bailout`
 
 The `--bailout` option can be used to configure the maximum number of test-failures allowed. By default, Sabre will run all tests and report all failures, however for some CI environments, it may be preferable to terminate earlier to reduce CPU usage.
 
@@ -56,7 +56,7 @@ This flag enables benchmarking to occur. By default, benchmarking is disabled to
 
 When the `--quiet` flag is given, all verbose `text` reporter outputs will be disabled.
 
-### `--outfile` (Unimplemented)
+### `--outfile`
 
 This specifies the output file path for reporters to divert their output.
 

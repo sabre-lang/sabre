@@ -54,6 +54,12 @@ public:
 
   /// @brief Gets the associated statistics.
   inline constexpr Trivia::Statistics *statistics() const noexcept { return m_statistics.get(); }
+
+  /// @brief Gets the current bailout status.
+  inline constexpr bool bailout() const noexcept {
+    if ($_LIKELY(!m_options->bailout)) return false;
+    return m_statistics->failed() >= m_options->bailout;
+  }
 };
 
 } // namespace XT::Session

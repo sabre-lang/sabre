@@ -52,7 +52,9 @@ public:
    * @brief Handles executing a test.
    * @param runner              Session runner.
    */
-  inline void execute(Session::Runner *runner) const { m_execute(runner); }
+  inline void execute(Session::Runner *runner) const {
+    if (!m_bailout(runner)) m_execute(runner);
+  }
 
 protected:
   //  PRIVATE METHODS  //
@@ -65,6 +67,12 @@ protected:
    * @param runner              Session runner.
    */
   virtual void m_execute(Session::Runner *runner) const = 0;
+
+  /**
+   * @brief Checks the current bailout conditions.
+   * @param runner              Session runner.
+   */
+  virtual bool m_bailout(Session::Runner *runner) const noexcept;
 };
 
 /// @brief Allows introspection of a test abstraction.

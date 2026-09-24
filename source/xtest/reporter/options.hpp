@@ -30,7 +30,7 @@ struct Options {
   //  PROPERTIES  //
 
   /// @brief The reporter output stream.
-  std::ostream &output = std::cout;
+  std::ostream *output = &std::cout;
 
   /// @brief Defines the reporter to use.
   $::String::Buffer label = Label::DEFAULT;

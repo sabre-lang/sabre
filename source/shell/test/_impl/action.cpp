@@ -5,6 +5,7 @@
 #include "shell/command/macros.hpp"
 #include "shell/test/action.hpp"
 #include "shell/validators/duration.hpp"
+#include "shell/validators/reporter.hpp"
 
 //  X-MACROS  //
 
@@ -63,9 +64,9 @@ void Shell::Test::Action::m_subscribe(CLI::App *command) {
 
   // prepare all the necessary testing options
   command->add_option("--pattern", m_runtime.testing.pattern);
-  command->add_option("--bailout", m_runtime.testing.bailout);
   command->add_option("--warmup", m_runtime.testing.bench.warmup);
   command->add_option("--samples", m_runtime.testing.bench.samples.maximum);
+  command->add_flag("--bailout{1}", m_runtime.testing.bailout)->expected(0, 1);
 
   // prepare the verbosing flag now
   command->add_flag_callback("--quiet", [&] { m_runtime.flags.verbose = false; });
@@ -73,6 +74,10 @@ void Shell::Test::Action::m_subscribe(CLI::App *command) {
   // duration values require a little more involved setup
   command->add_option<$::Chrono::Duration, size_t>("--timeout", m_runtime.testing.bench.timeout)
       ->transform(Validator::Duration());
+
+  // allow setting a chosen reporter to be used as well
+  command->add_option("--reporter", m_runtime.testing.reporter)->check(Validator::Reporter());
+  command->add_option("--outfile", m_runtime.testing.outfile)->check(CLI::NonexistentPath | CLI::ExistingFile);
 
   // set the necessary callback to run the instance now
   command->callback(std::bind(&Action::m_execute, this));

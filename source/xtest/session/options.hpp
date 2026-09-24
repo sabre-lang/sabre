@@ -12,6 +12,9 @@ namespace XT::Session {
 struct Options {
   //  PROPERTIES  //
 
+  /// @brief Maximum allowed failures.
+  size_t bailout = 0;
+
   /// @brief Benchmarking options.
   Bench::Options bench = {};
 

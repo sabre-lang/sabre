@@ -33,7 +33,7 @@ public:
    * @param runner            Session runner.
    * @param stream            Output stream.
    */
-  constexpr Stream(Session::Runner *runner, std::ostream &stream = std::cout) : Abstract(runner), m_stream(stream) {}
+  constexpr Stream(Session::Runner *runner, std::ostream *stream = &std::cout) : Abstract(runner), m_stream(*stream) {}
 };
 
 } // namespace XT::Reporter

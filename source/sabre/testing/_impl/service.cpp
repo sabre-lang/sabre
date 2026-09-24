@@ -17,13 +17,17 @@ int32_t Sabre::Testing::Service::m_invoke(const Options &options) {
   // declare an error if a session is in progress
   $_ASSERT(m_session == nullptr, "Testing session already in progress");
 
+  // prepare the output file to be used now
+  auto outfile = options.outfile.size() ? $::Unique::New<std::ofstream>(options.outfile) : nullptr;
+
   // prepare the testing options to be bound (we allow some overrides)
   XT::Session::Options passthrough = {
+      .bailout = options.bailout,
       .bench = options.bench,
       .ordering = options.ordering,
       .title = SABRE_MM_IDENTIFIER "/testing",
       .reporter = {
-          .output = std::cerr,
+          .output = outfile ? outfile.get() : &std::cerr,
           .spinner = [&](const $::Spinner::Options &options) {
             return m_services->get<Async::Service>()->spinner(options);
           },
