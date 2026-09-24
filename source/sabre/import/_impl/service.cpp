@@ -38,8 +38,6 @@ Sabre::Import::Service::Service(XI::Container *services) :
 
 //  PUBLIC METHODS  //
 
-//  PUBLIC METHODS  //
-
 MM_RESOLVE_SCHEME(FILE, absolute, ) {
   // prepare a suitable relative path
   auto relative = $::Path::relative(absolute);

@@ -5,10 +5,10 @@
 
 //  X-MACROS  //
 
-#define XX_OPTIONS_LIST(X)                                              \
-  X("--json", "Output result as JSON (expects only one input target)")  \
-  X("--write", "Overwrite all input targets with the formatted result") \
-  X("", "")                                                             \
+#define XX_OPTIONS_LIST(X)                                                 \
+  X("--write", "Overwrite all input targets with the formatted result")    \
+  X("--config", "Path to a common formatting configuration manifest file") \
+  X("", "")                                                                \
   SHELL_XX_OPTIONS_COMMON(X)
 
 //  CONSTRUCTORS  //
@@ -42,9 +42,6 @@ void Shell::Format::Action::m_execute() {
   // stop if there were no scripts actually given
   if (scripts.empty()) return m_fail("Expected at least one format target");
 
-  // if we have been given JSON then update the write flag
-  if (m_json) m_write = false;
-
   // ensure we have only one-script when not writing
   if (!m_write && scripts.size() > 1) m_fail("Dry mode expects only one script to format");
 
@@ -60,8 +57,7 @@ void Shell::Format::Action::m_execute() {
     auto resource = scripts.at(ii);
 
     // handle the result as necessary
-    if (m_write) m_overwrite(resource, result);
-    else m_output(resource, result, m_json);
+    m_write ? m_overwrite(resource, result) : m_output(resource, result);
   }
 }
 
@@ -70,11 +66,15 @@ void Shell::Format::Action::m_subscribe(CLI::App *command) {
   command->positionals_at_end(true);
 
   // prepare the available flags and options now
-  command->add_flag("--json", m_json);
   command->add_flag("--write", m_write);
 
   // prepare the positionals that will be available now
   command->add_option("targets", m_targets);
+
+  // allow overwriting the desired configuration options
+  command->add_option_function<$::String::Buffer>("--config", [&](const $::String::Buffer &config) {
+    m_options = m_resolve(config);
+  });
 
   // set the necessary callback to run the instance now
   command->callback(std::bind(&Action::m_execute, this));

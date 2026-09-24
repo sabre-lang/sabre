@@ -19,11 +19,11 @@ using Options = Sabre::Format::Options;
 class Action : public Command::Abstract {
   //  PROPERTIES  //
 
-  bool m_json = false;  // Output as JSON.
-  bool m_write = false; // Overwrite values.
+  // Overwrite file flag.
+  bool m_write = false;
 
   /// @brief Baseline formatter options.
-  Options m_options = {};
+  std::optional<Options> m_options = std::nullopt;
 
   /// @brief Available formatting targets.
   std::vector<$::String::View> m_targets = {};
@@ -53,6 +53,13 @@ protected:
   Result m_worker(const $::URI::Buffer &resource) const;
 
   /**
+   * @brief Handles resolving a configuration.
+   * @param config                    Configuration file.
+   */
+  std::optional<Options> m_resolve(const $::URI::Buffer &config) const;
+  std::optional<Options> m_resolve(const $::String::View &config) const;
+
+  /**
    * @brief Overwrites file contents on success.
    * @param script                    Script to output.
    * @param result                    Result value.
@@ -63,9 +70,8 @@ protected:
    * @brief Outputs results to the console.
    * @param script                    Script to output.
    * @param result                    Result value.
-   * @param edits                     JSON edits flag.
    */
-  void m_output(const $::URI::View &resource, const Result &result, bool edits) const;
+  void m_output(const $::URI::View &resource, const Result &result) const;
 };
 
 } // namespace Shell::Format

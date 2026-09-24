@@ -14,15 +14,11 @@ The builtin formatter handles auto-formatting any given Sabre scripts.
 
 ## Common Options
 
-### `--json` (Unimplemented)
-
-Requests that any formatting outputs are displayed as JSON.
-
 ### `--write`
 
 Overwrites all input targets with their formatted results. By default, the formatter will print formatting results to the terminal without overriding the original file.
 
-### `--config` (Unimplemented)
+### `--config`
 
 Specifies the input configuration to be used for formatting. This allows overriding the [crate manifest](/language/development/configuration) associated with the given scripts. By default, any script that is formatted will use it's upward parent crate manifest `format` option.
 
