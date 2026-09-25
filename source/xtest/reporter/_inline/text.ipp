@@ -71,7 +71,7 @@ public:
     // get the expected formatting padding to be used
     auto seed = ordering.randomize ? fmt::to_string(ordering.seed) : "unset";
     auto randomize = fmt::format("Randomization: {0}", (ordering.randomize ? "Enabled " : "Disabled"));
-    auto header = fmt::format("Ran {0} across {1} ", total, s_plural(total, " test"), s_plural(sections, " section"));
+    auto header = fmt::format("Ran {0} across {1} ", s_plural(total, " test"), s_plural(sections, " section"));
     auto padding = std::max(header.size(), randomize.size()); // determine a suitable padding to be used
 
     // show bailout statistics if necessary to be shown
