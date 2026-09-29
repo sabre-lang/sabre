@@ -34,11 +34,11 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ✅   | `builtins/number`  | Testing of `Number` builtin | -    |
 |   ✅   | `builtins/result`  | Testing of `Result` builtin | -    |
 |   ✅   | `builtins/string`  | Testing of `String` builtin | -    |
-|   🚀   | `syntax/class`     | Testing of `class` syntax   | -    |
-|   🚀   | `syntax/match`     | Testing of `match` syntax   | -    |
-|   🚀   | `syntax/use`       | Testing of `use` syntax     | -    |
-|   🚀   | `syntax/attribute` | Testing of `#...` syntax    | -    |
-|   🚀   | `syntax/decorator` | Testing of `@...` syntax    | -    |
+|   💀   | `syntax/class`     | Testing of `class` syntax   | -    |
+|   💀   | `syntax/match`     | Testing of `match` syntax   | -    |
+|   💀   | `syntax/use`       | Testing of `use` syntax     | -    |
+|   💀   | `syntax/attribute` | Testing of `#...` syntax    | -    |
+|   💀   | `syntax/decorator` | Testing of `@...` syntax    | -    |
 
 ## Libraries
 
@@ -49,7 +49,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ❌   | `sabre:chrono` | Temporal utilities.             | -                              |
 |   ❌   | `sabre:codec`  | Encoding/decoding function.     | -                              |
 |   ❌   | `sabre:ffi`    | Native library utilities.       | -                              |
-|   ❌   | `sabre:fsys`   | Filesystem utilities.           | -                              |
+|   ❌   | `sabre:fs`     | Filesystem utilities.           | -                              |
 |   ✅   | `sabre:gc`     | Garbage collection hooks.       | Additional statistics?         |
 |   🚀   | `sabre:json`   | JSON/JSONC parsing/serializing. | -                              |
 |   ❌   | `sabre:lint`   | Linting plugin bindings.        | -                              |

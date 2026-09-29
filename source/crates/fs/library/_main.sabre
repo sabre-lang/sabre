@@ -1,6 +1,6 @@
 ///
-/// @crate "fsys"
+/// @crate "fs"
 /// @describe Helpers for working with the filesystem.
 ///
 
-Todo("Unimplemented Crate - 'sabre:fsys'");
+Todo("Unimplemented Crate - 'sabre:fs'");
