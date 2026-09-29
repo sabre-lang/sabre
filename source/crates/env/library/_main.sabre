@@ -3,4 +3,29 @@
 /// @describe Helpers for working with the process environment.
 ///
 
-Todo("Unimplemented Crate - 'sabre:env'");
+// Dynamic Modules
+import "dylib:env" as env;
+
+// Sabre Modules
+import "sabre:_detail" as Detail;
+
+// - HELPERS - //
+
+//! @brief Internal helper to reduce bytecode output.
+let m_cast = Detail.Unsafe.cast;
+
+// - PUBLIC METHODS - //
+
+//! @brief Gets a value from the process environment.
+//! @param key                  Key to assign.
+//! @param alt                  Alternative value.
+export let get = m_cast[fn (key: String, alt?: String) -> String](env.get);
+
+//! @brief Sets a key-value pair on the process environment.
+//! @param key                  Key to assign.
+//! @param value                Value to assign.
+export let set = m_cast[fn (key: String, value: String) -> Void](env.set);
+
+//! @brief Removes a value from the process environment.
+//! @param key                  Key to remove.
+export let drop = m_cast[fn (key: String) -> Boolean](env.drop);
