@@ -61,7 +61,7 @@ struct Position {
     // attempt getting the start-of-line length
     for (uint32_t ii = 0; ii < line; ++ii) {
       auto nl = view.find('\n', som);
-      if (nl == $::String::View::npos) return -1;
+      if (nl == $::String::Term) return -1;
       som = nl + 1; // and increment passed the line
     }
 

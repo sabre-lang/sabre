@@ -93,7 +93,7 @@ private:
    * @param segment                 Segment to resolve.
    * @param distance                Original distances.
    */
-  static inline constexpr std::pair<uint8_t, uint8_t> m_identifier(const std::string_view &segment, size_t distance) {
+  static inline constexpr std::pair<uint8_t, uint8_t> m_identifier(const String::View &segment, size_t distance) {
     // note the starting position to use now
     uint8_t start = distance - segment.size(), ending = distance;
 
@@ -101,7 +101,7 @@ private:
     auto whitespace = segment.find_first_of(' ');
 
     // prepare the ending value now and ensure we fix empty items
-    if (whitespace != std::string_view::npos) ending = start + whitespace;
+    if (whitespace != String::Term) ending = start + whitespace;
 
     // and return the resulting details to be used
     return {start, ending};
@@ -120,7 +120,7 @@ $::Notate::Block $::Notate::Parse(const String::View &block, const Options &opti
 
   // and split into a desired set of segments now
   for (auto &&view : std::views::split(block, '\n')) {
-    std::string_view line = {view.begin(), view.end()};
+    String::View line = {view.begin(), view.end()};
     segments.emplace_back(Trim::both(line)); // emplace
   }
 

@@ -5,6 +5,10 @@ author: Reuben Roessler
 title: Sabre v0.4.0
 ---
 
+## Environment Files
+
+Todo...
+
 ## Format Features
 
 Todo...
@@ -13,18 +17,22 @@ Todo...
 
 Todo...
 
+## Upcoming Work
+
+Todo...
+
 ---
 
 ## Bug Fixes
-
-<h4>Package / sabre</h4>
-
-- Moved: Renamed the `fsys` crate to `fs` for upcoming work with the builtin crates.
 
 <h4>Toolkit / sabre format</h4>
 
 - Added: Implemented the `--config` option for defining a common manifest for formatting configuration.
 - Moved: Removed the `--json` flag for formatting since it requires diffing of two strings to implement.
+
+<h4>Toolkit / sabre run</h4>
+
+- Added: Implemented the `--env` option for defining embeddable environment variables.
 
 <h4>Toolkit / sabre test</h4>
 
@@ -33,3 +41,15 @@ Todo...
 - Added: Implemented the `--outfile` option for defining a file to pipe testing reports to.
 - Added: Implemented the `--reporter` option, however only the `text` reporter is currently implemented.
 - Added: Implemented the `--bailout` option for setting a threshold of test failures to bail at.
+
+<h4>Crate / sabre:env</h4>
+
+- Added: Prepared a stub crate for the `env` crate for managing the process environment.
+
+<h4>Crate / sabre:fs</h4>
+
+- Moved: Renamed the `fsys` crate to `fs` for upcoming work with the builtin crates.
+
+<h4>Crate / sabre:os</h4>
+
+- Added: Prepared a stub crate for the `os` crate for operating system interface methods.

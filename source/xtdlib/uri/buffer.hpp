@@ -119,8 +119,8 @@ private:
 
   /// @brief Gets the ":" delimiter index.
   inline constexpr size_t m_delimiter() const noexcept {
-    auto index = m_buffer.find_first_of(':'); // find now
-    return $_ASSERT(index != String::View::npos), index;
+    auto index = m_buffer.find_first_of(':');
+    return $_ASSERT(index != String::Term), index;
   }
 
   /// @brief Gets the unmodified trailing path.

@@ -56,6 +56,9 @@
 #include "sabre/document/publisher.hpp"
 #include "sabre/document/service.hpp"
 
+/// Dotenv Includes
+#include "sabre/dotenv/service.hpp"
+
 /// Engine Includes
 #include "sabre/engine/dispatch.hpp"
 #include "sabre/engine/exports.hpp"

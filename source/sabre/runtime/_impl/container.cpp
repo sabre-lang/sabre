@@ -7,6 +7,7 @@
 #include "sabre/async/service.hpp"
 #include "sabre/crate/service.hpp"
 #include "sabre/document/service.hpp"
+#include "sabre/dotenv/service.hpp"
 #include "sabre/garbage/service.hpp"
 #include "sabre/globals/service.hpp"
 #include "sabre/heap/service.hpp"
@@ -24,6 +25,9 @@ Sabre::Runtime::Container::Container() : Container({}) {}
 Sabre::Runtime::Container::Container(const Options &options) {
   // bind the options to the service
   bind<Options>(options);
+
+  // bind the environment service immediately
+  bind<Dotenv::Service>();
 
   // bind all the common services for the container
   bind<Async::Service>();

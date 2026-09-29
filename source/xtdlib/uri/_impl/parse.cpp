@@ -9,7 +9,7 @@ $::URI::Buffer $::URI::Parse(const String::View &view) {
   auto buffer = Buffer::m_normalize(view);
 
   // attempt checking for file paths now
-  if (offset == String::View::npos || ($_PLATFORM_WINDOWS && offset == 1)) {
+  if (offset == String::Term || ($_PLATFORM_WINDOWS && offset == 1)) {
     if (FS::Path(view).is_absolute()) return Buffer(Path::canonical(buffer).string());
     return Buffer(Scheme::HREF, buffer.starts_with("./") ? buffer.substr(2) : buffer);
   }
@@ -26,7 +26,7 @@ $::URI::Buffer $::URI::Parse(const String::View &view) {
   offset = remaining.find('/');
 
   auto authority = remaining.substr(0, offset); // resolve our values now
-  auto body = offset == String::Buffer::npos ? "" : remaining.substr(offset);
+  auto body = offset == String::Term ? "" : remaining.substr(offset);
 
   // and reconstruct the resulting URI again
   return Buffer(scheme, authority, body);

@@ -48,6 +48,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ❌   | `sabre:async`  | Asynchronous utilities.         | -                              |
 |   ❌   | `sabre:chrono` | Temporal utilities.             | -                              |
 |   ❌   | `sabre:codec`  | Encoding/decoding function.     | -                              |
+|   ❌   | `sabre:env`    | Current process environment.    | -                              |
 |   ❌   | `sabre:ffi`    | Native library utilities.       | -                              |
 |   ❌   | `sabre:fs`     | Filesystem utilities.           | -                              |
 |   ✅   | `sabre:gc`     | Garbage collection hooks.       | Additional statistics?         |
@@ -55,6 +56,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ❌   | `sabre:lint`   | Linting plugin bindings.        | -                              |
 |   ❌   | `sabre:math`   | Mathematics utilities.          | -                              |
 |   ⚪   | `sabre:mem`    | Virtual memory utilities.       | Buffers, allocators, ...       |
+|   ❌   | `sabre:os`     | Operating system interfaces.    | -                              |
 |   ❌   | `sabre:path`   | Filesystem path utilities.      | -                              |
 |   ❌   | `sabre:rng`    | Random number generators.       | -                              |
 |   ⚪   | `sabre:test`   | Testing suite framework.        | Skipping, lifecycle hooks, ... |

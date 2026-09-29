@@ -1,0 +1,6 @@
+///
+/// @crate "os"
+/// @describe Helpers for working with the operating system.
+///
+
+Todo("Unimplemented Crate - 'sabre:os'");

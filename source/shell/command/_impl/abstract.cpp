@@ -17,6 +17,9 @@ void Shell::Command::Abstract::m_common(CLI::App *command, Sabre::Runtime::Optio
   // if not if runtime mode, then stop handling
   if (!runtime) return;
 
+  // prepare the basic environment flag to be used
+  command->add_option("--env", options->script.dotenv)->expected(0, -1);
+
   // add the linting flag to be used now
   command->add_flag("--lint", options->flags.lint);
 

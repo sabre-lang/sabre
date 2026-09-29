@@ -43,8 +43,8 @@ bool XJCT::Archive::Provider::m_toggle(Binary &binary, const $::String::View &pr
   auto first = blob.find(prefix), last = blob.find(prefix, first + 1);
 
   // ensure that the details are correct now
-  if (first == $::String::View::npos) return false;
-  else if (last != $::String::View::npos) return false;
+  if (first == $::String::Term) return false;
+  else if (last != $::String::Term) return false;
 
   // prepare the colon and resource details now
   auto colon = first + prefix.size(), resource = colon + 1;

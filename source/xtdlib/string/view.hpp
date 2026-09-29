@@ -7,5 +7,6 @@
 
 /// Forward Definitions
 $_FWD($::String, using View = std::string_view)
+$_FWD($::String, static constexpr auto Term = std::string_view::npos)
 
 #endif

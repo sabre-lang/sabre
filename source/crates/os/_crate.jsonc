@@ -1,0 +1,6 @@
+{
+    "version": "0.3.1",
+    "name": "@sabre/os",
+    "main": "library/_main.sabre",
+    "describe": "Utilities for interfacing with operating system properties"
+}

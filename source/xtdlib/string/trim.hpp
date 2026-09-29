@@ -16,7 +16,7 @@ static inline consteval String::View whitespace() { return " \n\r\t\v\f"; }
  */
 static inline constexpr String::View leading(const String::View &view, const String::View &blacklist = whitespace()) {
   auto start = view.find_first_not_of(blacklist); // prepare now
-  return start == String::View::npos ? "" : view.substr(start);
+  return start == String::Term ? "" : view.substr(start);
 }
 
 /**
@@ -35,7 +35,7 @@ static inline constexpr String::View trailing(const String::View &view, const St
  */
 static inline constexpr String::View both(const String::View &view, const String::View &blacklist = whitespace()) {
   auto start = view.find_first_not_of(blacklist);
-  if (start == String::View::npos) return "";
+  if (start == String::Term) return "";
   auto end = view.find_last_not_of(blacklist);
   return view.substr(start, end - start + 1);
 }

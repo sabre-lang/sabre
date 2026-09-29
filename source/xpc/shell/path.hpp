@@ -55,7 +55,7 @@ resolve(const $::String::View &name, std::optional<$::String::Buffer> path = std
   if (name.empty()) return std::nullopt;
 
   // if the name contains "/" or "\\" on windows, then resolve to an absolute path
-  if (name.find_first_of(s_separator) != $::String::View::npos) return $::Path::absolute(name).string();
+  if (name.find_first_of(s_separator) != $::String::Term) return $::Path::absolute(name).string();
 
   // otherwise we have a purely searchable name
   path = path.or_else([] { return $::Environ::get("PATH"); });

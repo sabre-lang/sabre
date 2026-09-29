@@ -48,7 +48,7 @@ size_t $::Environ::separator(const String::View &pair) {
 
   // otherwise search one-place further
   auto equals = pair.find(value, 1);
-  return equals == String::View::npos ? 0 : equals;
+  return equals == String::Term ? 0 : equals;
 }
 
 $::Map::Dict<$::String::Buffer> $::Environ::view() {
@@ -62,7 +62,7 @@ $::Map::Dict<$::String::Buffer> $::Environ::view() {
     auto equals = separator(pair);
 
     // resolve the middle value to be used
-    auto middle = equals == String::View::npos ? pair.size() : equals;
+    auto middle = equals == String::Term ? pair.size() : equals;
 
     // and push our key/value to the dictionary
     output.emplace(pair.substr(0, middle), pair.substr(equals + 1));
