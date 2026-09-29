@@ -1,7 +1,7 @@
 #ifndef _SABRE_MACHINE_BUILDER_HPP
 #define _SABRE_MACHINE_BUILDER_HPP
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/machine/allocator.hpp"
 #include "sabre/machine/emitter.hpp"
 #include "sabre/machine/facts.hpp"

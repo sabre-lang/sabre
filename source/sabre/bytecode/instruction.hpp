@@ -4,7 +4,7 @@
 /// Vendor Modules
 #include <xlsp/xlsp.hpp>
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/bytecode/allocator.hpp"
 #include "sabre/bytecode/glyph.hpp"
 #include "sabre/bytecode/label.hpp"

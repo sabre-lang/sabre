@@ -1,7 +1,7 @@
 #ifndef _SABRE_TOOLCHAIN_COMPILE_HPP
 #define _SABRE_TOOLCHAIN_COMPILE_HPP
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/image/arena.hpp"
 #include "sabre/syntax/tree.hpp"
 #include "sabre/variable/captures.hpp"

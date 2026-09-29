@@ -1,7 +1,7 @@
 #ifndef _SABRE_BYTECODE_VISITOR_HPP
 #define _SABRE_BYTECODE_VISITOR_HPP
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/bytecode/allocator.hpp"
 #include "sabre/bytecode/compiler.hpp"
 #include "sabre/syntax/visitor.hpp"

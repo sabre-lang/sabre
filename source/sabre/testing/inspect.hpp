@@ -1,7 +1,7 @@
 #ifndef _SABRE_TESTING_INSPECT_HPP
 #define _SABRE_TESTING_INSPECT_HPP
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/forward/testing.hpp"
 #include "sabre/object/exception.hpp"
 #include "sabre/resource/trace.hpp"

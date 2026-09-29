@@ -1,7 +1,7 @@
 #ifndef _SABRE_MACHINE_ALLOCATOR_HPP
 #define _SABRE_MACHINE_ALLOCATOR_HPP
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/forward/machine.hpp"
 #include "sabre/register/slot.hpp"
 

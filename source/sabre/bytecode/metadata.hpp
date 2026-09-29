@@ -1,7 +1,7 @@
 #ifndef _SABRE_BYTECODE_METADATA_HPP
 #define _SABRE_BYTECODE_METADATA_HPP
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/function/info.hpp"
 #include "sabre/module/metadata.hpp"
 #include "sabre/runtime/isolate.hpp"

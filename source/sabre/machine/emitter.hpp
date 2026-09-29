@@ -1,7 +1,7 @@
 #ifndef _SABRE_MACHINE_EMITTER_HPP
 #define _SABRE_MACHINE_EMITTER_HPP
 
-/// Sabre Modules
+/// Sabre Includes
 #include "sabre/engine/interrupt.hpp"
 #include "sabre/machine/constants.hpp"
 #include "sabre/register/slot.hpp"
