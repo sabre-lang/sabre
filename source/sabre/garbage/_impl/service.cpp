@@ -19,6 +19,14 @@ Sabre::Garbage::Service::Service(XI::Container *services) :
 
 //  PUBLIC METHODS  //
 
+void Sabre::Garbage::Service::cleanup() {
+  // prepare the lock to be used now
+  $_UNUSED $_AUTO = $::Lock::guard(m_mutex);
+
+  // request clearing each of the available regions
+  m_recycle(Mode::MAJOR);
+}
+
 void Sabre::Garbage::Service::collect(bool major) {
   // prepare the lock to be used now
   $_UNUSED $_AUTO = $::Lock::guard(m_mutex);
@@ -163,16 +171,10 @@ Sabre::Globals::Visit Sabre::Garbage::Service::m_forward() {
   };
 }
 
+void Sabre::Garbage::Service::m_deallocate(Object::Header *header) { Object::Allocator::destroy(header); }
 void Sabre::Garbage::Service::m_deallocate() {
   auto deallocate = [&](Object::Header *header) { m_deallocate(header); };
   std::ranges::for_each(m_removable, deallocate), m_removable.clear();
-}
-
-void Sabre::Garbage::Service::m_deallocate(Object::Header *header) {
-#define X(T, ...)                                                                  \
-  case Shape::Lookup<T>(): Object::Allocator::destroy<T>(header->encode()); break;
-  switch (header->shape()) { SABRE_XX_VALUES_OBJECT(X) default : X(Object::Instance) }
-#undef X
 }
 
 void Sabre::Garbage::Service::m_recycle(Mode mode) {

@@ -6,7 +6,7 @@
 #include <xsio/xsio.hpp>
 
 /// Forward Declarations
-$_FWD(Sabre::Async, struct Entry)
+$_FWD(Sabre::Async, class Entry)
 $_FWD(Sabre::Async, class Service)
 $_FWD(Sabre::Async, struct Future)
 $_FWD(Sabre::Async, struct Thenable)

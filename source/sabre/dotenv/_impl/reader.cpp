@@ -7,20 +7,20 @@ Sabre::Dotenv::View &&Sabre::Dotenv::Reader::parse(const $::String::View &input,
   return parse(input, inherit ? $::Environ::view() : View());
 }
 
-Sabre::Dotenv::View &&Sabre::Dotenv::Reader::parse(const $::String::View &input, View &&environ) {
+Sabre::Dotenv::View &&Sabre::Dotenv::Reader::parse(const $::String::View &input, View &&env) {
   // prepare the lines to be iterated over
   auto lines = std::views::split(input, '\n');
 
   // and attempt parsing each line individually as needed
-  for (auto &&line : lines) m_parse(environ, $::Trim::both($::String::View(line)));
+  for (auto &&line : lines) m_parse(env, $::Trim::both($::String::View(line)));
 
   // return the resulting environment map
-  return environ;
+  return env;
 }
 
 //  PRIVATE METHODS  //
 
-void Sabre::Dotenv::Reader::m_parse(View &environ, const $::String::View &line) {
+void Sabre::Dotenv::Reader::m_parse(View &env, const $::String::View &line) {
   // check for empty lines, or ones that will have no content
   if (line.empty() || line.starts_with('#')) return;
 
@@ -39,7 +39,7 @@ void Sabre::Dotenv::Reader::m_parse(View &environ, const $::String::View &line) 
   if (key.empty()) return;
 
   // we now need to actually decipher the content now
-  m_emplace(environ, key, m_decipher(environ, value));
+  m_emplace(env, key, m_decipher(env, value));
 }
 
 $::String::Buffer Sabre::Dotenv::Reader::m_decipher(const View &, $::String::View &value) {
@@ -67,12 +67,12 @@ $::String::Buffer Sabre::Dotenv::Reader::m_decipher(const View &, $::String::Vie
   // only handle if we do have a closing value
   if (closing != $::String::Term) value = value.substr(0, closing);
 
-  /// TODO: use the "interpolate" result for formatting values with "environ"
+  /// TODO: use the "interpolate" result for formatting values with "env"
 
   // should safely be able to unescape the value now
   return $::Serde::Unescape(value).value_or("");
 }
 
-void Sabre::Dotenv::Reader::m_emplace(View &environ, const $::String::View &key, const $::String::Buffer &value) {
-  environ.insert_or_assign($::String::Buffer(key), value);
+void Sabre::Dotenv::Reader::m_emplace(View &env, const $::String::View &key, const $::String::Buffer &value) {
+  env.insert_or_assign($::String::Buffer(key), value);
 }

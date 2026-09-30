@@ -3,10 +3,28 @@
 
 //  PRIVATE METHODS  //
 
+Sabre::Type::Erased Sabre::Type::Prototype::m_callable() const {
+  // ignore if the constructor is invalid
+  if (m_constructor == nullptr) return New::any();
+
+  // bind all the prototype constraints to
+  auto constraints = Type::Constraints();
+
+  // resolve the required parameters now
+  auto generic = Type::New::cast<Type::Generic>(m_constructor);
+  auto parameters = generic ? generic->parameters() : Type::Template();
+
+  // iterate over the avialable constraints to be bound
+  for (const auto &[ii, parameter] : $::Ranges::Each(parameters)) {
+    constraints.emplace(parameter.get(), m_structure->constraints().at(ii));
+  }
+
+  // use the prototype constraints to resolve the constructor
+  return m_constructor->infer(&constraints);
+}
+
 $::Shared::Pointer<Sabre::Type::Instance> Sabre::Type::Prototype::m_instantiate() const {
-  auto self = m_as<Prototype>();
-  $_ASSERT(self.get() == this);
-  return $::Shared::New<Instance>(self);
+  return $::Shared::New<Instance>($::Shared::New<Prototype>(*this)->as<Prototype>());
 }
 
 Sabre::Type::Erased Sabre::Type::Prototype::m_infer(Constraints *constraints) const {
@@ -31,7 +49,7 @@ bool Sabre::Type::Prototype::m_unify(const Erased &candidate, Constraints *const
   auto other = candidate->as<Prototype>();
 
   // attempt finding a suitable super-class instance
-  while (other && !other->m_extends(m_shape)) {
+  while (other && !m_extends(other->m_shape)) {
     if (other->m_super->is<None>()) other = nullptr;
     else other = New::cast<Prototype>(other->m_super);
   }

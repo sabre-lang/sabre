@@ -25,6 +25,9 @@ protected:
   /// @brief Handles launching the runtime.
   $_NORETURN void m_execute() final;
 
+  /// @brief Internally handles testing.
+  int32_t m_launch();
+
   /// @brief Declares that there are no tests available.
   void m_empty();
 

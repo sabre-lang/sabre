@@ -79,6 +79,9 @@ public:
     m_scheduler->join();
     m_watchdog->join();
 
+    // allow cleanup code to occur here
+    m_storage->options->cleanup();
+
     // and return the necessary error-code
     return m_shutdown->code();
   }

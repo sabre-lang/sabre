@@ -12,7 +12,7 @@ class Service : public XI::Singleton, public XSIO::Async::Manager {
   //  TYPEDEFS  //
 
   /// @brief Allow main isolates internal access.
-  friend struct Entry;
+  friend class Entry;
 
   //  PROPERTIES  //
 

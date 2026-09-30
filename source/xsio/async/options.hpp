@@ -8,9 +8,15 @@
 
 namespace XSIO::Async {
 
+/// @brief Defines cleanup lambdas.
+using Cleanup = $::Shared::Functor<void() const>;
+
 /// @brief Asynchronous Runtime Options.
 struct Options {
   //  PROPERTIES  //
+
+  /// @brief Simple cleanup handler.
+  Cleanup cleanup = [] {};
 
   /// @brief Available thread options.
   struct {

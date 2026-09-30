@@ -36,6 +36,8 @@ struct Allocator {
    * @brief Handles destructing values.
    * @param value                 Value to destruct.
    */
+  static inline constexpr bool destroy(const Value::Any &value) { return m_destruct(value); }
+  static inline constexpr void destroy(const Object::Header *header) { m_destruct(header); }
   template <std::derived_from<Value::Any> T> static inline constexpr void destroy(const Value::Any &value) {
     if constexpr (m_validate<T>()) m_destruct<T>(value.as<Object::Any>());
   }
@@ -109,7 +111,7 @@ private:
    * @param value                 Value to be moved.
    */
   template <std::derived_from<Value::Any> T>
-  static inline constexpr void m_move(Heap::Address address, Object::Any object) {
+  static inline constexpr void m_move(Heap::Address address, const Object::Any &object) {
     using Wrapper = typename Object::Wrapper<T>;
     auto *other = std::bit_cast<Wrapper *>(object.address());
     new (std::bit_cast<Wrapper *>(address)) Wrapper(std::move(*other));
@@ -119,7 +121,9 @@ private:
    * @brief Handles destructing an object.
    * @param object                Value to destruct.
    */
-  template <std::derived_from<Value::Any> T> static inline constexpr void m_destruct(Object::Any object) {
+  static bool m_destruct(const Value::Any &object);
+  static void m_destruct(const Object::Header *header);
+  template <std::derived_from<Value::Any> T> static inline constexpr void m_destruct(const Object::Any &object) {
     using Wrapper = typename Object::Wrapper<T>;
     std::bit_cast<Wrapper *>(object.address())->~Wrapper();
   }

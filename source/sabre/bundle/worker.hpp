@@ -37,11 +37,14 @@ protected:
   /// @brief Handles launching the bundler.
   $_NORETURN void m_execute() final;
 
+  /// @brief Core handler for bundling.
+  int32_t m_bundle();
+
   /**
    * @brief Handles resolving the script.
    * @param script                Entry script.
    */
-  $::URI::Buffer m_resolve(const $::String::View &script);
+  std::optional<$::URI::Buffer> m_resolve(const $::String::View &script);
 
   /**
    * @brief Handles codesigning the output.

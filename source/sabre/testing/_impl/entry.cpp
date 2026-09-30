@@ -7,12 +7,13 @@
 
 //  PRIVATE METHODS  //
 
-$_NORETURN void Sabre::Testing::Entry::m_execute() {
+$_NORETURN void Sabre::Testing::Entry::m_execute() { m_thread->shutdown(m_launch()); }
+int32_t Sabre::Testing::Entry::m_launch() {
   // prepare the baseline spinner suffix to be shown
   static auto s_suffix = $::Spinner::Suffix("Testing");
 
-  // force our runtime to preload the lifecycle now
-  $_UNUSED $_AUTO = m_services->get<Lifecycle::Service>()->scope(this);
+  // ensure suitable scoped for the execution
+  m_scope();
 
   // get the underlying testing services to be used
   auto reporter = m_services->get<Diagnostic::Reporter>();
@@ -34,10 +35,10 @@ $_NORETURN void Sabre::Testing::Entry::m_execute() {
   }
 
   // bail if there are no tests given
-  if (thenables.empty()) m_empty(), m_thread->shutdown(EXIT_FAILURE);
+  if (thenables.empty()) return m_empty(), EXIT_FAILURE;
 
   // if we had any type-errors, then cancel testing
-  if (!m_report(reporter.get(), thenables.size())) m_thread->shutdown(EXIT_FAILURE);
+  if (!m_report(reporter.get(), thenables.size())) return EXIT_FAILURE;
 
   // prepare all the runtime-errors necessary
   auto unhandled = $::Map::Base<$::URI::View, Value::Any>();
@@ -54,10 +55,10 @@ $_NORETURN void Sabre::Testing::Entry::m_execute() {
   if (m_spinner) m_spinner->dismiss(), m_spinner = nullptr;
 
   // bail if we have an unhandled errors before testing
-  if (unhandled.size()) m_unhandled(std::move(unhandled)), m_thread->shutdown(EXIT_FAILURE);
+  if (unhandled.size()) return m_unhandled(std::move(unhandled)), EXIT_FAILURE;
 
   // and launch the testing session now
-  m_thread->shutdown(m_services->get<Service>()->invoke(options()->testing));
+  return m_services->get<Service>()->invoke(options()->testing);
 }
 
 bool Sabre::Testing::Entry::m_analyze(const $::URI::Buffer &resource, Diagnostic::Reporter *reporter) {

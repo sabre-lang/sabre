@@ -9,7 +9,7 @@ export namespace Product {
     //  PROPERTIES  //
 
     /** Underlying product identifier. */
-    export const identifier = _.publisher;
+    export const identifier = _.name;
 
     /** Underlying crate file-name. */
     export const crateFile = '_crate.jsonc';

@@ -24,25 +24,25 @@ private:
 
   /**
    * @brief Handles parsing a singular line.
-   * @param environ                 Environment map.
+   * @param env                     Environment map.
    * @param line                    Line to parse.
    */
-  static void m_parse(View &environ, const $::String::View &line);
+  static void m_parse(View &env, const $::String::View &line);
 
   /**
    * @brief Attempts unescaping incoming values.
-   * @param environ                 Environment map.
+   * @param env                     Environment map.
    * @param value                   Value to decipher.
    */
-  static $::String::Buffer m_decipher(const View &environ, $::String::View &value);
+  static $::String::Buffer m_decipher(const View &env, $::String::View &value);
 
   /**
    * @brief Handles inserting a pair into the environment.
-   * @param environ                 Environment map.
+   * @param env                     Environment map.
    * @param key                     Key to emplace.
    * @param value                   Value to emplace.
    */
-  static void m_emplace(View &environ, const $::String::View &key, const $::String::Buffer &value);
+  static void m_emplace(View &env, const $::String::View &key, const $::String::Buffer &value);
 };
 
 } // namespace Sabre::Dotenv

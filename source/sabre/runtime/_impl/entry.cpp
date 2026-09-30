@@ -6,11 +6,11 @@
 //  PRIVATE METHODS  //
 
 $_NORETURN void Sabre::Runtime::Entry::m_execute() {
-  // prepare the incoming runtime
-  $_UNUSED $_AUTO = service<Lifecycle::Service>()->scope(this);
+  // ensure suitable scoped for the execution
+  m_scope();
 
   // get the incoming resource to be run now
-  auto script = options()->script.entry;
+  const auto &script = options()->script.entry;
   auto result = m_import(script).pointer().okay();
 
   // attempt importing the incoming script

@@ -112,7 +112,7 @@ public:
    * @param callback              Callback to execute.
    */
   inline void each(Callback &&callback) const noexcept {
-    for (Address offset = buffer(); offset < m_used;) {
+    for (Address offset = buffer(), end = offset + m_used; offset < end;) {
       auto *header = std::bit_cast<Object::Header *>(offset);
       callback(header), offset += header->size(); // bump up
     }

@@ -31,9 +31,7 @@
   X(Builtins::Custom::Utility)
 
 #define SABRE_XX_BUILTINS_LIST(X) \
-  SABRE_XX_VALUES_IMMEDIATE(X)    \
-  SABRE_XX_VALUES_OBJECT(X)       \
-  X(Object::Instance)             \
+  SABRE_XX_VALUES_LIST(X)         \
   SABRE_XX_BUILTINS_CUSTOM(X)
 
 #endif

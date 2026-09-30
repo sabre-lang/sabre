@@ -60,32 +60,28 @@ SABRE_MM_CHECK_NODE(Class, node, analyzer) {
   // construct the underlying class prototype now
   auto proto = Type::New::prototype(node->name(), shape);
 
+  // prepare the current trace range
+  $_UNUSED $_AUTO = analyzer->trace(node);
+
+  // attempt resolving the incoming super typing
+  auto base = analyzer->check(node->header(), Type::New::none()).type;
+  if (base == proto) analyzer->report(node, 3001000, node->name()); // ignore self
+  else if (auto _ = Type::New::cast<Type::Prototype>(base)) proto->super() = base;
+  else if (!base->is<Type::None>()) analyzer->report(node->base(), 3001001, node->name(), *base);
+
   // and construct a baseline instance to be used now
   auto instance = proto->instantiate();
-
-  // set some of the constructor details to be used
-  auto generic = Type::New::cast<Type::Generic>(constructor);
 
   // pre-update the constructor with the instance as a return-type
   Type::New::cast<Type::Callable>(constructor)->returns() = instance;
 
+  // update the underlying constructor function to be used
+  proto->constructor() = constructor;
+
   // update the necessary components to be used now
+  auto generic = Type::New::cast<Type::Generic>(constructor);
   auto parameters = generic ? generic->parameters() : Type::Template();
   proto->constraints() = $::Ranges::To<Type::Erased>(parameters);
-
-  // update the underlying constructor function to be used
-  proto->constructor() = [constructor, parameters](const Type::Prototype *proto) -> Type::Erased {
-    // bind all the prototype constraints to
-    auto constraints = Type::Constraints();
-
-    // iterate over the avialable constraints to be bound
-    for (const auto &[ii, parameter] : $::Ranges::Each(parameters)) {
-      constraints.emplace(parameter.get(), proto->constraints().at(ii));
-    }
-
-    // use the prototype constraints to resolve the constructor
-    return constructor->infer(&constraints);
-  };
 
   // resolve the entity and it's context now
   auto *entity = analyzer->world()->lookup(node->name());
@@ -98,18 +94,11 @@ SABRE_MM_CHECK_NODE(Class, node, analyzer) {
   // update the current exported status as well
   if (entity->exported()) entity->unused(false);
 
-  // prepare the current trace range
-  $_UNUSED $_AUTO = analyzer->trace(node);
-
   // prepare the incoming world to be used for scoping
   auto callable = Type::New::cast<Type::Callable>(proto->callable());
   auto world = analyzer->scope(node->constructor(), callable, nullptr);
 
-  // attempt resolving the incoming super typing
-  auto base = analyzer->check(node->header(), Type::New::none()).type;
-  if (base == proto) analyzer->report(node, 3001000, node->name()); // no self-references
-  else if (auto _ = Type::New::cast<Type::Prototype>(base)) proto->super() = base;
-  else if (!base->is<Type::None>()) analyzer->report(node->base(), 3001001, node->name(), *base);
+  $::Debug::eprintln("{0} - {1}", node->name(), *proto->super());
 
   // ensure we declare the current outer shell now
   world->outer() = world->depth(), world->loops() = -1;

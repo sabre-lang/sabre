@@ -23,7 +23,7 @@
   X(Number::Tagged)
 
 #define SABRE_XX_VALUES_OBJECT(X) \
-  X(String::Any)                  \
+  X(String::Large)                \
                                   \
   X(Function::Native)             \
   X(Function::Jitted)             \
@@ -44,8 +44,11 @@
   SABRE_XX_VALUES_IMMEDIATE(X)  \
   X(String::Small)              \
                                 \
-  X(String::Large)              \
   SABRE_XX_VALUES_OBJECT(X)     \
-  X(Object::Instance)
+  X(Object::Instance)           \
+                                \
+  X(String::Any)                \
+  X(Object::Any)                \
+  X(Function::Any)
 
 #endif

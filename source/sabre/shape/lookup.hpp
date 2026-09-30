@@ -12,8 +12,8 @@ static constexpr Underlying Invalid() { return Limits::MAXIMUM; }
 /// @brief Handles looking up associated shapes.
 template <class T> static constexpr Underlying Lookup() {
   // prepare some fast lookups for strings (since no overlap for immediate/object)
-  if constexpr (std::same_as<String::Small, T>) return Lookup<String::Any>();
-  if constexpr (std::same_as<String::Large, T>) return Lookup<String::Any>();
+  if constexpr (std::same_as<String::Any, T>) return Lookup<String::Large>();
+  if constexpr (std::same_as<String::Small, T>) return Lookup<String::Large>();
 
   // prepare an initial value on the threshold
   Underlying shape = Limits::THRESHOLD;

@@ -4,7 +4,6 @@
 #include "sabre/bundle/service.hpp"
 #include "sabre/document/buffer.hpp"
 #include "sabre/import/service.hpp"
-#include "sabre/lifecycle/service.hpp"
 
 //  CONSTRUCTORS  //
 
@@ -14,12 +13,13 @@ Sabre::Bundle::Worker::Worker(XI::Container *services, const Options &options) :
 
 //  PRIVATE METHODS  //
 
-$_NORETURN void Sabre::Bundle::Worker::m_execute() {
-  // force our runtime to preload the lifecycle now
-  $_UNUSED $_AUTO = service<Lifecycle::Service>()->scope(this);
-
+$_NORETURN void Sabre::Bundle::Worker::m_execute() { m_thread->shutdown(m_bundle()); }
+int32_t Sabre::Bundle::Worker::m_bundle() {
   // prepare a suitable spinner suffix to be used
   static auto s_suffix = $::Spinner::Suffix("Bundling");
+
+  // ensure suitable scoped for the execution
+  m_scope();
 
   // prepare the necessary services to be used
   auto *async = service<Async::Service>();
@@ -28,17 +28,20 @@ $_NORETURN void Sabre::Bundle::Worker::m_execute() {
 
   // start by resolving the underlying script
   auto script = m_resolve(runtime->script.entry);
+  if (!script.has_value()) return EXIT_FAILURE;
+
+  // prepare a reporter to be used as well
   $::Unique::Pointer<Diagnostic::Reporter> reporter = *m_services;
 
   // attempt running analysis now
-  auto stats = runtime->flags.typeless ? Import::Statistics() : modules->analyze(script, reporter.get(), true);
+  auto stats = runtime->flags.typeless ? Import::Statistics() : modules->analyze(*script, reporter.get(), true);
 
   // attempt checking the types available now as necessary
-  if (stats.errors) m_thread->shutdown(EXIT_FAILURE);
+  if (stats.errors) return EXIT_FAILURE;
 
   // stop if in linting only mode
-  if (!m_options.compile) m_thread->shutdown(EXIT_SUCCESS);
-  else if (stats.hints) $::Debug::println(); // display padding
+  if (!m_options.compile) return EXIT_SUCCESS;
+  else if (stats.hints) $::Debug::println();
 
   // get an initial starting time-point
   auto start = $::Clock::Performance();
@@ -54,13 +57,13 @@ $_NORETURN void Sabre::Bundle::Worker::m_execute() {
 
   // get the underlying executable binary now and imbue it
   auto binary = XJCT::Archive::Binary($::Executable::resolve());
-  if (!m_imbue(binary, blob)) m_thread->shutdown(EXIT_FAILURE);
+  if (!m_imbue(binary, blob)) return EXIT_FAILURE;
 
   // finally show that we are writing out output
   if (runtime->flags.verbose) m_spinner->suffix(s_suffix("Writing Executable..."));
 
   // get the incoming output name to be used
-  auto output = m_output(script, binary.extension());
+  auto output = m_output(*script, binary.extension());
 
   // attempt outputting the file with the desired options now
   $::FS::Overwrite(output, binary.buffer());
@@ -69,23 +72,22 @@ $_NORETURN void Sabre::Bundle::Worker::m_execute() {
   $::FS::Chmod.executable(output);
 
   // finally attempt code-signing if necessary
-  if (!m_codesign(output)) m_thread->shutdown(EXIT_FAILURE);
+  if (!m_codesign(output)) return EXIT_FAILURE;
 
   // immediately stop if not in verbose mode
-  if (!runtime->flags.verbose) m_thread->shutdown(EXIT_SUCCESS);
+  if (!runtime->flags.verbose) return EXIT_SUCCESS;
 
   // prepare the elapsed time now
   auto details = fmt::format("Compiled '{0}' in {1}", output.filename().string(), $::Clock::Performance() - start);
 
   // finally we dismiss with the time elapsed and exit the worker now
-  m_spinner->dismiss(s_suffix(details)), m_thread->shutdown(EXIT_SUCCESS);
+  return m_spinner->dismiss(s_suffix(details)), EXIT_SUCCESS;
 }
 
-$::URI::Buffer Sabre::Bundle::Worker::m_resolve(const $::String::View &script) {
+std::optional<$::URI::Buffer> Sabre::Bundle::Worker::m_resolve(const $::String::View &script) {
   auto resource = resolve(script, $::System::cwd());
   if (resource.has_value()) return *resource;
-  m_failure(8000000, resource.error());
-  m_thread->shutdown(EXIT_FAILURE);
+  return m_failure(8000000, resource.error()), std::nullopt;
 }
 
 $::FS::Path Sabre::Bundle::Worker::m_output(const $::URI::View &script) {

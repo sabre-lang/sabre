@@ -67,6 +67,9 @@ public:
   /// @brief Gets the disposable stack containers.
   inline constexpr Lifetimes *lifetimes() const noexcept { return m_lifetimes.get(); }
 
+  /// @brief Forcibly cleans all allocated values.
+  void cleanup();
+
   /**
    * @brief Request a GC attempt.
    * @param major                     Force major collection.

@@ -36,12 +36,6 @@ public:
   //  PUBLIC METHODS  //
 
   /**
-   * @brief Scopes a lifecycle sequence.
-   * @param isolate                   Runtime isolate.
-   */
-  Scope scope(Runtime::Isolate *isolate = nullptr);
-
-  /**
    * @brief Handles preloading the lifecycle.
    * @param isolate                   Runtime isolate.
    */

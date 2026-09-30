@@ -11,7 +11,7 @@ class Instance : public Mixin<Instance> {
   //  PROPERTIES  //
 
   /// @brief Associated class typing.
-  $::Shared::Pointer<Prototype> m_prototype = nullptr;
+  $::Shared::Pointer<Prototype> m_prototype = {};
 
 public:
   //  CONSTRUCTORS  //

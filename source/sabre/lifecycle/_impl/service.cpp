@@ -2,6 +2,7 @@
 #include "sabre/lifecycle/service.hpp"
 #include "sabre/async/service.hpp"
 #include "sabre/dylib/registry.hpp"
+#include "sabre/garbage/service.hpp"
 #include "sabre/globals/service.hpp"
 #include "sabre/import/service.hpp"
 #include "sabre/runtime/container.hpp"
@@ -16,10 +17,6 @@ Sabre::Lifecycle::Service::Service() : Service($::Global::get<Runtime::Container
 Sabre::Lifecycle::Service::Service(XI::Container *services) : m_services(services) {}
 
 //  PUBLIC METHODS  //
-
-Sabre::Lifecycle::Scope Sabre::Lifecycle::Service::scope(Runtime::Isolate *isolate) {
-  return Scope(m_services, isolate);
-}
 
 void Sabre::Lifecycle::Service::preload(Runtime::Isolate *isolate) {
   // get the available global service now
@@ -56,6 +53,15 @@ void Sabre::Lifecycle::Service::preload(Runtime::Isolate *isolate) {
 }
 
 void Sabre::Lifecycle::Service::unload(Runtime::Isolate *) {
+  // ensure each individual disposable is executed
   for (const auto &disposable : m_disposables | std::views::values) disposable();
-  m_disposables.clear(); // and remove the disposables now since all finalized
+
+  // remove the disposables now since all finalized
+  m_disposables.clear();
+
+  // prepare a mapping for the removed headers
+  auto removed = $::Map::Set<Pointer::Underlying>();
+
+  // also ensure we deallocate all heap-allocated values before exiting as well
+  m_services->get<Garbage::Service>()->cleanup();
 }

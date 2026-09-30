@@ -8,8 +8,8 @@
 
 namespace Sabre::Type {
 
-/// @brief Constructor Applicator Callback.
-using Constructor = $::Shared::Functor<Erased(const Prototype *) const>;
+// /// @brief Constructor Applicator Callback.
+// using Constructor = $::Shared::Functor<Erased(const Prototype *) const>;
 
 /// @brief Type Class Node.
 class Prototype : public Mixin<Prototype> {
@@ -30,7 +30,7 @@ class Prototype : public Mixin<Prototype> {
   $::Shared::Pointer<Structure> m_structure;
 
   /// @brief The underlying base constructor.
-  Constructor m_constructor = nullptr;
+  Erased m_constructor = nullptr;
 
   /// @brief Static field properties available.
   $::Map::Record<Entity> m_statics = {};
@@ -75,8 +75,8 @@ public:
   inline constexpr const Apply &operators() const noexcept { return m_structure->operators(); }
 
   /// @brief The available class constructor.
-  inline constexpr Constructor &constructor() noexcept { return m_constructor; }
-  inline constexpr const Constructor &constructor() const noexcept { return m_constructor; }
+  inline constexpr Erased &constructor() noexcept { return m_constructor; }
+  inline constexpr const Erased &constructor() const noexcept { return m_constructor; }
 
   /// @brief The available class generics.
   inline constexpr std::vector<Erased> &constraints() noexcept { return m_structure->constraints(); }
@@ -86,7 +86,7 @@ public:
   inline constexpr $::Shared::Pointer<Instance> instantiate() const { return m_instantiate(); }
 
   /// @brief The baseline handler for constructing prototypes.
-  inline constexpr Erased callable() const noexcept { return m_constructor ? m_constructor(this) : New::any(); }
+  inline constexpr Erased callable() const noexcept { return m_callable(); }
 
   /**
    * @brief Handles looking up static fields.
@@ -129,6 +129,9 @@ protected:
     if (!m_super->is<Prototype>()) return m_super->lookup(field);
     return m_super->as<Prototype>()->m_lookup(field);
   }
+
+  /// @brief Handles constructing a callback instance.
+  Erased m_callable() const;
 
   /// @brief Handles constructing a class instantiation.
   $::Shared::Pointer<Instance> m_instantiate() const;

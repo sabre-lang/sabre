@@ -11,9 +11,6 @@ namespace Sabre::Lifecycle {
 class Scope : public XI::Transient {
   //  PROPERTIES  //
 
-  /// @brief The lifecycle service.
-  Service *m_lifecycle;
-
   /// @brief Bound isolate instance.
   Runtime::Isolate *m_isolate;
 
@@ -26,7 +23,6 @@ public:
    * @param isolate           Runtime isolate.
    */
   explicit Scope(Runtime::Isolate *isolate = nullptr);
-  explicit Scope(XI::Container *services, Runtime::Isolate *isolate = nullptr);
 
   /// @brief Handles destructing the scoping.
   ~Scope();
