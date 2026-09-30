@@ -27,9 +27,6 @@ bool Sabre::Type::Instance::m_unify(const Erased &candidate, Constraints *constr
   // attempt resolving a suitable prototype
   auto other = New::cast<Prototype>(candidate, false);
 
-  $::Debug::eprintln("L: {0}", *this);
-  $::Debug::eprintln("R: {0}", *candidate);
-
   if (other == nullptr) return false;      // failed to find a parent class
   if (m_prototype == nullptr) return true; // pass all generic objects now
 
