@@ -11,6 +11,9 @@ export namespace Product {
     /** Underlying product identifier. */
     export const identifier = _.name;
 
+    /** Underlying product publisher. */
+    export const publisher = _.publisher;
+
     /** Underlying crate file-name. */
     export const crateFile = '_crate.jsonc';
 

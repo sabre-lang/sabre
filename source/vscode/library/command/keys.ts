@@ -10,8 +10,8 @@ export namespace Key {
     //  PROPERTIES  //
 
     /** Server Restart Key. */
-    export const RESTART = Key('restart');
+    export const RESTART_SERVER = Key('restart');
 
     /** Open Settings Key. */
-    export const SETTINGS = Key('settings');
+    export const SETTINGS_OPEN = Key('settings');
 }

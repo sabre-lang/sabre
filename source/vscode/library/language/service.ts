@@ -26,12 +26,12 @@ export class Service extends Disposable.Registry implements Extension.Plugin {
         // register the base client instance
         this.m_subscribe(this.m_client);
 
+        // prepare all the necessary event listeners
+        this.m_commands.register(Command.Key.RESTART_SERVER, () => this.m_client.restart());
+
         // handle when the underlying settings change (eg: restart the server instance)
         this.m_subscribe(Settings.Registry.listen('server.loggingLevel', () => this.m_client.restart()));
         this.m_subscribe(Settings.Registry.listen('server.executablePath', () => this.m_client.restart()));
-
-        // prepare all the necessary event listeners
-        this.m_subscribe(this.m_commands.register(Command.Key.RESTART, () => this.m_client.restart()));
 
         // finally force the client to be initialized first
         await this.m_client.restart();

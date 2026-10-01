@@ -98,8 +98,6 @@ SABRE_MM_CHECK_NODE(Class, node, analyzer) {
   auto callable = Type::New::cast<Type::Callable>(proto->callable());
   auto world = analyzer->scope(node->constructor(), callable, nullptr);
 
-  $::Debug::eprintln("{0} - {1}", node->name(), *proto->super());
-
   // ensure we declare the current outer shell now
   world->outer() = world->depth(), world->loops() = -1;
 
