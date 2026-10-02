@@ -39,6 +39,9 @@
 #include "sabre/bytecode/trace.hpp"
 #include "sabre/bytecode/visitor.hpp"
 
+/// Codec Includes
+#include "sabre/codec/json.hpp"
+
 /// Crate Includes
 #include "sabre/crate/constants.hpp"
 #include "sabre/crate/manifest.hpp"

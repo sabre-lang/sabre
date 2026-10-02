@@ -226,6 +226,8 @@ SABRE_XX_DIAGNOSTIC_RUNTIME(6000900, ERROR, "'Todo' expression evaluated. {0}")
 SABRE_XX_DIAGNOSTIC_RUNTIME(6001000, ERROR, "Disposable operator not of type 'Function'")
 SABRE_XX_DIAGNOSTIC_RUNTIME(6001001, ERROR, "An error was supressed during disposal")
 
+SABRE_XX_DIAGNOSTIC_RUNTIME(6001100, ERROR, "Could not decode {0} input. {1}")
+
 /// "Assertion" Diagnostics Group 7_000_000
 SABRE_XX_DIAGNOSTIC_ASSERTION(7000000, ERROR, "{0}")
 SABRE_XX_DIAGNOSTIC_ASSERTION(7000001, ERROR, "Expression evaluated to a '{0}' value")

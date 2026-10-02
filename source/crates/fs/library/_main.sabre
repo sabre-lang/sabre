@@ -3,4 +3,19 @@
 /// @describe Helpers for working with the filesystem.
 ///
 
-Todo("Unimplemented Crate - 'sabre:fs'");
+// Dynamic Modules
+import "dylib:fs" as fs;
+
+// Sabre Modules
+import "sabre:_detail" as Detail;
+
+// - HELPERS - //
+
+//! @brief Internal helper to reduce bytecode output.
+let m_cast = Detail.Unsafe.cast;
+
+// - PUBLIC METHODS - //
+
+//! @brief Reads then entire contents of a file.
+//! @param path                     Path to read.
+export let read_file = m_cast[fn (path: String) -> String](fs.read_file);

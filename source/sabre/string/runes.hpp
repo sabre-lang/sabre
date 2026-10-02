@@ -137,6 +137,9 @@ protected:
     // prepare the outgoing units to be used
     auto units = std::vector<size_t>();
 
+    // ensure we reserve our bytes (in-case of large strings)
+    units.reserve(bytes);
+
     // attempt reading the incoming lengths now
     for (size_t ii = 0; ii < bytes;) units.emplace_back(ii), ii += $::Encoding::UTF8::length(data + ii);
 
