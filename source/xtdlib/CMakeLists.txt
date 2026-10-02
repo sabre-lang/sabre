@@ -4,7 +4,7 @@
 sabre_package_require(xhash)
 
 # Prepare all the vendors to be required
-sabre_vendors_require(aster boost fmt function2 glaze spdlog)
+sabre_vendors_require(aster boost fmt function2 glaze simdutf spdlog)
 
 # --  PACKAGE PROPERTIES  -- #
 
@@ -27,6 +27,7 @@ sabre_library_declare(${SABRE_TARGET_XTDLIB} PCH SOURCES ${SABRE_SOURCES_XTDLIB}
     mono::common
     sabre::xhash
     spdlog::spdlog
+    simdutf::simdutf
     Boost::interprocess
     function2::function2
 )

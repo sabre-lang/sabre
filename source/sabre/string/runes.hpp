@@ -8,25 +8,16 @@ namespace Sabre::String {
 
 /// @brief Contains a string as code-points.
 class Runes {
-  //  TYPEDEFS  /
-
-  /// @brief The underlying encoding offsets.
-  enum class Offset : size_t {
-    BYTE_SIZE,
-    UTF8_SIZE,
-    UTF8_DATA,
-  };
-
   //  PROPERTIES  //
 
+  /// @brief Total rune bytes.
+  size_t m_bytes = 0;
+
   /// @brief All encoded string-buffer.
-  void *m_data = nullptr;
+  char *m_data = nullptr;
 
-  /// @brief The decoded lengths available.
-  void *m_units = nullptr;
-
-  // prepare our offset sizing to be used
-  static inline constexpr size_t m_offset = sizeof(Offset);
+  /// @brief The flattened 32-bit values.
+  std::vector<uint32_t> m_units = {};
 
 public:
   //  CONSTRUCTORS  //
@@ -40,12 +31,12 @@ public:
    * @param bytes             Size in bytes.
    */
   constexpr Runes(const char *data) : Runes(data, std::strlen(data)) {}
-  constexpr Runes(const char *data, size_t bytes) {
+  constexpr Runes(const char *data, size_t bytes) : m_bytes(bytes) {
     // ignore if there are no bytes to resolve
     if (bytes == 0) return;
 
-    m_data = m_copy(data, bytes);    // copy the data
-    m_units = m_decode(data, bytes); // and decode units
+    m_data = m_copy(data, bytes); // copy the data
+    m_units = $::Encoding::UTF8::units(data, bytes);
   }
 
   /**
@@ -64,8 +55,9 @@ public:
    * @brief The move constructor simply moves data.
    * @param other             Other item to swap.
    */
-  constexpr Runes(Runes &&other) : m_data(other.m_data), m_units(other.m_units) {
-    other.m_data = other.m_units = nullptr;
+  constexpr Runes(Runes &&other) : m_bytes(other.m_bytes), m_data(other.m_data), m_units(std::move(other.m_units)) {
+    other.m_bytes = 0;
+    other.m_data = nullptr;
   }
 
   /// @brief Handles deallocating runes.
@@ -75,12 +67,9 @@ public:
 
   /// @brief Handles copying across data from another set of runes.
   inline constexpr Runes &operator=(const Runes &other) noexcept {
-    // remove any underlying data if available
-    m_destruct();
-
-    // and we copy across any incoming data now
-    m_data = other.m_data ? m_copy(other.m_data, other.bytes()) : nullptr;
-    m_units = other.m_units ? m_copy(other.m_units, (2 + other.size()) * m_offset) : nullptr;
+    // we copy across any incoming data now as necessary
+    m_units = other.m_units, m_bytes = other.m_bytes;
+    m_data = other.m_data ? m_copy(other.m_data, other.m_bytes) : nullptr;
 
     // return the resulting reference now
     return *this;
@@ -89,12 +78,9 @@ public:
   /// @brief Handles moving other items.
   inline constexpr Runes &operator=(Runes &&other) noexcept {
     // ensure the properties are moved
-    m_data = other.m_data;
-    m_units = other.m_units;
-
-    // and then clear the other item
-    other.m_data = nullptr;
-    other.m_units = nullptr;
+    m_data = std::move(other.m_data);
+    m_bytes = std::move(other.m_bytes);
+    m_units = std::move(other.m_units);
 
     // and return the resulting details now
     return *this;
@@ -102,70 +88,30 @@ public:
 
   //  PUBLIC METHODS  //
 
-  inline constexpr bool empty() const noexcept { return m_data == nullptr; }
-  inline constexpr size_t size() const noexcept { return m_size(Offset::UTF8_SIZE); }
-  inline constexpr size_t bytes() const noexcept { return m_size(Offset::BYTE_SIZE); }
+  inline constexpr bool empty() const noexcept { return m_bytes == 0; }
+  inline constexpr size_t bytes() const noexcept { return m_bytes; }
+  inline constexpr size_t size() const noexcept { return m_units.size(); }
   inline constexpr Value::Symbol symbol() const noexcept { return Value::Symbol(view()); }
-  inline constexpr const char *data() const noexcept { return static_cast<const char *>(m_data); }
+  inline constexpr const char *data() const noexcept { return m_data; }
 
-  inline constexpr $::String::View view() const noexcept { return {data(), bytes()}; }
-  inline constexpr std::span<const size_t> units() const noexcept { return {m_at(Offset::UTF8_DATA), size()}; }
+  inline constexpr $::String::View view() const noexcept { return {m_data, bytes()}; }
+  inline constexpr std::span<const uint32_t> units() const noexcept { return m_units; }
 
 protected:
   //  PRIVATE METHODS  //
 
   /// @brief Handles removing internal data.
   inline constexpr void m_destruct() {
-    if (m_data) std::free(m_data), m_data = nullptr;
-    if (m_units) std::free(m_units), m_units = nullptr;
+    if (m_data) std::free(static_cast<void *>(m_data)), m_data = nullptr;
   }
 
   /**
    * @brief Handles copying across data.
    * @param data              Incoming data to copy.
    */
-  template <class T> inline constexpr void *m_copy(const T *data, size_t bytes) const noexcept {
-    return std::memcpy(std::malloc(bytes), static_cast<const void *>(data), bytes);
+  inline constexpr char *m_copy(const char *data, size_t bytes) const noexcept {
+    return static_cast<char *>(std::memcpy(std::malloc(bytes), static_cast<const void *>(data), bytes));
   }
-
-  /**
-   * @brief Decode the incoming data code-points.
-   * @param data                  Buffer data.
-   * @param bytes                 Size in bytes.
-   */
-  inline constexpr void *m_decode(const char *data, size_t bytes) const noexcept {
-    // prepare the outgoing units to be used
-    auto units = std::vector<size_t>();
-
-    // ensure we reserve our bytes (in-case of large strings)
-    units.reserve(bytes);
-
-    // attempt reading the incoming lengths now
-    for (size_t ii = 0; ii < bytes;) units.emplace_back(ii), ii += $::Encoding::UTF8::length(data + ii);
-
-    // return the decoded result now
-    auto output = static_cast<size_t *>(std::malloc((2 + units.size()) * m_offset));
-
-    *output = bytes, *(output + 1) = units.size(); // copy across
-    std::memcpy(output + 2, units.data(), units.size() * m_offset);
-
-    // finally return the output now
-    return output;
-  }
-
-  /**
-   * @brief Gets the byte-offset from sizes.
-   * @param offset                Size offset.
-   */
-  inline constexpr const size_t *m_at(Offset offset) const noexcept {
-    return static_cast<const size_t *>(m_units) + static_cast<size_t>(offset);
-  }
-
-  /**
-   * @brief Constructs a size value.
-   * @param offset                Size offset.
-   */
-  inline constexpr size_t m_size(Offset offset) const noexcept { return m_units ? *m_at(offset) : 0; }
 
   /**
    * @brief Handles printing runes.

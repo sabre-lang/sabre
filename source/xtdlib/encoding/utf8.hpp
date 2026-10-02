@@ -38,22 +38,13 @@ inline constexpr uint32_t length(const char *buffer) {
  * @brief Checks how long a UTF-8 string is.
  * @param view                  String to check.
  */
-inline uint32_t count(const char *buffer, size_t size) {
-  // prepare the base accumulator
-  size_t acc = 0;
-
-  // attempt iterating over the buffer now
-  for (auto begin = buffer, end = buffer + size; begin < end; ++acc) begin += length(begin);
-
-  // return the final accumulator value
-  return acc;
-}
+size_t count(const char *buffer, size_t size);
 
 /**
  * @brief Checks how long a UTF-8 string is.
  * @param view                  String to check.
  */
-inline uint32_t count(const $::String::View &view) { return count(view.data(), view.size()); }
+size_t count(const $::String::View &view);
 
 /**
  * @brief Converts a code-point to a string.
@@ -71,6 +62,13 @@ uint32_t rune(const char *buffer, size_t bytes, size_t unit);
 uint32_t rune(const char *buffer, const char *end, size_t unit);
 
 /**
+ * @brief Gets the equivalent UTF-8 codepoints.
+ * @param view                  View to resolve.
+ */
+std::vector<uint32_t> units(const $::String::View &view);
+std::vector<uint32_t> units(const char *buffer, size_t bytes);
+
+/**
  * @brief Gets an underlying offset.
  * @param view                  View to resolve.
  * @param unit                  Codepoint index.
@@ -78,6 +76,7 @@ uint32_t rune(const char *buffer, const char *end, size_t unit);
 size_t offset(const $::String::View &view, size_t unit);
 size_t offset(const char *buffer, size_t bytes, size_t unit);
 size_t offset(const char *buffer, const char *end, size_t unit);
+size_t offset(const std::span<const uint32_t> &span, size_t unit);
 
 /**
  * @brief Validates a given code-point.

@@ -134,6 +134,7 @@ __sabre_vendors_declare(function2 4.2.5 REPO "naios/function2.git")
 __sabre_vendors_declare(glaze v8.1.0 REPO "stephenberry/glaze.git")
 __sabre_vendors_declare(lief 1.0.0 REPO "lief-project/LIEF.git")
 __sabre_vendors_declare(muuid v2.5.0 REPO "gershnik/modern-uuid.git" TAG v2.3)
+__sabre_vendors_declare(simdutf v9.2.1 REPO "simdutf/simdutf.git")
 __sabre_vendors_declare(spdlog v1.17.0 REPO "gabime/spdlog.git")
 
 # Also expose "boost" as a vendor

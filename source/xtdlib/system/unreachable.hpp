@@ -1,7 +1,7 @@
 #ifndef _XTDLIB_SYSTEM_UNREACHABLE_HPP
 #define _XTDLIB_SYSTEM_UNREACHABLE_HPP
 
-/// XTD Includes
+/// Library Includes
 #include "xtdlib/macros/attributes.hpp"
 #include "xtdlib/system/abort.hpp"
 

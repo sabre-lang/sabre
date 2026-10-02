@@ -64,7 +64,14 @@ struct String::Large : public Object::Mixin<Large> {
    * @param unit                  Unit index to resolve.
    */
   inline constexpr size_t offset(size_t unit) const {
-    return size() == bytes() ? unit : m_storage().m_runes.units()[unit];
+    // fast-path when we have ASCII only strings
+    if (size() == bytes()) return unit;
+
+    // otherwise we need to do some trickery
+    const auto &span = m_storage().m_runes.units();
+
+    // can safely convert to a suitable result now
+    return $::Encoding::UTF8::offset(span, unit);
   }
 
   /**
@@ -75,11 +82,8 @@ struct String::Large : public Object::Mixin<Large> {
     // if the underlying bytes size is same as utf-8 size, then return immediately
     if (size() == bytes()) return static_cast<uint32_t>(data()[unit]);
 
-    auto index = m_storage().m_runes.units()[unit];
-    auto start = data() + index, end = data() + bytes();
-
-    uint32_t codepoint; // prepare the codepoint to be read now and ensure valid
-    return $_EXPECT($::Encoding::UTF8::peek(start, end, codepoint)), codepoint;
+    // can safely return the internally flattened units available
+    return m_storage().m_runes.units()[unit];
   }
 
 protected:

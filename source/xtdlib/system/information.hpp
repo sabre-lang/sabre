@@ -1,7 +1,7 @@
 #ifndef _XTDLIB_SYSTEM_INFORMATION_HPP
 #define _XTDLIB_SYSTEM_INFORMATION_HPP
 
-/// XTD Includes
+/// Library Includes
 #include "xtdlib/filesystem/path.hpp"
 #include "xtdlib/string/buffer.hpp"
 #include "xtdlib/string/view.hpp"
