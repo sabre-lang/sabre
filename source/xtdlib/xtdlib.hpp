@@ -69,6 +69,7 @@
 /// Memory Includes
 #include "xtdlib/memory/constants.hpp"
 #include "xtdlib/memory/mapping.hpp"
+#include "xtdlib/memory/region.hpp"
 
 /// Mutex Includes
 #include "xtdlib/mutex/guard.hpp"

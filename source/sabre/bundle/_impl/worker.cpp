@@ -66,7 +66,7 @@ int32_t Sabre::Bundle::Worker::m_bundle() {
   auto output = m_output(*script, binary.extension());
 
   // attempt outputting the file with the desired options now
-  $::FS::Overwrite(output, binary.buffer());
+  $::FS::Overwrite(output, binary.span());
 
   // make the output file also executable now as well
   $::FS::Chmod.executable(output);

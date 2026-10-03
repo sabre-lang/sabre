@@ -11,7 +11,7 @@ class Buffer {
   //  PROPERTIES  //
 
   /// @brief Underlying memory buffer.
-  $::FS::Region m_buffer = $::FS::Region();
+  $::Memory::Region m_buffer = {};
 
   /// @brief Reference resource value.
   $::URI::Buffer m_resource = $::URI::View().buffer();

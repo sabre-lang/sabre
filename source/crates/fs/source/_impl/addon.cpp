@@ -17,7 +17,7 @@ SABRE_MM_DYLIB_METHOD(FS, read_file, isolate, args) {
   auto buffer = $::FS::Read(file_path.view());
 
   // convert our result into a suitable output now
-  return String::Any(isolate, buffer.view());
+  return isolate->create<Iterable::Buffer>(std::move(buffer));
 }
 
 SABRE_MM_DYLIB_METHOD(FS, read_dir, isolate, args) {

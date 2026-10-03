@@ -6,6 +6,7 @@
 
 /// Forward Declarations
 $_FWD(Sabre::Iterable, struct List)
+$_FWD(Sabre::Iterable, struct Buffer)
 $_FWD(Sabre::Iterable, struct Iterator)
 $_FWD(Sabre::Iterable, class Interval)
 

@@ -15,7 +15,10 @@ struct XJCT::ELF::Note : public LIEF::ELF::Note {
 //  PRIVATE METHODS  //
 
 bool XJCT::Target::Linux::m_imbue(Archive::Binary &binary, const Imbue::Options &options) const noexcept {
-  auto parser = LIEF::ELF::Parser::parse(binary.buffer());
+  // construct a stream to be used instead of the buffer
+  auto stream = $::Unique::New<LIEF::SpanStream>(binary.data(), binary.size());
+
+  auto parser = LIEF::ELF::Parser::parse(std::move(stream));
   if (parser == nullptr) return false; // failed building
 
   // fail if any of the notes have the same name
@@ -39,5 +42,5 @@ bool XJCT::Target::Linux::m_imbue(Archive::Binary &binary, const Imbue::Options 
   LIEF::ELF::Builder builder = {*parser, {.notes = true}};
 
   // finally rebuild the output as necessary now (this currently fails due to LIEF being bad)
-  return builder.build(), binary.buffer() = builder.get_build(), true;
+  return builder.build(), binary.update(builder.get_build());
 }

@@ -18,4 +18,4 @@ let m_cast = Detail.Unsafe.cast;
 
 //! @brief Reads then entire contents of a file.
 //! @param path                     Path to read.
-export let read_file = m_cast[fn (path: String) -> String](fs.read_file);
+export let read_file = m_cast[fn (path: String) -> Buffer](fs.read_file);

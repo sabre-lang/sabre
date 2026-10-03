@@ -5,8 +5,11 @@
 //  PRIVATE METHODS  //
 
 bool XJCT::Target::Darwin::m_imbue(Archive::Binary &binary, const Imbue::Options &options) const noexcept {
+  // construct a stream to be used instead of the buffer
+  auto stream = $::Unique::New<LIEF::SpanStream>(binary.data(), binary.size());
+
   // prepare the parser to be used for modification
-  auto parser = LIEF::MachO::Parser::parse(binary.buffer());
+  auto parser = LIEF::MachO::Parser::parse(std::move(stream));
   if (parser == nullptr) return false; // failed to create
 
   // pre-build the necessary content now
@@ -28,5 +31,5 @@ bool XJCT::Target::Darwin::m_imbue(Archive::Binary &binary, const Imbue::Options
   }
 
   // update our executable and return now
-  return binary.buffer() = parser->raw(), true;
+  return binary.update(parser->raw());
 }

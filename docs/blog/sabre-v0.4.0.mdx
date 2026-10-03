@@ -17,6 +17,10 @@ Todo...
 
 Todo...
 
+## Buffer Builtin
+
+Todo...
+
 ## Upcoming Work
 
 Todo...
@@ -29,6 +33,10 @@ Todo...
 
 - Fixed: The settings open command now correctly opens the user-settings for Sabre.
 
+<h4>Toolkit / sabre bundle</h4>
+
+- Fixed: Removed unnecessary copies of the base binary to be bundled improving bundling speed.
+
 <h4>Toolkit / sabre format</h4>
 
 - Added: Implemented the `--config` option for defining a common manifest for formatting configuration.
@@ -38,6 +46,7 @@ Todo...
 
 - Added: Implemented the `--env` option for defining embeddable environment variables.
 - Fixed: Improved reading speed of files by eliminating an erroneous copy into internal storage.
+- Added: Prepared foundations for the `Buffer` builtin type to be used for fixed-length contiguous sequences of bytes.
 
 <h4>Toolkit / sabre test</h4>
 
@@ -57,6 +66,7 @@ Todo...
 <h4>Crate / sabre:fs</h4>
 
 - Moved: Renamed the `fsys` crate to `fs` for upcoming work with the builtin crates.
+- Added: Implemented a basic `read_file` method for reading files to a `Buffer` value.
 
 <h4>Crate / sabre:os</h4>
 

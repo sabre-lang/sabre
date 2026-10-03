@@ -5,7 +5,10 @@
 //  PRIVATE METHODS  //
 
 bool XJCT::Target::Windows::m_imbue(Archive::Binary &binary, const Imbue::Options &options) const noexcept {
-  auto parser = LIEF::PE::Parser::parse(binary.buffer());
+  // construct a stream to be used instead of the buffer
+  auto stream = $::Unique::New<LIEF::SpanStream>(binary.data(), binary.size());
+
+  auto parser = LIEF::PE::Parser::parse(std::move(stream));
   if (parser == nullptr) return false; // failed building
 
   // ensure that there are actually some resources available
@@ -54,5 +57,5 @@ bool XJCT::Target::Windows::m_imbue(Archive::Binary &binary, const Imbue::Option
 
   // and update the underlying binary now
   auto builder = LIEF::PE::Builder(*parser, configuration);
-  return builder.build(), binary.buffer() = builder.get_build(), true;
+  return builder.build(), binary.update(builder.get_build());
 }

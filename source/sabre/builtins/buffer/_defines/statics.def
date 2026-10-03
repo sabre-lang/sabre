@@ -1,0 +1,21 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(empty)
+SABRE_XX_STATICS_TYPEDEF("fn -> Buffer")
+SABRE_XX_STATICS_DESCRIBE("Creates an empty `Buffer` value.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(filled)
+SABRE_XX_STATICS_TYPEDEF("fn (size: Number, value: Number) -> Buffer")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Buffer` filled to a size with a given value.")
+SABRE_XX_STATICS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

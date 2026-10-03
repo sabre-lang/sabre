@@ -19,6 +19,7 @@ static Sabre::Type::Erased g_number = Sabre::Builtins::Inspect<Sabre::Number::Ta
 static Sabre::Type::Erased g_string = Sabre::Builtins::Inspect<Sabre::String::Any>::typeclass()->instantiate();
 static Sabre::Type::Erased g_symbol = Sabre::Builtins::Inspect<Sabre::Value::Symbol>::typeclass()->instantiate();
 static Sabre::Type::Erased g_boolean = Sabre::Builtins::Inspect<Sabre::Value::Boolean>::typeclass()->instantiate();
+static Sabre::Type::Erased g_buffer = Sabre::Builtins::Inspect<Sabre::Iterable::Buffer>::typeclass()->instantiate();
 
 //  PUBLIC METHODS  //
 
@@ -32,6 +33,7 @@ const Sabre::Type::Erased &Sabre::Type::New::number() { return g_number; }
 const Sabre::Type::Erased &Sabre::Type::New::string() { return g_string; }
 const Sabre::Type::Erased &Sabre::Type::New::symbol() { return g_symbol; }
 const Sabre::Type::Erased &Sabre::Type::New::boolean() { return g_boolean; }
+const Sabre::Type::Erased &Sabre::Type::New::buffer() { return g_buffer; }
 
 const $::Shared::Pointer<Sabre::Type::Structure> &Sabre::Type::New::object() { return g_object; }
 const $::Shared::Pointer<Sabre::Type::Instance> &Sabre::Type::New::exception() { return g_exception; }

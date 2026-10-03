@@ -1,0 +1,69 @@
+/// Builtins Includes
+#include "sabre/builtins/_inline/defines.ipp"
+
+//  MACROS  //
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(size)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the number of elements in a `Buffer` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(empty)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Determines if a `Buffer` has no elements.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(front)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the first element of a `Buffer` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(back)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Gets the last element of a `Buffer` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(map)
+SABRE_XX_FIELDS_TYPEDEF("fn (callback: fn (Number, Number?) -> Number) -> Buffer")
+SABRE_XX_FIELDS_DESCRIBE("Mutates each element in a `Buffer` with a given transformation callback.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(fold)
+SABRE_XX_FIELDS_TYPEDEF("fn (initial: V, callback: fn (V, Number) -> V) -> V")
+SABRE_XX_FIELDS_DESCRIBE("Reduces all elements in a `Buffer` to an accumulated value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(slice)
+SABRE_XX_FIELDS_TYPEDEF("fn (start?: Number, end?: Number) -> Buffer")
+SABRE_XX_FIELDS_DESCRIBE("Creates a view of a `Buffer` indicated by a given range.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(reverse)
+SABRE_XX_FIELDS_TYPEDEF("fn -> Buffer")
+SABRE_XX_FIELDS_DESCRIBE("Reverses a `Buffer` value.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(first_index_of)
+SABRE_XX_FIELDS_TYPEDEF("fn (needle: Number) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Finds the index of the first element in a `Buffer` that matches a given needle.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(last_index_of)
+SABRE_XX_FIELDS_TYPEDEF("fn (needle: Number) -> Number")
+SABRE_XX_FIELDS_DESCRIBE("Finds the index of the last element in a `Buffer` that matches a given needle.")
+SABRE_XX_FIELDS_FOOTER()
+
+//  UNDEFINES  //
+
+/// Builtins Includes
+#include "sabre/builtins/_inline/undefs.ipp"

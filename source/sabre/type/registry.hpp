@@ -20,6 +20,7 @@ struct New : public $::Ensure::Static {
   static const Erased &string();  // Gets the string instance type.
   static const Erased &symbol();  // Gets the symbol instance type.
   static const Erased &boolean(); // Gets the boolean instance type.
+  static const Erased &buffer();  // Gets the buffer instance type.
 
   /// @brief Gets the typed object instance.
   static const $::Shared::Pointer<Structure> &object();

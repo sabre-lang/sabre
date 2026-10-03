@@ -30,7 +30,7 @@ static inline struct {
    * @param file_path             File to overwrite.
    * @param buffer                Buffer to write.
    */
-  inline constexpr void operator()(const Path &file_path, const std::vector<uint8_t> &buffer) const noexcept {
+  inline constexpr void operator()(const Path &file_path, const std::span<const uint8_t> &buffer) const noexcept {
     std::ofstream(file_path, mode).write(reinterpret_cast<const char *>(buffer.data()), buffer.size());
   }
 } Overwrite;

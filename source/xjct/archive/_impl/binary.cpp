@@ -4,8 +4,9 @@
 
 //  PRIVATE METHODS  //
 
-XJCT::Archive::Format XJCT::Archive::Binary::m_deduce(const Blob::Bytes &buffer) noexcept {
-  if (LIEF::ELF::is_elf(buffer)) return Format::LINUX;
-  else if (LIEF::MachO::is_macho(buffer)) return Format::DARWIN;
-  return LIEF::PE::is_pe(buffer) ? Format::WINDOWS : Format::UNKNOWN;
+XJCT::Archive::Format XJCT::Archive::Binary::m_deduce(const std::span<const uint8_t> &span) noexcept {
+  auto stream = $::Unique::New<LIEF::SpanStream>(span);
+  if (LIEF::ELF::is_elf(*stream.get())) return Format::LINUX;
+  else if (LIEF::MachO::is_macho(*stream.get())) return Format::DARWIN;
+  return LIEF::PE::is_pe(*stream.get()) ? Format::WINDOWS : Format::UNKNOWN;
 }

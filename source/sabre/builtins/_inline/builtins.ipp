@@ -6,6 +6,7 @@
 
 /// Builtins Includes
 #include "sabre/builtins/boolean/traits.hpp"
+#include "sabre/builtins/buffer/traits.hpp"
 #include "sabre/builtins/class/traits.hpp"
 #include "sabre/builtins/debug/traits.hpp"
 #include "sabre/builtins/enum/traits.hpp"

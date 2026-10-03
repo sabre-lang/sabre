@@ -37,6 +37,7 @@
                                   \
   X(Iterable::Iterator)           \
   X(Iterable::List)               \
+  X(Iterable::Buffer)             \
                                   \
   X(Monad::Result)
 

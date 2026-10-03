@@ -11,8 +11,8 @@ namespace Sabre::Iterable {
 class Slice {
   //  PROPERTIES  //
 
-  Number::Integral m_start = 0;
-  Number::Integral m_stop = 0;
+  Number::Integral m_start = 0; // Start position.
+  Number::Integral m_stop = 0;  // Ending position.
 
 public:
   //  CONSTRUCTORS  //
