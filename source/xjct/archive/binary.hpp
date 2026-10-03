@@ -19,6 +19,15 @@ class Binary {
 public:
   //  CONSTRUCTORS  //
 
+  /// @brief Constructs an empty binary.
+  explicit Binary() = default;
+
+  /**
+   * @brief Constructs a binary from a given buffer.
+   * @param buffer                Buffer to bind.
+   */
+  explicit Binary(const $::FS::Region &buffer) : Binary($::Ranges::To(buffer.span())) {}
+
   /**
    * @brief Constructs a binary from a given buffer.
    * @param buffer                Buffer to bind.
@@ -29,7 +38,7 @@ public:
    * @brief Constructs a binary from an executable path.
    * @param executable            Executable to read.
    */
-  explicit Binary(const $::FS::Path &executable) : Binary($::FS::Bytes(executable)) {}
+  explicit Binary(const $::FS::Path &executable) : Binary($::FS::Read(executable)) {}
 
   //  PUBLIC METHODS  //
 

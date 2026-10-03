@@ -11,7 +11,7 @@ class Buffer {
   //  PROPERTIES  //
 
   /// @brief Underlying memory buffer.
-  $::String::Buffer m_buffer = "";
+  $::FS::Region m_buffer = $::FS::Region();
 
   /// @brief Reference resource value.
   $::URI::Buffer m_resource = $::URI::View().buffer();
@@ -43,8 +43,8 @@ public:
    * @brief Constructs a buffer.
    * @param content               Content to bind.
    */
-  constexpr Buffer(const $::String::View &content, const $::URI::View &resource = {})
-      : m_buffer(content), m_resource(resource.buffer()) {}
+  constexpr Buffer(const $::String::View &content, const $::URI::View &resource = {}) :
+      m_buffer(content), m_resource(resource.buffer()) {}
 
   //  PUBLIC METHODS  //
 
@@ -52,10 +52,10 @@ public:
   inline constexpr size_t size() const { return m_buffer.size(); }
 
   /// @brief Gets the coinciding buffer data.
-  inline constexpr const char *data() const { return m_buffer.data(); }
+  inline constexpr const char *data() const { return static_cast<const char *>(m_buffer.data()); }
 
   /// @brief Gets the associated string-view.
-  inline constexpr $::String::View view() const { return m_buffer; }
+  inline constexpr $::String::View view() const { return m_buffer.view(); }
 
   /// @brief Potential resource available.
   inline constexpr $::URI::View resource() const noexcept { return m_resource; }
@@ -64,7 +64,7 @@ public:
   inline constexpr bool anonymous() const noexcept { return resource().anonymous(); }
 
   /// @brief Converts the buffer to a binary vector.
-  inline constexpr std::vector<uint8_t> binary() const { return $::Ranges::To<uint8_t>(m_buffer); }
+  inline constexpr std::span<const uint8_t> binary() const { return m_buffer.span(); }
 };
 
 } // namespace Sabre::Document
