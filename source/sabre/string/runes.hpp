@@ -10,14 +10,14 @@ namespace Sabre::String {
 class Runes {
   //  PROPERTIES  //
 
-  /// @brief Total rune bytes.
+  /// @brief Total runes available.
+  size_t m_size = 0;
+
+  /// @brief Total size in bytes.
   size_t m_bytes = 0;
 
   /// @brief All encoded string-buffer.
-  char *m_data = nullptr;
-
-  /// @brief The flattened 32-bit values.
-  std::vector<uint32_t> m_units = {};
+  $::Shared::Pointer<char[]> m_data = nullptr;
 
 public:
   //  CONSTRUCTORS  //
@@ -31,13 +31,7 @@ public:
    * @param bytes             Size in bytes.
    */
   constexpr Runes(const char *data) : Runes(data, std::strlen(data)) {}
-  constexpr Runes(const char *data, size_t bytes) : m_bytes(bytes) {
-    // ignore if there are no bytes to resolve
-    if (bytes == 0) return;
-
-    m_data = m_copy(data, bytes); // copy the data
-    m_units = $::Encoding::UTF8::units(data, bytes);
-  }
+  constexpr Runes(const char *data, size_t bytes) : m_bytes(bytes), m_data(m_decode(data, bytes)) {}
 
   /**
    * @brief Constructs a set of runes.
@@ -45,73 +39,59 @@ public:
    */
   constexpr Runes(const $::String::View &buffer) : Runes(buffer.data(), buffer.size()) {}
 
-  /**
-   * @brief The copy construct just inherits the base constructor.
-   * @param other             Other runes buffer.
-   */
-  constexpr Runes(const Runes &other) : Runes(other.data(), other.bytes()) {}
-
-  /**
-   * @brief The move constructor simply moves data.
-   * @param other             Other item to swap.
-   */
-  constexpr Runes(Runes &&other) : m_bytes(other.m_bytes), m_data(other.m_data), m_units(std::move(other.m_units)) {
-    other.m_bytes = 0;
-    other.m_data = nullptr;
-  }
-
-  /// @brief Handles deallocating runes.
-  constexpr ~Runes() { m_destruct(); }
-
-  //  OPERATOR METHODS  //
-
-  /// @brief Handles copying across data from another set of runes.
-  inline constexpr Runes &operator=(const Runes &other) noexcept {
-    // we copy across any incoming data now as necessary
-    m_units = other.m_units, m_bytes = other.m_bytes;
-    m_data = other.m_data ? m_copy(other.m_data, other.m_bytes) : nullptr;
-
-    // return the resulting reference now
-    return *this;
-  }
-
-  /// @brief Handles moving other items.
-  inline constexpr Runes &operator=(Runes &&other) noexcept {
-    // ensure the properties are moved
-    m_data = std::move(other.m_data);
-    m_bytes = std::move(other.m_bytes);
-    m_units = std::move(other.m_units);
-
-    // and return the resulting details now
-    return *this;
-  }
-
   //  PUBLIC METHODS  //
 
-  inline constexpr bool empty() const noexcept { return m_bytes == 0; }
+  inline constexpr size_t size() const noexcept { return m_size; }
   inline constexpr size_t bytes() const noexcept { return m_bytes; }
-  inline constexpr size_t size() const noexcept { return m_units.size(); }
-  inline constexpr Value::Symbol symbol() const noexcept { return Value::Symbol(view()); }
-  inline constexpr const char *data() const noexcept { return m_data; }
+  inline constexpr bool empty() const noexcept { return m_bytes == 0; }
+  inline constexpr bool ascii() const noexcept { return m_size == m_bytes; }
 
-  inline constexpr $::String::View view() const noexcept { return {m_data, bytes()}; }
-  inline constexpr std::span<const uint32_t> units() const noexcept { return m_units; }
+  inline constexpr const char *data() const noexcept { return m_data.get(); }
+  inline constexpr $::String::View view() const noexcept { return {m_data.get(), m_bytes}; }
+  inline constexpr Value::Symbol symbol() const noexcept { return Value::Symbol(view()); }
+
+  /**
+   * @brief Gets the offset from a given index.
+   * @param unit                  Unit index to resolve.
+   */
+  inline constexpr size_t offset(size_t unit) const { return m_offset(unit); }
+
+  /**
+   * @brief Reads a codepoint rune from the string.
+   * @param unit                  Unit index expected.
+   */
+  inline constexpr uint32_t codepoint(size_t unit) const { return m_codepoint(unit); }
 
 protected:
   //  PRIVATE METHODS  //
-
-  /// @brief Handles removing internal data.
-  inline constexpr void m_destruct() {
-    if (m_data) std::free(static_cast<void *>(m_data)), m_data = nullptr;
-  }
 
   /**
    * @brief Handles copying across data.
    * @param data              Incoming data to copy.
    */
-  inline constexpr char *m_copy(const char *data, size_t bytes) const noexcept {
-    return static_cast<char *>(std::memcpy(std::malloc(bytes), static_cast<const void *>(data), bytes));
+  inline constexpr $::Shared::Pointer<char[]> m_copy(const char *data, size_t bytes) const noexcept {
+    if ($_UNLIKELY(bytes == 0)) return nullptr;
+    auto ptr = std::make_shared<char[]>(bytes);
+    return std::memcpy(ptr.get(), data, bytes), std::move(ptr);
   }
+
+  /**
+   * @brief Converts a unit index to an offset.
+   * @param unit              Unit to convert.
+   */
+  size_t m_offset(size_t unit) const noexcept;
+
+  /**
+   * @brief Reads a codepoint from the set of runes.
+   * @param unit              Unit to read.
+   */
+  uint32_t m_codepoint(size_t unit) const noexcept;
+
+  /**
+   * @brief Handles decoding data to be contained.
+   * @param data              Incoming data to copy.
+   */
+  $::Shared::Pointer<char[]> m_decode(const char *data, size_t bytes) noexcept;
 
   /**
    * @brief Handles printing runes.

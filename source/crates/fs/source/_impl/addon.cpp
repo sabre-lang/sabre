@@ -14,10 +14,10 @@ SABRE_MM_DYLIB_METHOD(FS, read_file, isolate, args) {
 
   // get the incoming file to be read
   auto file_path = args.at<String::Any>(0);
-  auto buffer = $::FS::Read($::Path::absolute(file_path.view()));
+  auto buffer = $::FS::Read(file_path.view());
 
   // convert our result into a suitable output now
-  return String::Any(isolate, buffer);
+  return String::Any(isolate, buffer.view());
 }
 
 SABRE_MM_DYLIB_METHOD(FS, read_dir, isolate, args) {

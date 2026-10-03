@@ -17,7 +17,7 @@ namespace Mock {
     export let ascii = "abcdef";
 
     //! @brief Prepare a Unicode value.
-    export let unicode = "maçã";
+    export let unicode = "açúcar";
 
     //! @brief Prepare some emoji value.
     export let emoji = "🦄";
@@ -39,7 +39,7 @@ Test.suite("Methods", fn {
     Test.case("String.size '()'", fn {
         Assert.equals(Mock.none.size(), 0);
         Assert.equals(Mock.ascii.size(), 6);
-        Assert.equals(Mock.unicode.size(), 4);
+        Assert.equals(Mock.unicode.size(), 6);
         Assert.equals(Mock.emoji.size(), 1);
     });
 
@@ -53,7 +53,7 @@ Test.suite("Methods", fn {
     Test.case("String.bytes '()'", fn {
         Assert.equals(Mock.none.bytes(), 0);
         Assert.equals(Mock.ascii.bytes(), 6);
-        Assert.equals(Mock.unicode.bytes(), 6);
+        Assert.equals(Mock.unicode.bytes(), 8);
         Assert.equals(Mock.emoji.bytes(), 4);
     });
 
@@ -66,6 +66,7 @@ Test.suite("Methods", fn {
 
     Test.case("String.at 'Number'", fn {
         Assert.panics(fn => Mock.none.at(0));
+        Assert.equals(Mock.unicode.at(2), "ú");
         Assert.equals(Mock.emoji.at(0), Mock.emoji);
     });
 

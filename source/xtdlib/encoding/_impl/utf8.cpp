@@ -94,25 +94,38 @@ std::vector<uint32_t> $::Encoding::UTF8::units(const char *buffer, size_t bytes)
   return units.resize(written), units;
 }
 
-size_t $::Encoding::UTF8::offset(const std::span<const uint32_t> &span, size_t unit) {
-  return simdutf::utf8_length_from_utf32(reinterpret_cast<const char32_t *>(span.data()), unit);
-}
-
 size_t $::Encoding::UTF8::offset(const String::View &view, size_t unit) {
   return offset(view.data(), view.size(), unit);
 }
 
 size_t $::Encoding::UTF8::offset(const char *buffer, size_t size, size_t unit) {
-  return offset(buffer, buffer + size, unit);
-}
+  // immediately stop if we have the starting unit
+  if (unit == 0) return 0;
 
-size_t $::Encoding::UTF8::offset(const char *buffer, $_UNUSED const char *end, size_t unit) {
-  // prepare a resulting position now
-  auto head = buffer;
+  // prepare the bounds to be used for finding our offset
+  size_t lower = unit, higher = std::min(size, unit * 4);
 
-  // attempt peeking until the necessary unit now
-  for (size_t ii = 0; ii < unit; ++ii) $_ASSERT(buffer < end), buffer += length(buffer);
+  // binary search the exact byte boundary using "simdutf::count_utf8"
+  while (lower <= higher) {
+    // determine a suitable middle point
+    size_t offset = lower + (higher - lower) / 2;
 
-  // attempt running our necessary peek handler now
-  return static_cast<size_t>(buffer - head);
+    // ensure that the offset always lands on a UTF-8 boundary character
+    while (offset > lower && (static_cast<uint8_t>(buffer[offset]) & 0xC0) == 0x80) --offset;
+
+    // determine the current index to check against
+    size_t index = simdutf::count_utf8(buffer, offset);
+
+    // if our target is accurate, then return the offset
+    if (index == unit) return offset;
+
+    // update our conditions instead
+    index < unit ? lower = offset + 1 : higher = offset;
+  }
+
+  // ensure we align our final output boundary
+  while (lower < size && (static_cast<uint8_t>(buffer[lower]) & 0xC0) == 0x80) ++lower;
+
+  // fallback to the maximum size allowed
+  return lower;
 }

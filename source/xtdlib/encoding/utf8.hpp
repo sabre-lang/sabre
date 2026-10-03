@@ -75,8 +75,6 @@ std::vector<uint32_t> units(const char *buffer, size_t bytes);
  */
 size_t offset(const $::String::View &view, size_t unit);
 size_t offset(const char *buffer, size_t bytes, size_t unit);
-size_t offset(const char *buffer, const char *end, size_t unit);
-size_t offset(const std::span<const uint32_t> &span, size_t unit);
 
 /**
  * @brief Validates a given code-point.

@@ -67,7 +67,7 @@ Sabre::Value::Any Sabre::Builtins::Field::slice(Isolate *isolate, const Args &ar
 
   // get the value to be sliced
   auto self = args.self<String::Any>();
-  auto size = static_cast<int64_t>(self.size());
+  auto size = static_cast<int64_t>(self.bytes());
 
   // if not actually given any arguments, return self instead
   if (args.empty()) return self;

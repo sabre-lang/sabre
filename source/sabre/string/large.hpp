@@ -20,7 +20,7 @@ template <> struct Object::Wrapper<String::Large> {
    * @brief Constructs a large string.
    * @param intern                Intern to bind.
    */
-  explicit Wrapper(const String::Intern &intern) : storage(intern) {}
+  explicit Wrapper(const String::Intern &intern) : storage(intern.view()) {}
 
   /**
    * @brief Constructs a large string.
@@ -60,31 +60,16 @@ struct String::Large : public Object::Mixin<Large> {
   }
 
   /**
-   * @brief Gets the offset from a given index.
-   * @param unit                  Unit index to resolve.
-   */
-  inline constexpr size_t offset(size_t unit) const {
-    // fast-path when we have ASCII only strings
-    if (size() == bytes()) return unit;
-
-    // otherwise we need to do some trickery
-    const auto &span = m_storage().m_runes.units();
-
-    // can safely convert to a suitable result now
-    return $::Encoding::UTF8::offset(span, unit);
-  }
-
-  /**
    * @brief Reads a codepoint rune from the string.
    * @param unit                  Unit index expected.
    */
-  inline constexpr uint32_t rune(size_t unit) const {
-    // if the underlying bytes size is same as utf-8 size, then return immediately
-    if (size() == bytes()) return static_cast<uint32_t>(data()[unit]);
+  inline constexpr uint32_t rune(size_t unit) const { return m_storage().m_runes.codepoint(unit); }
 
-    // can safely return the internally flattened units available
-    return m_storage().m_runes.units()[unit];
-  }
+  /**
+   * @brief Gets the offset from a given index.
+   * @param unit                  Unit index to resolve.
+   */
+  inline constexpr size_t offset(size_t unit) const { return m_storage().m_runes.offset(unit); }
 
 protected:
   //  PRIVATE METHODS  //
