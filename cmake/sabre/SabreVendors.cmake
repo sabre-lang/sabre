@@ -121,6 +121,8 @@ endmacro()
 
 # We require ensuring some items are installed
 set(FMT_INSTALL ON)
+set(SIMDUTF_TESTS OFF)
+set(SIMDUTF_TOOLS OFF)
 set(SPDLOG_INSTALL ON)
 set(SPDLOG_FMT_EXTERNAL ON)
 
