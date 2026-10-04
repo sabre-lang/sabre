@@ -16,20 +16,22 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 
 ## Runtime
 
-| Status | Feature | Description                          | Todo                    |
-| :----: | ------- | ------------------------------------ | ----------------------- |
-|   💀   | `@...`  | Implement runtime decorators.        | Needs better typing     |
-|   💀   | `#...`  | Implement compile-time attributes.   | Overloads not yet done  |
-|   ✅   | `use`   | Implement explicit resources.        | -                       |
-|   ✅   | `enum`  | Implement enumeration declarations.  | -                       |
-|   ⚪   | `class` | Implement class-based inheritance.   | Needs a testing suite   |
-|   ⚪   | `match` | Implement `match` statements.        | Needs better typing     |
-|   ❌   | `Debug` | Implement debug `breakpoint` method. | Implement a DAP manager |
+| Status | Feature  | Description                          | Todo                    |
+| :----: | -------- | ------------------------------------ | ----------------------- |
+|   💀   | `@...`   | Implement runtime decorators.        | Needs better typing     |
+|   💀   | `#...`   | Implement compile-time attributes.   | Overloads not yet done  |
+|   ✅   | `use`    | Implement explicit resources.        | -                       |
+|   ✅   | `enum`   | Implement enumeration declarations.  | -                       |
+|   ⚪   | `class`  | Implement class-based inheritance.   | Needs a testing suite   |
+|   ⚪   | `match`  | Implement `match` statements.        | Needs better typing     |
+|   ❌   | `Debug`  | Implement debug `breakpoint` method. | Implement a DAP manager |
+|   💀   | `Buffer` | Implement the `Buffer` builtin.      | Needs factory methods   |
 
 ## Testing
 
 | Status | Suite              | Description                 | Todo |
 | :----: | ------------------ | --------------------------- | ---- |
+|   ❌   | `builtins/buffer`  | Testing of `Buffer` builtin | -    |
 |   ✅   | `builtins/list`    | Testing of `List` builtin   | -    |
 |   ✅   | `builtins/number`  | Testing of `Number` builtin | -    |
 |   ✅   | `builtins/result`  | Testing of `Result` builtin | -    |
@@ -49,7 +51,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ❌   | `sabre:chrono` | Temporal utilities.             | -                              |
 |   💀   | `sabre:env`    | Current process environment.    | -                              |
 |   ❌   | `sabre:ffi`    | Native library utilities.       | -                              |
-|   💀   | `sabre:fs`     | Filesystem utilities.           | -                              |
+|   🚀   | `sabre:fs`     | Filesystem utilities.           | -                              |
 |   ✅   | `sabre:gc`     | Garbage collection hooks.       | Additional statistics?         |
 |   🚀   | `sabre:json`   | JSON/JSONC parsing/serializing. | -                              |
 |   ❌   | `sabre:lint`   | Linting plugin bindings.        | -                              |
@@ -83,7 +85,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ⚪   | Blog      | Still need to implement `feed.xml`   |
 |   ⚪   | Crates    | Only stub pages have been made.      |
 |   ⚪   | Builtins  | Only stub pages have been made.      |
-|   ⚪   | Language  | Fundamentals, advanced concepts, ... |
+|   🚀   | Language  | Fundamentals, advanced concepts, ... |
 |   ⚪   | Project   | Contribution points, dashboard, ...  |
 |   💀   | Proposals | Only a baseline specification, ...   |
 |   ⚪   | Tour      | Some steps are not yet finished.     |
