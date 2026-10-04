@@ -47,7 +47,6 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ✅   | `sabre:assert` | Assertion library methods.      | Additional methods?            |
 |   ❌   | `sabre:async`  | Asynchronous utilities.         | -                              |
 |   ❌   | `sabre:chrono` | Temporal utilities.             | -                              |
-|   ❌   | `sabre:codec`  | Encoding/decoding function.     | -                              |
 |   💀   | `sabre:env`    | Current process environment.    | -                              |
 |   ❌   | `sabre:ffi`    | Native library utilities.       | -                              |
 |   ❌   | `sabre:fs`     | Filesystem utilities.           | -                              |

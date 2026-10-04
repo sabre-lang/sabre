@@ -41,6 +41,8 @@
 
 /// Codec Includes
 #include "sabre/codec/json.hpp"
+#include "sabre/codec/toml.hpp"
+#include "sabre/codec/yaml.hpp"
 
 /// Crate Includes
 #include "sabre/crate/constants.hpp"
