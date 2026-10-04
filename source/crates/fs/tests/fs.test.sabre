@@ -1,0 +1,25 @@
+///
+/// @testing Crate "sabre:fs" Functionality.
+/// @describe Coordinates testing the builtin "fs" crate.
+///
+
+// Sabre Modules
+import "sabre:fs" as FS;
+import "sabre:uuid" as UUID;
+import "sabre:test" as Test;
+import "sabre:assert" as Assert;
+
+// - TEST MOCKS - //
+
+namespace Mock {
+    //! A unique random path for testing.
+    export let path = "{0}.txt".fmt(UUID.V4());
+
+    //! Simple contents for file writing.
+    export let ascii = "This is a purely ASCII file!";
+};
+
+// - TEST CASES - //
+
+Test.todo("FS.read_file 'String'", fn {});
+Test.todo("FS.write_file 'String, String'", fn {});

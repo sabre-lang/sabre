@@ -49,7 +49,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 |   ❌   | `sabre:chrono` | Temporal utilities.             | -                              |
 |   💀   | `sabre:env`    | Current process environment.    | -                              |
 |   ❌   | `sabre:ffi`    | Native library utilities.       | -                              |
-|   ❌   | `sabre:fs`     | Filesystem utilities.           | -                              |
+|   💀   | `sabre:fs`     | Filesystem utilities.           | -                              |
 |   ✅   | `sabre:gc`     | Garbage collection hooks.       | Additional statistics?         |
 |   🚀   | `sabre:json`   | JSON/JSONC parsing/serializing. | -                              |
 |   ❌   | `sabre:lint`   | Linting plugin bindings.        | -                              |
