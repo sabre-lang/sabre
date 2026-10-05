@@ -35,7 +35,14 @@ $::String::Buffer Sabre::Server::Style::typing(const Relint::Mirror *mirror) {
       [](const Syntax::Call *node) -> Type::Erased { return node->callee()->trivia()->type(); },
 
       // for execution policies, we want to transform the return-type to be asynchronous
-      [](const Syntax::Execute *node) -> Type::Erased { return Type::New::asyncify(node->callee()->trivia()->type()); },
+      [](const Syntax::Execute *node) -> Type::Erased {
+        switch (node->policy()) {
+        default: return nullptr; // silently ignore invalid policies
+        case Function::Policy::CALL: return node->callee()->trivia()->type();
+        case Function::Policy::ASYNC: return Type::New::asyncify(node->callee()->trivia()->type());
+        case Function::Policy::DEFER: return Type::New::disposable(node->callee()->trivia()->type());
+        }
+      },
   };
 
   // attempt visiting our nodes as necessary now

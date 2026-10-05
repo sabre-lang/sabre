@@ -20,6 +20,7 @@
 #include "sabre/type/compound/structure.hpp"
 #include "sabre/type/resolver/asyncify.hpp"
 #include "sabre/type/resolver/awaited.hpp"
+#include "sabre/type/resolver/disposable.hpp"
 #include "sabre/type/resolver/invoker.hpp"
 #include "sabre/type/resolver/loopable.hpp"
 #include "sabre/type/utility/algorithm.hpp"

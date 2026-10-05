@@ -66,7 +66,7 @@ Sabre::Machine::Memory Sabre::Machine::Emitter::mem(const Register::Host &vreg, 
 
 void Sabre::Machine::Emitter::self(const Register::Slot &vreg) { self(slot(vreg)); }
 void Sabre::Machine::Emitter::self(const Register::Host &vreg) {
-  static constexpr auto s_offset = sizeof(Value::Any) * Function::Offset::ARGS_SELF;
+  static constexpr auto s_offset = Function::Offset::ARGS_SELF * sizeof(Value::Any);
   m_compiler->load_u64(vreg, mem(m_builder->argv, s_offset)); // use the self offset
 }
 
@@ -256,6 +256,6 @@ void Sabre::Machine::Emitter::jmpc(const Label &label, const Register::Host &vre
 //  PRIVATE METHODS  //
 
 void Sabre::Machine::Emitter::m_argv(const Register::Host &vreg, size_t offset) {
-  offset = sizeof(Value::Any) * (offset + Function::Offset::ARGS_DATA);
+  offset = (offset + Function::Offset::ARGS_DATA) * sizeof(Value::Any);
   m_compiler->load_u64(vreg, mem(m_builder->argv, offset));
 }

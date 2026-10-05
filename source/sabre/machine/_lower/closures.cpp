@@ -167,7 +167,7 @@ SABRE_MM_MACHINE_EMIT(SPAWN_N_VOID, builder, instruction) {
   __ee__ params(span.slice(1));
 
   // and then start calling the necessary glue method
-  __ee__ call(Glue::invoke, dx, builder->isolate, tx, builder->params);
+  __ee__ call(Glue::spawn, dx, builder->isolate, tx, builder->params);
 
   // finally do a fast test after the invocation
   __ee__ test(dx, Validate::FAST);

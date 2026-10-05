@@ -45,7 +45,7 @@ SABRE_MM_LOWER_NODE(Variable, node, compiler, ) {
   compiler->preamble(node, ireg);
 
   // if the instance is disposable, then attach to frame
-  if (node->disposable()) compiler->emit<Glyph::DISPOSE_DEFER>(ireg);
+  if (node->disposable()) compiler->emit<Glyph::DISPOSE_TRACE>(ireg);
 
   // and handle assignment based on the leakage state
   if (leaked) compiler->emit<Glyph::STORE_CONTEXT>(dest, ireg);

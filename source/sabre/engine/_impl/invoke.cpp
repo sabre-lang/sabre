@@ -135,7 +135,7 @@ Sabre::Value::Any Sabre::Engine::Invoke::m_closure(
   stack[s_header + Function::Offset::STK_SELF] = args.self(); // the simplest item to bind
 
   // fill all the incoming arguments and variadic arguments now
-  if (argc) std::memcpy(stack.data() + s_args, args.data(), sizeof(Value::Any) * argc);
+  if (argc) std::memcpy(stack.data() + s_args, args.data(), argc * sizeof(Value::Any));
   if (vargs != UINT64_MAX) stack[argc = vargs + s_args] = isolate->create<Iterable::List>(args.slice(vargs));
 
   // enforce a checkpoint before running our handler

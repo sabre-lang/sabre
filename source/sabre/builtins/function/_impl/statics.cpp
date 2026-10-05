@@ -53,6 +53,7 @@ Sabre::Value::Any Sabre::Builtins::Static::bind(Isolate *isolate, const Args &ar
   SABRE_MM_ASSERT_TYPEOF(isolate, Function::Any, args[0]);
   return isolate->bind(args.at<Function::Any>(0), args[1]);
 }
+
 Sabre::Value::Any Sabre::Builtins::Static::call(Isolate *isolate, const Args &args) {
   // ensure we have some valid values as necessary now
   SABRE_MM_ASSERT_ARGC(isolate, args.size(), 1);

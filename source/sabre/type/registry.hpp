@@ -28,6 +28,10 @@ struct New : public $::Ensure::Static {
   /// @brief Gets the typed exception instance.
   static const $::Shared::Pointer<Instance> &exception();
 
+  /// @brief Gets the typed disposable instance.
+  static const $::Shared::Pointer<Structure> &disposable();
+  static Erased disposable(const Erased &target);
+
   /**
    * @brief Makes a type entity optional.
    * @param target                Target option.
@@ -158,7 +162,8 @@ struct New : public $::Ensure::Static {
    * @param returns               Return typing.
    * @param parameters            Parameter types.
    */
-  static $::Shared::Pointer<Callable> function(const Erased &returns = any());
+  static $::Shared::Pointer<Callable> function();
+  static $::Shared::Pointer<Callable> function(const Erased &returns);
   static $::Shared::Pointer<Callable> function(const Erased &returns, const Entity &first);
   static $::Shared::Pointer<Callable> function(const Erased &returns, const std::vector<Entity> &parameters);
   static $::Shared::Pointer<Callable> function(const Erased &returns, const Entity &first, const Entity &second);
@@ -168,7 +173,8 @@ struct New : public $::Ensure::Static {
    * @param returns               Return typing.
    * @param parameters            Parameter types.
    */
-  static $::Shared::Pointer<Callable> variadic(const Erased &returns = any());
+  static $::Shared::Pointer<Callable> variadic();
+  static $::Shared::Pointer<Callable> variadic(const Erased &returns);
   static $::Shared::Pointer<Callable> variadic(const Erased &returns, const Entity &first);
   static $::Shared::Pointer<Callable> variadic(const Erased &returns, const std::vector<Entity> &parameters);
   static $::Shared::Pointer<Callable> variadic(const Erased &returns, const Entity &first, const Entity &second);

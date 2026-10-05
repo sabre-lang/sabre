@@ -16,14 +16,17 @@ SABRE_MM_CHECK_NODE(Execute, node, analyzer) {
 
   // handle based on the incoming execution policy
   switch (node->policy()) {
+  // for normal function policies, we return the base result
+  case Function::Policy::CALL: return result;
+
   // for asynchronous results, we construct a suitable future
   case Function::Policy::ASYNC: {
     auto awaited = Type::New::awaited(result.type);
     return analyzer->passable(Type::New::future(awaited));
   }
 
-  // for normal function policies, we return the base result
-  case Function::Policy::CALL: return result;
+  // for disposable policies, we return something to defer
+  case Function::Policy::DEFER: return Type::New::disposable();
 
   // otherwise we need to declare the policy as invalid
   default: return analyzer->report(node, 9000002, "Analyzer.check(Syntax::Execute)");

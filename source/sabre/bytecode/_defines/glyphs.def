@@ -142,6 +142,12 @@ SABRE_XX_GLYPH_CALL(CALL_N_INLINE, /** dst */ Register::Slot, /** argv */ Regist
 SABRE_XX_GLYPH_CALL(CALL_0_FIELD, /** dst */ Register::Slot, /** symbol */ Index)
 SABRE_XX_GLYPH_CALL(CALL_N_FIELD, /** dst */ Register::Slot, /** symbol */ Index, /** argv */ Register::Span)
 
+SABRE_XX_GLYPH_CALL(DEFER_0_VOID, /** dst */ Register::Slot)
+SABRE_XX_GLYPH_CALL(DEFER_N_VOID, /** dst */ Register::Slot, /** argv */ Register::Span)
+
+SABRE_XX_GLYPH_CALL(DEFER_0_FIELD, /** dst */ Register::Slot, /** symbol */ Index)
+SABRE_XX_GLYPH_CALL(DEFER_N_FIELD, /** dst */ Register::Slot, /** symbol */ Index, /** argv */ Register::Span)
+
 SABRE_XX_GLYPH_CALL(SPAWN_0_VOID, /** dst */ Register::Slot)
 SABRE_XX_GLYPH_CALL(SPAWN_N_VOID, /** dst */ Register::Slot, /** argv */ Register::Span)
 
@@ -150,7 +156,7 @@ SABRE_XX_GLYPH_CALL(SPAWN_N_FIELD, /** dst */ Register::Slot, /** symbol */ Inde
 
 SABRE_XX_GLYPH_DISPOSE(DISPOSE_OPEN, /** depth */ Index)
 SABRE_XX_GLYPH_DISPOSE(DISPOSE_CLOSE, /** depth */ Index)
-SABRE_XX_GLYPH_DISPOSE(DISPOSE_DEFER, /** src */ Register::Slot)
+SABRE_XX_GLYPH_DISPOSE(DISPOSE_TRACE, /** src */ Register::Slot)
 
 SABRE_XX_GLYPH_MODULE(MODULE_OPEN, /** src */ Register::Slot)
 SABRE_XX_GLYPH_MODULE(MODULE_CLOSE, /** dst */ Register::Slot)

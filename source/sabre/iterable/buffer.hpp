@@ -31,17 +31,19 @@ template <> struct Object::Wrapper<Iterable::Buffer> {
   explicit Wrapper($::Memory::Region &&region) : region(std::move(region)) {}
 
   /**
-   * @brief Constructs a list.
-   * @param elements              Elements to bind.
+   * @brief Constructs a list from a span.
+   * @param values                Values to bind.
    */
-  explicit Wrapper(const std::vector<uint8_t> &elements) : region(elements) {}
+  explicit Wrapper(const std::span<uint8_t> &values) : region(values) {}
+  explicit Wrapper(const std::span<const uint8_t> &values) : region(values) {}
+  explicit Wrapper(const std::vector<uint8_t> &values) : region(values) {}
 
   /**
-   * @brief Constructs a list.
-   * @param elements              Elements to bind.
+   * @brief Constructs a list from text.
+   * @param text                  Input content.
    */
-  explicit Wrapper(const std::span<uint8_t> &elements) : region(elements) {}
-  explicit Wrapper(const std::span<const uint8_t> &elements) : region(elements) {}
+  explicit Wrapper(const $::String::View &text) : region(text) {}
+  explicit Wrapper(const $::String::Buffer &text) : region(text) {}
 };
 
 /// @brief Buffer Interface.

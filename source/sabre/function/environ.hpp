@@ -71,6 +71,15 @@ public:
   inline constexpr Value::Any load(size_t index) const noexcept { return m_get(Offset::VALUES + index); }
 
   /**
+   * @brief Handles slicing values from the context.
+   * @param offset                    Offset to slice.
+   * @param count                     Total slice count.
+   */
+  inline constexpr std::span<Value::Any> slice(size_t offset, size_t count = std::dynamic_extent) const {
+    return list().slice(Offset::VALUES + offset, count);
+  }
+
+  /**
    * @brief Stores a value on the context.
    * @param index                     Index of value.
    * @param value                     Value to assign.

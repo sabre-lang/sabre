@@ -47,4 +47,12 @@ import { Callout } from '@/website/components';
     };
     ```
 
+    ### `Disposable`
+
+    The lifetimes type `Disposable` is an internal utility type that denotes disposability. When assigned to a `use` declaration, these values are disposed of at the end of their scoping.
+
+    ```sabre
+    use scoped = Debug.println::defer("Will print at scope end!");
+    ```
+
 </Builtins.Component>

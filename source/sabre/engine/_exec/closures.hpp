@@ -43,10 +43,14 @@ SABRE_MM_ENGINE_EXECUTE(CLOSURE_PASS, isolate, frame, unqualified) {
   const auto &context = frame->context();
 
   // prepare the self and callee values
-  auto receiver = context.load(0), callee = context.load(1);
+  auto callee = context.load(0), receiver = context.load(1);
+
+  // check if our context has additional arguments given
+  auto argv = context.slice(Function::Offset::ARGS_BIND);
+  if (auto given = frame->argv(); given.size()) argv = given;
 
   // attempt calling the instance
-  auto result = invoke(isolate, callee, {receiver, frame->argv()});
+  auto result = invoke(isolate, callee, {receiver, argv});
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);
@@ -105,7 +109,7 @@ SABRE_MM_ENGINE_EXECUTE(CALL_N_FIELD, isolate, frame, unqualified) {
 }
 
 SABRE_MM_ENGINE_EXECUTE(SPAWN_0_VOID, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::CALL_0_VOID>();
+  auto *instruction = unqualified->cast<Glyph::SPAWN_0_VOID>();
   auto result = spawn(isolate, frame->accumulator());
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
@@ -113,7 +117,7 @@ SABRE_MM_ENGINE_EXECUTE(SPAWN_0_VOID, isolate, frame, unqualified) {
 }
 
 SABRE_MM_ENGINE_EXECUTE(SPAWN_N_VOID, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::CALL_N_VOID>();
+  auto *instruction = unqualified->cast<Glyph::SPAWN_N_VOID>();
   auto [callee, argv] = frame->split(instruction->get<1>());
   auto result = spawn(isolate, callee, argv);
   if ($_UNLIKELY(!result.pointer().okay())) return result;
@@ -122,16 +126,16 @@ SABRE_MM_ENGINE_EXECUTE(SPAWN_N_VOID, isolate, frame, unqualified) {
 }
 
 SABRE_MM_ENGINE_EXECUTE(SPAWN_0_FIELD, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::CALL_0_FIELD>();
+  auto *instruction = unqualified->cast<Glyph::SPAWN_0_FIELD>();
   auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
-  auto result = m_invoke(isolate, symbol, {frame->accumulator()});
+  auto result = m_spawn(isolate, symbol, {frame->accumulator()});
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);
 }
 
 SABRE_MM_ENGINE_EXECUTE(SPAWN_N_FIELD, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::CALL_N_FIELD>();
+  auto *instruction = unqualified->cast<Glyph::SPAWN_N_FIELD>();
   auto [target, argv] = frame->split(instruction->get<2>());
   auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
   auto result = m_spawn(isolate, symbol, {target, argv});

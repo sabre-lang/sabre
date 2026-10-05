@@ -100,85 +100,72 @@ public:
   /// @brief Denotes if this instruction could panic.
   inline constexpr bool panics() const noexcept {
     switch (encoded()) {
-    case JUMP_TO: $_FALLTHROUGH;
-    case JUMP_FALSEY: $_FALLTHROUGH;
-    case JUMP_TRUTHY: $_FALLTHROUGH;
-    case JUMP_FILLED: $_FALLTHROUGH;
-
-    case MATCH_VOID: $_FALLTHROUGH;
-    case MATCH_TEXT: $_FALLTHROUGH;
-    case MATCH_TRUE: $_FALLTHROUGH;
-    case MATCH_FALSE: $_FALLTHROUGH;
-    case MATCH_CONST: $_FALLTHROUGH;
-    case MATCH_GUARD: $_FALLTHROUGH;
-
-    case CALL_0_VOID: $_FALLTHROUGH;
-    case CALL_N_VOID: $_FALLTHROUGH;
-    case CALL_0_INLINE: $_FALLTHROUGH;
-    case CALL_N_INLINE: $_FALLTHROUGH;
-    case CALL_0_FIELD: $_FALLTHROUGH;
-    case CALL_N_FIELD: $_FALLTHROUGH;
-
-    case SPAWN_0_VOID: $_FALLTHROUGH;
-    case SPAWN_N_VOID: $_FALLTHROUGH;
-    case SPAWN_0_FIELD: $_FALLTHROUGH;
-    case SPAWN_N_FIELD: $_FALLTHROUGH;
-
-    case CLASS_BIND: $_FALLTHROUGH;
-    case CLASS_SUPER: $_FALLTHROUGH;
-    case CLASS_EXPORT: $_FALLTHROUGH;
-    case CLOSURE_PASS: $_FALLTHROUGH;
-
-    case DISPOSE_CLOSE: $_FALLTHROUGH;
-
-    case ITER_LOAD: $_FALLTHROUGH;
-    case ITER_NEXT: $_FALLTHROUGH;
-
-    case MODULE_BARREL: $_FALLTHROUGH;
-    case MODULE_IMPORT: $_FALLTHROUGH;
-    case MODULE_EXPORT: $_FALLTHROUGH;
-
-    case OBJECT_ATTR: $_FALLTHROUGH;
+    case LOAD_ZERO: $_FALLTHROUGH;
+    case LOAD_ONE: $_FALLTHROUGH;
+    case LOAD_VOID: $_FALLTHROUGH;
+    case LOAD_TRUE: $_FALLTHROUGH;
+    case LOAD_FALSE: $_FALLTHROUGH;
+    case LOAD_SELF: $_FALLTHROUGH;
+    case LOAD_CONST: $_FALLTHROUGH;
+    case LOAD_GLOBAL: $_FALLTHROUGH;
 
     case LOAD_CONTEXT: $_FALLTHROUGH;
-    case LOAD_FIELD: $_FALLTHROUGH;
     case LOAD_UPVALUE: $_FALLTHROUGH;
-
     case STORE_CONTEXT: $_FALLTHROUGH;
-    case STORE_FIELD: $_FALLTHROUGH;
     case STORE_UPVALUE: $_FALLTHROUGH;
 
-    case UNOP_NEG: $_FALLTHROUGH;
-    case UNOP_INV: $_FALLTHROUGH;
+    case REG_SWAP: $_FALLTHROUGH;
+    case REG_MOVE: $_FALLTHROUGH;
 
-    case BINOP_ADD: $_FALLTHROUGH;
-    case BINOP_SUB: $_FALLTHROUGH;
-    case BINOP_MUL: $_FALLTHROUGH;
-    case BINOP_DIV: $_FALLTHROUGH;
-    case BINOP_MOD: $_FALLTHROUGH;
-    case BINOP_POW: $_FALLTHROUGH;
-    case BINOP_XOR: $_FALLTHROUGH;
-    case BINOP_BOR: $_FALLTHROUGH;
-    case BINOP_BAND: $_FALLTHROUGH;
-    case BINOP_SHL: $_FALLTHROUGH;
-    case BINOP_SHR: $_FALLTHROUGH;
+    case TYPE_GUARD: $_FALLTHROUGH;
 
-    case BINOP_ADDI: $_FALLTHROUGH;
-    case BINOP_SUBI: $_FALLTHROUGH;
-    case BINOP_MULI: $_FALLTHROUGH;
-    case BINOP_DIVI: $_FALLTHROUGH;
-    case BINOP_MODI: $_FALLTHROUGH;
-    case BINOP_POWI: $_FALLTHROUGH;
-    case BINOP_XORI: $_FALLTHROUGH;
-    case BINOP_BORI: $_FALLTHROUGH;
-    case BINOP_BANDI: $_FALLTHROUGH;
-    case BINOP_SHLI: $_FALLTHROUGH;
-    case BINOP_SHRI: $_FALLTHROUGH;
+    case DISPOSE_OPEN: $_FALLTHROUGH;
+    case DISPOSE_CLOSE: $_FALLTHROUGH;
+    case DISPOSE_TRACE: $_FALLTHROUGH;
 
-    case EXEC_PANIC: return true;
+    case MODULE_OPEN: $_FALLTHROUGH;
+    case MODULE_CLOSE: $_FALLTHROUGH;
 
-    // otherwise default to non-panicking
-    default: return false;
+    case CLASS_MAKE: $_FALLTHROUGH;
+
+    case CLOSURE_MAKE: $_FALLTHROUGH;
+    case CLOSURE_LIFT: $_FALLTHROUGH;
+
+    case ENUM_MAKE: $_FALLTHROUGH;
+    case ENUM_EMPTY: $_FALLTHROUGH;
+
+    case LIST_MAKE: $_FALLTHROUGH;
+    case LIST_EMPTY: $_FALLTHROUGH;
+
+    case OBJECT_MAKE: $_FALLTHROUGH;
+    case OBJECT_EMPTY: $_FALLTHROUGH;
+
+    case STRING_MAKE: $_FALLTHROUGH;
+    case STRING_CONCAT: $_FALLTHROUGH;
+
+    case UNOP_NOT: $_FALLTHROUGH;
+    case BINOP_COAL: $_FALLTHROUGH;
+
+    case TEST_EQ: $_FALLTHROUGH;
+    case TEST_NE: $_FALLTHROUGH;
+
+    case TEST_GT: $_FALLTHROUGH;
+    case TEST_LT: $_FALLTHROUGH;
+    case TEST_GE: $_FALLTHROUGH;
+    case TEST_LE: $_FALLTHROUGH;
+
+    case TEST_GTI: $_FALLTHROUGH;
+    case TEST_LTI: $_FALLTHROUGH;
+    case TEST_GEI: $_FALLTHROUGH;
+    case TEST_LEI: $_FALLTHROUGH;
+
+    case EXEC_RETURN: $_FALLTHROUGH;
+    case EXEC_ABORT: $_FALLTHROUGH;
+    case EXEC_RAISE: $_FALLTHROUGH;
+    case EXEC_NOOP: return false;
+
+    // otherwise default to panicking
+    default: return true;
     }
   }
 

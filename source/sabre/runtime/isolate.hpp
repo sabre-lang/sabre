@@ -130,7 +130,8 @@ public:
    * @param target                    Function to bind.
    * @param receiver                  Callback receiver.
    */
-  Function::Any bind(const Function::Any &target, const Value::Any &receiver);
+  Function::Any bind(const Value::Any &target, const Value::Any &receiver);
+  Function::Any bind(const Value::Any &target, const Function::Args &args);
 
   /**
    * @brief Handles calling functions.

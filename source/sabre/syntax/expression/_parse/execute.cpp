@@ -15,7 +15,7 @@ SABRE_MM_PARSE_INFIX(Execute, parser, callee, assignable) {
   if (token == nullptr) return nullptr;
 
   // prepare a baseline policy value now
-  auto policy = Function::Policy::ASYNC;
+  auto policy = Function::Policy::CALL;
 
 // validate the incoming policy name
 #define X(P, N, ...)                                         \

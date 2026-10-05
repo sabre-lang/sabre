@@ -203,6 +203,16 @@ static inline Reference spawn(Runtime::Isolate *isolate, Reference target, const
 }
 
 /**
+ * @brief Glues a baseline deference invocation.
+ * @param isolate               Runtime isolate.
+ * @param target                Target to call.
+ * @param values                Argument values.
+ */
+static inline Reference defer(Runtime::Isolate *isolate, Reference target, const Value::Any *values) {
+  return Engine::Dispatch::defer(isolate, Value::Cast(target), argv(values)).pointer();
+}
+
+/**
  * @brief Handles constructing empty objects.
  * @param isolate               Runtime isolate.
  */
@@ -360,7 +370,7 @@ static inline Reference ignore(Runtime::Isolate *isolate, size_t depth) {
  * @param isolate               Runtime isolate.
  * @param target                Disposable target.
  */
-static inline void defer(Runtime::Isolate *isolate, Reference target) {
+static inline void trace(Runtime::Isolate *isolate, Reference target) {
   isolate->lifetimes()->defer(isolate, Value::Cast(target));
 }
 

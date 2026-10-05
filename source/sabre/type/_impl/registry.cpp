@@ -12,8 +12,17 @@ static Sabre::Type::Erased g_fail = $::Shared::New<Sabre::Type::Poison>();
 static Sabre::Type::Erased g_unset = $::Shared::New<Sabre::Type::Unset>();
 static Sabre::Type::Erased g_never = $::Shared::New<Sabre::Type::Union>();
 
+static auto g_function = Sabre::Type::New::function(g_any);
+static auto g_variadic = Sabre::Type::New::variadic(g_any);
 static auto g_object = $::Shared::New<Sabre::Type::Structure>(g_any);
 static auto g_exception = Sabre::Builtins::Inspect<Sabre::Object::Exception>::typeclass()->instantiate();
+static auto g_disposable = $::Shared::New<Sabre::Type::Structure>(
+    "Disposable",
+    Sabre::Type::Algorithm({{
+        Sabre::Operator::Inspect::symbol(Sabre::Operator::Kind::DISP),
+        Sabre::Type::Entity(g_function),
+    }})
+);
 
 static Sabre::Type::Erased g_number = Sabre::Builtins::Inspect<Sabre::Number::Tagged>::typeclass()->instantiate();
 static Sabre::Type::Erased g_string = Sabre::Builtins::Inspect<Sabre::String::Any>::typeclass()->instantiate();
@@ -37,6 +46,11 @@ const Sabre::Type::Erased &Sabre::Type::New::buffer() { return g_buffer; }
 
 const $::Shared::Pointer<Sabre::Type::Structure> &Sabre::Type::New::object() { return g_object; }
 const $::Shared::Pointer<Sabre::Type::Instance> &Sabre::Type::New::exception() { return g_exception; }
+
+const $::Shared::Pointer<Sabre::Type::Structure> &Sabre::Type::New::disposable() { return g_disposable; }
+Sabre::Type::Erased Sabre::Type::New::disposable(const Erased &target) {
+  return transform(target, Utility::Disposable());
+}
 
 $::Shared::Pointer<Sabre::Type::Structure> Sabre::Type::New::record(const Erased &value) {
   return $::Shared::New<Structure>(value);
@@ -130,8 +144,9 @@ $::Shared::Pointer<Sabre::Type::Transform> Sabre::Type::New::invocation(const Er
   return transform(target, Utility::Invoker(async));
 }
 
+$::Shared::Pointer<Sabre::Type::Callable> Sabre::Type::New::function() { return g_function; }
 $::Shared::Pointer<Sabre::Type::Callable> Sabre::Type::New::function(const Erased &returns) {
-  return function(returns, std::vector<Entity>());
+  return $::Shared::New<Callable>(returns);
 }
 
 $::Shared::Pointer<Sabre::Type::Callable> Sabre::Type::New::function(const Erased &returns, const Entity &initial) {
@@ -148,6 +163,7 @@ Sabre::Type::New::function(const Erased &returns, const std::vector<Entity> &par
   return $::Shared::New<Callable>(returns, parameters);
 }
 
+$::Shared::Pointer<Sabre::Type::Callable> Sabre::Type::New::variadic() { return g_variadic; }
 $::Shared::Pointer<Sabre::Type::Callable> Sabre::Type::New::variadic(const Erased &returns) {
   return $::Shared::New<Variadic>(returns);
 }

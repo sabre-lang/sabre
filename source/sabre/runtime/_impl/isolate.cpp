@@ -72,19 +72,29 @@ Sabre::Runtime::Isolate::spawn(const Value::Any &target, Function::Args &&args, 
   else return create<Async::Future>(target.as<Function::Any>(), args).await(thread());
 }
 
-Sabre::Function::Any Sabre::Runtime::Isolate::bind(const Function::Any &callback, const Value::Any &receiver) {
+Sabre::Function::Any Sabre::Runtime::Isolate::bind(const Value::Any &callback, const Value::Any &receiver) {
+  return bind(callback, Function::Args(receiver));
+}
+
+Sabre::Function::Any Sabre::Runtime::Isolate::bind(const Value::Any &callback, const Function::Args &args) {
+  // prepare the prefix sizing to be used
+  static constexpr auto s_prefix = Function::Offset::ARGS_BIND;
+
   // prepare the passthrough callback to be used
   auto *info = Builtins::Inspect<Function::Any>::glue();
 
   // construct a passthrough context
-  auto context = Function::Environ(this, 2);
+  auto context = Function::Environ(this, s_prefix + args.size());
 
   // bind the contextual details
-  context.store(0, receiver);
-  context.store(1, callback);
+  context.store(0, callback);
+  context.store(1, args.self());
+
+  // fastly copy all the arguments to be passed forward to our bound function
+  std::memcpy(context.slice(s_prefix).data(), args.data(), args.size() * sizeof(Value::Any));
 
   // and construct the resulting passthrough handler
-  return create<Function::Closure>(info, receiver, context);
+  return create<Function::Closure>(info, args.self(), context);
 }
 
 Sabre::Resource::Result Sabre::Runtime::Isolate::resolve(const $::String::View &script, const $::FS::Path &hint) const {

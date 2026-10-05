@@ -14,7 +14,7 @@ SABRE_MM_FORMAT_INFIX(Execute, reader, callee) {
   auto *policy = m_identifier(reader);
 
   // update the policy to asynchronous if missing at all
-  if (policy == nullptr) policy = storage->unicode("async");
+  if (policy == nullptr) policy = storage->unicode("call");
 
   // append the ":" token now
   callee = storage->append(callee, storage->policy(), policy);

@@ -14,6 +14,9 @@ void Sabre::Builtins::Wrapper<Sabre::Builtins::Custom::Utility>::m_typedefs(Type
   globals->types().declare("Any", TN::any());
   globals->types().declare("Never", TN::never());
 
+  // define the internal "Disposable" typing interface
+  globals->types().declare("Disposable", TN::disposable());
+
   // define the generic "Maybe" typing using a required generic
   auto M = Sabre::Builtins::TN::constraint("T", TN::any());
   globals->types().declare("Maybe", TN::generic(TN::maybe(M), M));

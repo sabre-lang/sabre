@@ -20,6 +20,25 @@ static inline struct {
   }
 } Unpack;
 
+/// @brief Helper for resolving iterator values.
+static inline struct {
+  //  OPERATOR METHODS  //
+
+  /**
+   * @brief Resolves iterator values.
+   * @param isolate               Runtime isolate.
+   * @param value                 Potential iterator.
+   */
+  inline constexpr Value::Any operator()(Runtime::Isolate *isolate, const Value::Any &value) const noexcept {
+    // fast-path immediate iterator values here
+    if (value.is<Iterator>()) return value;
+
+    // otherwise attempt resolving via the attribute descriptor
+    auto *descriptor = value.attribute(Operator::Kind::ITER);
+    return descriptor ? descriptor->getter(isolate, value) : Value::Missing();
+  }
+} Resolve;
+
 } // namespace Sabre::Iterable
 
 namespace Sabre::Iterable::Deduce {

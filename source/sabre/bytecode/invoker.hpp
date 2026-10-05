@@ -3,6 +3,7 @@
 
 /// Sabre Includes
 #include "sabre/bytecode/allocator.hpp"
+#include "sabre/function/policy.hpp"
 
 /// Syntax Modules
 #include "sabre/syntax/expression/accessor.hpp"
@@ -20,6 +21,9 @@ enum class Convention : uint8_t { VOID, INLINE, FIELD };
 class Invoker {
   //  TYPEDEFS  //
 
+  /// @brief Alias the internal policy details.
+  using Policy = Function::Policy;
+
   /// @brief Internal arguments typing.
   using Args = std::vector<Syntax::Expression *>;
 
@@ -29,7 +33,7 @@ class Invoker {
   //  PROPERTIES  //
 
   /// @brief Denotes if asynchronous.
-  bool m_async = false;
+  Policy m_policy = Policy::CALL;
 
   /// @brief The convention to be used.
   Convention m_convention = Convention::VOID;
@@ -46,11 +50,13 @@ public:
   /**
    * @brief Constructs a expression based invocation.
    * @param callee            Callee to classify.
-   * @param async             Whether asynchronous.
+   * @param policy            Execution policy given.
    */
-  explicit Invoker(const Syntax::Expression *callee, bool async = false) : Invoker(m_classify(callee), async) {}
-  explicit Invoker(const Details &classification, bool async = false) :
-      m_async(async), m_convention(classification.first), m_callee(classification.second) {}
+  explicit Invoker(const Syntax::Expression *callee) : Invoker(m_classify(callee)) {}
+  explicit Invoker(const Details &classification) : Invoker(classification, Policy::CALL) {}
+  explicit Invoker(const Syntax::Expression *callee, Policy policy) : Invoker(m_classify(callee), policy) {}
+  explicit Invoker(const Details &classification, Policy policy) :
+      m_policy(policy), m_convention(classification.first), m_callee(classification.second) {}
 
   //  PUBLIC METHODS  //
 
@@ -61,8 +67,8 @@ public:
   inline constexpr const Syntax::Expression *callee() const noexcept { return m_callee; }
 
   /// @brief Denotes if the invocation is inlinable.
-  inline constexpr bool inlined(bool async = false) const noexcept {
-    return m_convention == Convention::INLINE && !async;
+  inline constexpr bool inlined() const noexcept {
+    return m_convention == Convention::INLINE && m_policy == Policy::CALL;
   }
 
   /**
@@ -71,10 +77,7 @@ public:
    * @param destination       Destination register.
    * @param args              Call arguments.
    */
-  void compile(Compiler *compiler, Register::Slot destination, const Args &args = {}) const;
-
-private:
-  //  PRIVATE METHODS  //
+  void compile(Compiler *compiler, Register::Slot &destination, const Args &args = {}) const;
 
   /**
    * @brief Handles preparing an invocation.
@@ -83,25 +86,27 @@ private:
    * @param arguments         Call arguments.
    * @param async             Asynchronous flag.
    */
-  Register::List m_prepare(Compiler *compiler, Register::Slot &destination, const Args &args = {}) const;
+  Register::List prepare(Compiler *compiler, Register::Slot &destination, const Args &args = {}) const;
+
+private:
+  //  PRIVATE METHODS  //
 
   /**
-   * @brief Handles emitting synchronous invocation.
+   * @brief Handles emitting invocations.
    * @param compiler          Byecode compiler.
    * @param destination       Destination register.
    * @param span              Optional arguments span.
    */
-  void m_invoke(Compiler *compiler, const Register::Slot &destination) const noexcept;
-  void m_invoke(Compiler *compiler, const Register::Slot &destination, const Register::Span &span) const noexcept;
+  template <Policy P> void m_bind(Compiler *compiler, const Register::Slot &) const noexcept;
+  template <Policy P> void m_bind(Compiler *compiler, const Register::Slot &, const Register::Span &) const noexcept;
 
   /**
-   * @brief Handles emitting asynchronous invocations.
+   * @brief Handles emitting invocations.
    * @param compiler          Byecode compiler.
    * @param destination       Destination register.
    * @param span              Optional arguments span.
    */
-  void m_spawn(Compiler *compiler, const Register::Slot &destination) const noexcept;
-  void m_spawn(Compiler *compiler, const Register::Slot &destination, const Register::Span &span) const noexcept;
+  void m_dispatch(Compiler *compiler, const Register::Slot &destination, const Register::Span &span) const noexcept;
 
   /**
    * @brief Handles classifying the invocation.
@@ -118,6 +123,14 @@ private:
     default: return {Convention::VOID, callee};
     }
   }
+
+  //  SPECIALIZATIONS  //
+
+#define X(P, ...)                                                                                                \
+  template <> void m_bind<Policy::P>(Compiler *, const Register::Slot &) const noexcept;                         \
+  template <> void m_bind<Policy::P>(Compiler *, const Register::Slot &, const Register::Span &) const noexcept;
+  SABRE_XX_FUNCTION_POLICIES(X)
+#undef X
 };
 
 } // namespace Sabre::Bytecode

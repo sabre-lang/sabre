@@ -4,7 +4,7 @@
 //  OPERATOR METHODS  //
 
 Sabre::Type::Erased
-Sabre::Type::Utility::Asyncify::operator()(const Erased &target, Constraints *constraints) const noexcept {
+Sabre::Type::Utility::Disposable::operator()(const Erased &target, Constraints *constraints) const noexcept {
   // attempt instantiating the incoming target
   auto instantiated = target->infer(constraints);
 
@@ -12,8 +12,7 @@ Sabre::Type::Utility::Asyncify::operator()(const Erased &target, Constraints *co
   auto callable = New::cast<Callable>(instantiated);
 
   // update the return typing now
-  auto awaited = New::awaited(callable->returns());
-  callable->returns() = New::future(awaited);
+  callable->returns() = New::disposable();
 
   // and return the instantiated instance (in case of generics)
   return instantiated;

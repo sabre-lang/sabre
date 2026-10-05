@@ -8,9 +8,6 @@
 
 namespace Sabre::Type {
 
-// /// @brief Constructor Applicator Callback.
-// using Constructor = $::Shared::Functor<Erased(const Prototype *) const>;
-
 /// @brief Type Class Node.
 class Prototype : public Mixin<Prototype> {
   //  TYPEDEFS  //

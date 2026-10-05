@@ -45,6 +45,7 @@ public:
    * @param args                  Arguments to apply.
    */
   static Value::Any spawn(Isolate *isolate, const Value::Any &target, const Args &args = {});
+  static Value::Any defer(Isolate *isolate, const Value::Any &target, const Args &args = {});
   static Value::Any invoke(Isolate *isolate, const Value::Any &target, const Args &args = {});
 
   /**
@@ -205,6 +206,7 @@ private:
    */
   static Value::Any m_invoke(Isolate *isolate, const Value::Symbol &symbol, const Args &args = {});
   static Value::Any m_spawn(Isolate *isolate, const Value::Symbol &symbol, const Args &args = {});
+  static Value::Any m_defer(Isolate *isolate, const Value::Symbol &symbol, const Args &args = {});
 
   /**
    * @brief Handles exposing an export value.

@@ -1,23 +1,17 @@
-#ifndef _SABRE_TYPE_LOOPABLE_HPP
-#define _SABRE_TYPE_LOOPABLE_HPP
+#ifndef _SABRE_TYPE_DISPOSABLE_HPP
+#define _SABRE_TYPE_DISPOSABLE_HPP
 
 /// Type Includes
 #include "sabre/type/utility/transform.hpp"
 
 namespace Sabre::Type::Utility {
 
-/// @brief Loopable Type Resolver.
-class Loopable {
-  //  PROPERTIES  //
-
-  /// @brief Wrap with an `Iterator` typing.
-  bool m_outer = true;
-
-public:
+/// @brief Disposable Type Resolver.
+struct Disposable {
   //  CONSTRUCTORS  //
 
   /// @brief Default constructor.
-  explicit Loopable(bool outer = true) : m_outer(outer) {}
+  explicit Disposable() = default;
 
   //  OPERATOR METHODS  //
 
@@ -30,7 +24,7 @@ public:
 };
 
 /// @brief Ensure the resolution conversion is valid.
-static_assert(std::convertible_to<Loopable, Resolver>);
+static_assert(std::convertible_to<Disposable, Resolver>);
 
 } // namespace Sabre::Type::Utility
 

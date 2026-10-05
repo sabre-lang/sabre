@@ -24,6 +24,7 @@ namespace Sabre::Function::Offset {
 static inline constexpr size_t ARGS_SIZE = 0;             // Argument size.
 static inline constexpr size_t ARGS_SELF = ARGS_SIZE + 1; // Receiver value.
 static inline constexpr size_t ARGS_DATA = ARGS_SELF + 1; // Arguments data.
+static inline constexpr size_t ARGS_BIND = 2;             // Binding offset.
 
 static inline constexpr int32_t STK_OPTR = -4; // Offset pointer.
 static inline constexpr int32_t STK_ENVP = -3; // Environment contextt.
@@ -156,6 +157,16 @@ public:
   }
 
   /**
+   * @brief Coordinates a safe casting of an argument.
+   * @param index                 Index of value.
+   */
+  template <std::derived_from<Value::Any> T> inline constexpr const T *when(size_t index) const noexcept {
+    auto *value = index < size() ? data() + index : nullptr;
+    if (value == nullptr || !value->is<T>()) return nullptr;
+    return static_cast<const T *>(value); // safely cast now
+  }
+
+  /**
    * @brief Handles slicing arguments.
    * @param offset                Offset to slice.
    * @param count                 Count to be used.
@@ -206,7 +217,7 @@ private:
     m_span = new Value::Any[count + s_offset];
 
     // copy across the incoming data now if given
-    std::memcpy(m_span, data, sizeof(Value::Any) * (count + s_offset));
+    std::memcpy(m_span, data, (count + s_offset) * sizeof(Value::Any));
   }
 
   /**
@@ -223,7 +234,7 @@ private:
     m_span = new Value::Any[count + s_offset];
 
     // copy across the incoming data now if given
-    if (data) std::memcpy(m_span + s_offset, data, sizeof(Value::Any) * count);
+    if (data) std::memcpy(m_span + s_offset, data, count * sizeof(Value::Any));
 
     // always forcibly update the incoming size
     m_self() = self, *m_get(Offset::ARGS_SIZE) = Value::Any(count);

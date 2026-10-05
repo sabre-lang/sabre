@@ -21,16 +21,6 @@ struct Asyncify {
    * @param constraints           Constraints to use.
    */
   Erased operator()(const Erased &target, Constraints *constraints) const noexcept;
-
-private:
-  //  PRIVATE METHODS  //
-
-  /**
-   * @brief Handles awaiting a target.
-   * @param target                Target to await.
-   * @param constraints           Constraints to use.
-   */
-  Erased m_resolve(const Erased &target, Constraints *constraints) const noexcept;
 };
 
 /// @brief Ensure the resolution conversion is valid.

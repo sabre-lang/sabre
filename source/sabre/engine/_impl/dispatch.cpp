@@ -27,6 +27,24 @@ Sabre::Value::Any Sabre::Engine::Dispatch::spawn(Isolate *isolate, const Value::
   return isolate->create<Async::Future>(target.as<Function::Any>(), args);
 }
 
+Sabre::Value::Any Sabre::Engine::Dispatch::defer(Isolate *isolate, const Value::Any &target, const Args &args) {
+  // prepare the disposable handler to be used
+  auto dispose = isolate->bind(target, args);
+
+  // prepare a suitable output to bind the dispose method to
+  auto object = isolate->create<Object::Instance>();
+
+  // resolve a suitable target for overloading
+  static constexpr auto s_kind = Operator::Kind::DISP;
+  static constexpr auto s_symbol = Operator::Inspect::symbol(s_kind);
+
+  // and manually override the attribute as required
+  object.fields().emplace(s_symbol, Member::Factory::reference(dispose));
+
+  // finally return the resulting object instance now
+  return object;
+}
+
 Sabre::Value::Any
 Sabre::Engine::Dispatch::getter(Isolate *isolate, const Value::Any &target, const Value::Symbol &symbol) {
   auto descriptor = target.attribute(symbol); // get the descriptor to be used
@@ -248,6 +266,12 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_spawn(Isolate *isolate, const Value
   auto callee = getter(isolate, args.self(), symbol);
   if (!callee.pointer().okay()) return callee;
   return spawn(isolate, callee, args);
+}
+
+Sabre::Value::Any Sabre::Engine::Dispatch::m_defer(Isolate *isolate, const Value::Symbol &symbol, const Args &args) {
+  auto callee = getter(isolate, args.self(), symbol);
+  if (!callee.pointer().okay()) return callee;
+  return defer(isolate, callee, args);
 }
 
 Sabre::Value::Any Sabre::Engine::Dispatch::m_expose(
