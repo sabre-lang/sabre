@@ -31,7 +31,7 @@ description: A brief outline of the current bug-fixes, goals and other milestone
 
 | Status | Suite              | Description                 | Todo |
 | :----: | ------------------ | --------------------------- | ---- |
-|   ❌   | `builtins/buffer`  | Testing of `Buffer` builtin | -    |
+|   ⚪   | `builtins/buffer`  | Testing of `Buffer` builtin | -    |
 |   ✅   | `builtins/list`    | Testing of `List` builtin   | -    |
 |   ✅   | `builtins/number`  | Testing of `Number` builtin | -    |
 |   ✅   | `builtins/result`  | Testing of `Result` builtin | -    |

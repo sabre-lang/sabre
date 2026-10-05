@@ -7,8 +7,14 @@
 //  X-MACROS  //
 
 #define CRATE_XX_FS_METHODS(X) \
-  X(read_dir)                  \
-  X(read_file)
+  X(read_file)                 \
+  X(read_text)                 \
+  X(write_file)                \
+  X(write_text)                \
+  X(remove_entry)              \
+  X(temp_file)                 \
+  X(exists_file)               \
+  X(exists_entry)
 
 //  NAMESPACES  //
 

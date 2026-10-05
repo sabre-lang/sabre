@@ -8,18 +8,52 @@ import "sabre:fs" as FS;
 import "sabre:uuid" as UUID;
 import "sabre:test" as Test;
 import "sabre:assert" as Assert;
+import "sabre:_detail" as Detail;
 
 // - TEST MOCKS - //
 
 namespace Mock {
-    //! A unique random path for testing.
-    export let path = "{0}.txt".fmt(UUID.V4());
-
     //! Simple contents for file writing.
-    export let ascii = "This is a purely ASCII file!";
+    export let ascii = "This is a purely ASCII content!";
 };
 
 // - TEST CASES - //
 
-Test.todo("FS.read_file 'String'", fn {});
-Test.todo("FS.write_file 'String, String'", fn {});
+Test.case("FS.read/write_file 'String'", fn {
+    use temporary = FS.temp_file();
+    FS.write_file(temporary.path(), Buffer.encode(Mock.ascii));
+    let buffer = FS.read_file(temporary.path());
+    Assert.equals(Buffer.decode(buffer), Mock.ascii);
+});
+
+Test.case("FS.read/write_text 'String'", fn {
+    use temporary = FS.temp_file();
+    FS.write_text(temporary.path(), Mock.ascii);
+    let buffer = FS.read_text(temporary.path());
+    Assert.equals(buffer, Mock.ascii);
+});
+
+Test.case("FS.remove_entry 'String'", fn {
+    let temporary = FS.temp_file();
+    FS.remove_entry(temporary.path());
+    Assert.falsey(FS.exists_file(temporary.path()));
+});
+
+Test.case("FS.temp_file 'String?'", fn {
+    // prepare the resulting file-path
+    mut cached_path?: String = Void;
+
+    // prepare a temporary file to be checked in a custom scoping
+    {
+        use temporary = FS.temp_file();
+        cached_path = temporary.path();
+
+        Assert.truthy(FS.exists_entry(temporary.path()));
+        Assert.truthy(FS.exists_file(temporary.path()));
+    }
+
+    // finally check that the file does not exist anymore
+    let file_path = Detail.Unsafe.cast[String](cached_path);
+    Assert.falsey(FS.exists_entry(file_path));
+    Assert.falsey(FS.exists_file(file_path));
+});

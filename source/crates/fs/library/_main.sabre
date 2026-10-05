@@ -14,8 +14,60 @@ import "sabre:_detail" as Detail;
 //! @brief Internal helper to reduce bytecode output.
 let m_cast = Detail.Unsafe.cast;
 
+// - TYPEDEFS - //
+
+//! @brief Utility class for temporary files.
+class Temporary(prefix, suffix) {
+    // - PROPERTIES - //
+
+    //! @brief The internal temporary path.
+    private let m_path: String = fs.temp_file(prefix, suffix);
+
+    // - PUBLIC METHODS - //
+
+    //! @brief Gets the temporary file path.
+    public let path = fn: String => Self.m_path;
+
+    // - PRIVATE METHODS - //
+
+    //! @brief The internal handler for disposing of temporary files.
+    #[Operator.dispose]
+    private let m_dispose = fn => fs.remove_entry(Self.m_path);
+};
+
 // - PUBLIC METHODS - //
 
 //! @brief Reads then entire contents of a file.
 //! @param path                     Path to read.
 export let read_file = m_cast[fn (path: String) -> Buffer](fs.read_file);
+
+//! @brief Reads then entire contents of a file as text.
+//! @param path                     Path to read.
+export let read_text = m_cast[fn (path: String) -> String](fs.read_text);
+
+//! @brief Writes a buffer to a give input file.
+//! @param path                     File path to write.
+//! @param buffer                   Buffer to write.
+export let write_file = m_cast[fn (path: String, buffer: Buffer) -> Void](fs.write_file);
+
+//! @brief Writes a text-buffer to a give input file.
+//! @param path                     File path to write.
+//! @param buffer                   Buffer to write.
+export let write_text = m_cast[fn (path: String, buffer: String) -> Void](fs.write_text);
+
+//! @brief Creates a temporary file with given options.
+//! @param prefix                   File path prefix.
+//! @param suffix                   File path suffix.
+export let temp_file = fn (prefix?: String, suffix?: String): Temporary => Temporary(prefix, suffix);
+
+//! @brief Removes an entry from the filesystem.
+//! @param path                     File path to remove.
+export let remove_entry = m_cast[fn (path: String) -> Void](fs.remove_entry);
+
+//! @brief Checks if a filesystem entry exists.
+//! @param path                     File path to check.
+export let exists_file = m_cast[fn (path: String) -> Boolean](fs.exists_file);
+
+//! @brief Checks if a file exists on the filesystem.
+//! @param path                     File path to check.
+export let exists_entry = m_cast[fn (path: String) -> Boolean](fs.exists_file);

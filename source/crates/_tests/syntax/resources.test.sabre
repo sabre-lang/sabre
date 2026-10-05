@@ -10,24 +10,8 @@ import "sabre:assert" as Assert;
 // - TEST MOCKS - //
 
 namespace Mock {
-    //! @brief Binds a scoped callback.
-    export let scope = fn (target: Function): Any {
-        // An anonymous resource (see below note).
-        let resource = {};
-
-        // Attaching a disposal callback to the resource directly.
-        #[Operator.dispose resource]
-        let callback = fn => target();
-
-        // Return the constructed resource.
-        return resource;
-    };
-};
-
-// - TEST CASES - //
-
-Test.suite("Syntax", fn {
-    Test.case("Dispose '()'", fn {
+    //! @brief Prepare a disposable handler.
+    export let attempt = fn (factory: Function) {
         // prepare a mutable result value
         let expect: Any = 42;
         let initial: Any = Void;
@@ -42,11 +26,42 @@ Test.suite("Syntax", fn {
 
         // attempt scoping our resource now
         {
-            use scoped = Mock.scope(dispose);
+            use scoped = factory(dispose);
             Assert.equals(result, initial);
         }
 
         // finally check that our scoped value changed
         Assert.equals(result, expect);
+    };
+
+    //! @brief Binds a scoped callback.
+    export let scope = fn (target: Function): Any {
+        // An anonymous resource (see below note).
+        let resource = {};
+
+        // Attaching a disposal callback to the resource directly.
+        #[Operator.dispose resource]
+        let callback = fn => target();
+
+        // Return the constructed resource.
+        return resource;
+    };
+
+    //! @brief Binds a disposable class.
+    export class temporary(target: Function) {
+        #[Operator.dispose]
+        private let m_dispose = fn => target();
+    };
+};
+
+// - TEST CASES - //
+
+Test.suite("Syntax", fn {
+    Test.case("Dispose 'scoped'", fn {
+        Mock.attempt(Mock.scope);
+    });
+
+    Test.case("Dispose 'class'", fn {
+        Mock.attempt(Mock.temporary);
     });
 });
