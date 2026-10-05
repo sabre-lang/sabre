@@ -4,6 +4,18 @@
 //  MACROS  //
 
 SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(from)
+SABRE_XX_STATICS_TYPEDEF("fn (value: Iterable[Number]) -> Buffer")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Buffer` from an iterable or array-like value containing numbers.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
+SABRE_XX_STATICS_DEFINE(encode)
+SABRE_XX_STATICS_TYPEDEF("fn (value: String, encoding?: Todo) -> Buffer")
+SABRE_XX_STATICS_DESCRIBE("Creates a `Buffer` from a textual input with optional encoding.")
+SABRE_XX_STATICS_FOOTER()
+
+SABRE_XX_STATICS_HEADER()
 SABRE_XX_STATICS_DEFINE(empty)
 SABRE_XX_STATICS_TYPEDEF("fn -> Buffer")
 SABRE_XX_STATICS_DESCRIBE("Creates an empty `Buffer` value.")

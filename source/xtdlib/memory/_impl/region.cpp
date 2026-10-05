@@ -39,9 +39,9 @@ struct $::Memory::Region::Wrapper {
 
 //  CONSTRUCTORS  //
 
-$::Memory::Region::Region() : m_internal($::Shared::New<Wrapper>()) {}
-$::Memory::Region::Region(size_t capacity) : m_internal($::Shared::New<Wrapper>(Anonymous(capacity))) {}
-$::Memory::Region::Region($::Shared::Pointer<Wrapper> &&internal) : m_internal(std::move(internal)) {}
+$::Memory::Region::Region() : m_internal(Shared::New<Wrapper>()) {}
+$::Memory::Region::Region(size_t capacity) : m_internal(Shared::New<Wrapper>(Anonymous(capacity))) {}
+$::Memory::Region::Region(Shared::Pointer<Wrapper> &&internal) : m_internal(std::move(internal)) {}
 $::Memory::Region::Region(const String::View &content) : Region(content.data(), content.size()) {}
 $::Memory::Region::Region(const std::span<const uint8_t> &buffer) : Region(buffer.data(), buffer.size()) {}
 $::Memory::Region::Region(const void *data, size_t size) : Region(size) {
@@ -54,7 +54,7 @@ $::Memory::Region $::FS::Read(const String::Buffer &buffer) { return Read(String
 $::Memory::Region $::FS::Read(const FS::Path &file_path) { return Read(file_path.string()); }
 $::Memory::Region $::FS::Read(const String::View &file_path) {
   auto region = Memory::Read(file_path); // resolve now for user
-  return Memory::Region($::Shared::New<Memory::Region::Wrapper>(std::move(region)));
+  return Memory::Region(Shared::New<Memory::Region::Wrapper>(std::move(region)));
 }
 
 bool $::Memory::Region::empty() const noexcept { return size() == 0; }

@@ -13,20 +13,11 @@ Sabre::Value::Any Sabre::Builtins::Static::from(Isolate *isolate, const Args &ar
   SABRE_MM_ASSERT_ARGC(isolate, args.size(), 1);
 
   // pull out the incoming iterable value now
-  auto value = args[0];
+  auto iterator = Iterable::Resolve(isolate, args[0]);
 
-  // fast-path iterator values if given at all
-  if (value.is<Iterable::Iterator>()) return isolate->create<Iterable::List>(value.as<Iterable::Iterator>());
-
-  // prepare the incoming descriptor to be used
-  auto *descriptor = value.attribute(Operator::Kind::ITER);
-
-  // attempt getting the iterable to be used
-  auto attribute = descriptor ? descriptor->getter(isolate, value) : Value::Missing();
-  if (!attribute.pointer().okay()) return isolate->panic(6000502, value.brand());
-
-  // should be able to cast and convert to a suitable array now
-  return isolate->create<Iterable::List>(attribute.as<Iterable::Iterator>());
+  // handle based on whether the iterator is okay or now
+  if (!iterator.pointer().okay()) return isolate->panic(6000502, iterator.brand());
+  else return isolate->create<Iterable::List>(iterator.as<Iterable::Iterator>());
 }
 
 Sabre::Value::Any Sabre::Builtins::Static::empty(Isolate *isolate, const Args &) {

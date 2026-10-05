@@ -53,7 +53,7 @@ Sabre::Value::Any Sabre::Builtins::Field::map(Isolate *isolate, const Args &args
   auto passthrough = std::vector<Value::Any>(2);
 
   // prepare the filtered view of values now
-  auto mapped = std::vector<uint8_t>(values.size());
+  auto bytes = std::vector<uint8_t>(values.size());
 
   // iterate over the available values now
   for (size_t ii = 0; ii < values.size(); ++ii) {
@@ -66,12 +66,12 @@ Sabre::Value::Any Sabre::Builtins::Field::map(Isolate *isolate, const Args &args
 
     // if the result failed, then pass onwards
     if (!result.pointer().okay()) return result;
-    else if (result.is<Number::Tagged>()) mapped[ii] = result.as<Number::Tagged>().value();
+    else if (result.is<Number::Tagged>()) bytes[ii] = result.as<Number::Tagged>().value();
     else return isolate->panic(6000253, "result", Value::Inspect<Number::Tagged>::name());
   }
 
-  // construct the filtered list now
-  return isolate->create<Iterable::Buffer>(mapped);
+  // construct the mapped list now
+  return isolate->create<Iterable::Buffer>(std::move(bytes));
 }
 
 Sabre::Value::Any Sabre::Builtins::Field::fold(Isolate *isolate, const Args &args) {
