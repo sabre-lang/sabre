@@ -65,7 +65,10 @@ std::span<uint8_t> $::Memory::Region::span() const noexcept { return {static_cas
 
 //  PUBLIC METHODS  //
 
-$::Memory::Allocation $::Memory::Anonymous(size_t size) { return boost::interprocess::anonymous_shared_memory(size); }
+$::Memory::Allocation $::Memory::Anonymous(size_t size) {
+  return size ? boost::interprocess::anonymous_shared_memory(size) : Allocation();
+}
+
 $::Memory::Allocation $::Memory::Read(const String::View &file_path, Offset size) {
   try {
     static constexpr auto readonly = boost::interprocess::read_only;

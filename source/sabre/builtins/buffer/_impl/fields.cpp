@@ -148,7 +148,6 @@ Sabre::Value::Any Sabre::Builtins::Field::first_index_of(Isolate *isolate, const
 
   // ensure our needle can be suitable used as a byte
   SABRE_MM_ASSERT_INTEGRAL(isolate, needle);
-  SABRE_MM_ASSERT_INDEX(isolate, needle, 0xFF);
 
   // attempt finding the needle in the haystack
   auto iter = std::ranges::find(haystack, needle);
@@ -172,7 +171,6 @@ Sabre::Value::Any Sabre::Builtins::Field::last_index_of(Isolate *isolate, const 
 
   // ensure our needle can be suitable used as a byte
   SABRE_MM_ASSERT_INTEGRAL(isolate, needle);
-  SABRE_MM_ASSERT_INDEX(isolate, needle, 0xFF);
 
   // attempt finding the needle in the haystack
   auto iter = std::ranges::find(haystack | std::views::reverse, needle);

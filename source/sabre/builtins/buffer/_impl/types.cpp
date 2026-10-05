@@ -55,10 +55,14 @@ Sabre::Type::Entity Sabre::Builtins::Field::reverse() { return {TN::function(TN:
 Sabre::Type::Entity Sabre::Builtins::Field::first_index_of() { return TN::function(TN::number(), TN::number()); }
 Sabre::Type::Entity Sabre::Builtins::Field::last_index_of() { return TN::function(TN::number(), TN::number()); }
 
-Sabre::Type::Entity Sabre::Builtins::Static::from() { return TN::function(TN::buffer(), TN::iterable(TN::number())); }
-Sabre::Type::Entity Sabre::Builtins::Static::encode() { return TN::function(TN::buffer(), TN::iterable(TN::string())); }
+Sabre::Type::Entity Sabre::Builtins::Static::from() { return TN::function(TN::buffer(), TN::list(TN::number())); }
+Sabre::Type::Entity Sabre::Builtins::Static::encode() { return TN::function(TN::buffer(), TN::string()); }
+Sabre::Type::Entity Sabre::Builtins::Static::decode() { return TN::function(TN::string(), TN::buffer()); }
 Sabre::Type::Entity Sabre::Builtins::Static::empty() { return TN::function(TN::buffer()); }
-Sabre::Type::Entity Sabre::Builtins::Static::filled() { return TN::function(TN::buffer(), TN::number(), TN::number()); }
+Sabre::Type::Entity Sabre::Builtins::Static::filled() {
+  auto fill = TN::optional(TN::number());
+  return TN::function(TN::buffer(), TN::number(), fill);
+}
 
 template <>
 Sabre::Type::Erased

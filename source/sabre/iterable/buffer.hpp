@@ -64,6 +64,8 @@ struct Iterable::Buffer : public Object::Mixin<Iterable::Buffer> {
   /// @brief Gets the available values from the list.
   inline constexpr uint8_t *data() const { return static_cast<uint8_t *>(m_wrapper()->region.data()); }
 
+  inline constexpr $::String::View view() const { return m_wrapper()->region.view(); }
+
   /// @brief Gets a view of the internal buffer span.
   inline constexpr std::span<uint8_t> span() const { return m_wrapper()->region.span(); }
 

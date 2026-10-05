@@ -7,8 +7,117 @@
 import "sabre:test" as Test;
 import "sabre:assert" as Assert;
 
+// - TEST MOCKS - //
+
+namespace Mock {
+    //! @brief Prepare an empty list.
+    export let none = Buffer.empty();
+
+    //! @brief Prepare a buffer of ones.
+    export let ones = Buffer.filled(10, 1);
+
+    //! @brief Prepare an encoded string.
+    export let text = "Hello, World!";
+
+    //! @brief Prepare a ranged set of bytes.
+    export let bytes = List.range(42);
+};
+
 // - TEST CASES - //
 
-Test.todo("Traits", fn {});
-Test.todo("Methods", fn {});
-Test.todo("Statics", fn {});
+Test.suite("Traits", fn {
+    Test.case("For 'Buffer'", fn {
+        for (nn, ii in Buffer.from(Mock.bytes)) Assert.equals(nn, Mock.bytes.get(ii));
+        for (ch, ii in Buffer.encode(Mock.text)) Assert.equals(String.codepoint(ch), Mock.text.at(ii));
+    });
+});
+
+Test.suite("Methods", fn {
+    Test.case("Buffer.empty '()'", fn {
+        Assert.truthy(Mock.none.empty());
+        Assert.falsey(Mock.ones.empty());
+    });
+
+    Test.case("Buffer.size '()'", fn {
+        Assert.equals(Mock.none.size(), 0);
+        Assert.differs(Mock.ones.size(), 0);
+    });
+
+    Test.case("Buffer.back '()'", fn {
+        Assert.panics(fn => Mock.none.back());
+        Assert.equals(Buffer.from(Mock.bytes).back(), 41);
+    });
+
+    Test.case("Buffer.front '()'", fn {
+        Assert.panics(fn => Mock.none.front());
+        Assert.equals(Buffer.from(Mock.bytes).front(), 0);
+    });
+
+    Test.case("Buffer.map 'Function'", fn {
+        let double = fn (nn) => nn * 2;
+        let inputs = [10, 20, 30, 40, 50];
+        let expect = inputs.map(double);
+        let buffer = Buffer.from(inputs).map(double);
+
+        // iterate over the mapped buffer to be compared against
+        for (nn, ii in buffer) Assert.equals(nn, expect.get(ii));
+    });
+
+    Test.case("Buffer.fold 'Any, Function'", fn {
+        let values = Buffer.from([10, 20, 30]);
+        let sum = values.fold(0, fn (aa, nn) => aa + nn);
+        Assert.equals(sum, 60); // should be same value
+    });
+
+    Test.case("Buffer.reverse '()'", fn {
+        let inputs = [10, 20, 30, 40, 50];
+        let buffer = Buffer.from(inputs).reverse();
+        let expect = inputs.reverse();
+
+        // iterate over the reversed buffer to be compared against
+        for (nn, ii in buffer) Assert.equals(nn, expect.get(ii));
+    });
+
+    Test.case("Buffer.slice '...Number'", fn {
+        let values = Buffer.from([10, 20, 30, 40]);
+        let none = values.slice(0, 0);
+        let slice = values.slice(1, 3);
+
+        Assert.truthy(none.empty());
+        Assert.equals(slice.size(), 2);
+        Assert.equals(slice.front(), 20);
+    });
+
+    Test.case("Buffer.last_index_of 'Any'", fn {
+        Assert.equals(Buffer.empty().last_index_of(10), -1);
+        Assert.equals(Buffer.from([10, 20, 30]).last_index_of(20), 1);
+        Assert.equals(Buffer.from([10, 20, 10]).last_index_of(10), 2);
+        Assert.equals(Buffer.from([10, 20, 30]).last_index_of(40), -1);
+    });
+
+    Test.case("Buffer.first_index_of 'Any'", fn {
+        Assert.equals(Buffer.empty().first_index_of(10), -1);
+        Assert.equals(Buffer.from([10, 20, 30]).first_index_of(20), 1);
+        Assert.equals(Buffer.from([10, 20, 10]).first_index_of(10), 0);
+        Assert.equals(Buffer.from([10, 20, 30]).first_index_of(40), -1);
+    });
+});
+
+Test.suite("Statics", fn {
+    Test.case("Buffer.from 'List[Number]'", fn {
+        let buffer = Buffer.from(Mock.bytes);
+        Assert.equals(buffer.size(), Mock.bytes.size());
+        for (nn, ii in buffer) Assert.equals(nn, Mock.bytes.get(ii));
+    });
+
+    Test.case("Buffer.encode 'String'", fn {
+        let buffer = Buffer.encode(Mock.text);
+        Assert.equals(Buffer.decode(buffer), Mock.text);
+    });
+
+    Test.case("Buffer.empty '()'", fn {
+        let buffer = Buffer.empty();
+        Assert.truthy(buffer.empty());
+        Assert.equals(buffer.size(), 0);
+    });
+});

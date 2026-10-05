@@ -56,6 +56,18 @@ Sabre::Value::Any Sabre::Builtins::Static::encode(Isolate *isolate, const Args &
   return isolate->create<Iterable::Buffer>(text.view());
 }
 
+Sabre::Value::Any Sabre::Builtins::Static::decode(Isolate *isolate, const Args &args) {
+  // ensure we have an incoming value now
+  SABRE_MM_ASSERT_ARGC(isolate, args.size(), 1);
+  SABRE_MM_ASSERT_TYPEOF(isolate, Iterable::Buffer, args[0]);
+
+  // if we have been given a string, fast path
+  auto buffer = args.at<Iterable::Buffer>(0);
+
+  // construct our buffer from the given text
+  return String::Any(isolate, buffer.view());
+}
+
 Sabre::Value::Any Sabre::Builtins::Static::empty(Isolate *isolate, const Args &) {
   return isolate->create<Iterable::Buffer>();
 }
