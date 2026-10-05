@@ -94,17 +94,13 @@ SABRE_MM_DYLIB_METHOD(FS, remove_entry, isolate, args) {
 
 SABRE_MM_DYLIB_METHOD(FS, temp_file, isolate, args) {
   // generate a suitably unique file name to be used
-  auto prefix = args.at(0, String::Small());
-  auto suffix = args.at(1, String::Small(".txt"));
-
-  // generate a suitable unique buffer value now
-  char unique[muuid::uuid::char_length] = {};
-  XH::UUID::V7().to_chars(unique);
+  auto prefix = args.when<String::Any>(0);
+  auto suffix = args.when<String::Any>(1);
 
   // ensure we construct a suitable unique basename now
-  auto basename = $::String::Buffer(unique);
-  if (prefix.is<String::Any>()) basename = prefix.as<String::Any>().view() + basename;
-  if (suffix.is<String::Any>()) basename = basename + suffix.as<String::Any>().view();
+  auto basename = XH::UUID::V7().to_string();
+  if (prefix) basename = prefix->view() + basename;
+  basename = basename + (suffix ? suffix->view() : ".txt");
 
   // construct the unique path now as necessary
   auto file_path = std::filesystem::temp_directory_path() / basename;
