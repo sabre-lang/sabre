@@ -49,6 +49,10 @@ Sabre::Type::Entity Sabre::Builtins::Field::set(const Self *self) {
   return TN::function(self->constraints(0), TN::number(), self->constraints(0));
 }
 
+Sabre::Type::Entity Sabre::Builtins::Field::swap(const Self *) {
+  return TN::function(TN::boolean(), TN::number(), TN::number());
+}
+
 Sabre::Type::Entity Sabre::Builtins::Field::front(const Self *self) { return back(self); }
 Sabre::Type::Entity Sabre::Builtins::Field::back(const Self *self) { return TN::function(self->constraints(0)); }
 

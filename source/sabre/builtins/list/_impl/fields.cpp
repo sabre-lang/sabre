@@ -83,6 +83,37 @@ Sabre::Value::Any Sabre::Builtins::Field::set(Isolate *isolate, const Args &args
   return self.set(index, args.at(1));
 }
 
+Sabre::Value::Any Sabre::Builtins::Field::swap(Isolate *isolate, const Args &args) {
+  SABRE_MM_ASSERT_ARGC(isolate, args.size(), 2);
+  SABRE_MM_ASSERT_TYPEOF(isolate, Number::Tagged, args[0]);
+  SABRE_MM_ASSERT_TYPEOF(isolate, Number::Tagged, args[1]);
+  SABRE_MM_ASSERT_TYPEOF(isolate, Iterable::List, args.self());
+
+  // pull out our necessary items now
+  auto self = args.self<Iterable::List>();
+  auto size = static_cast<int64_t>(self.size());
+
+  // prepare both of the available indices now
+  auto left = static_cast<int64_t>(args.at<Number::Tagged>(0));
+  auto right = static_cast<int64_t>(args.at<Number::Tagged>(1));
+
+  // attempt updating the indices if negative at all
+  if (left < 0) left += size;
+  if (right < 0) right += size;
+
+  // fail if the indices are out of the available bounds
+  SABRE_MM_ASSERT_INDEX(isolate, size, left);
+  SABRE_MM_ASSERT_INDEX(isolate, size, right);
+
+  // only swap if not the same value
+  if (left == right) return Value::False;
+
+  // prepare our values to be swapped
+  auto &values = self.values();
+  std::swap(values[left], values[right]);
+  return Value::True; // denote completion
+}
+
 Sabre::Value::Any Sabre::Builtins::Field::map(Isolate *isolate, const Args &args) {
   // ensure some conditions about the list
   SABRE_MM_ASSERT_ARGC(isolate, args.size(), 1);

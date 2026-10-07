@@ -40,6 +40,12 @@ SABRE_XX_FIELDS_DESCRIBE("Sets an element in a `List` by index.")
 SABRE_XX_FIELDS_FOOTER()
 
 SABRE_XX_FIELDS_HEADER()
+SABRE_XX_FIELDS_DEFINE(swap)
+SABRE_XX_FIELDS_TYPEDEF("fn (left: Number, right: Number) -> Boolean")
+SABRE_XX_FIELDS_DESCRIBE("Swaps two elements in a `List` by index.")
+SABRE_XX_FIELDS_FOOTER()
+
+SABRE_XX_FIELDS_HEADER()
 SABRE_XX_FIELDS_DEFINE(map)
 SABRE_XX_FIELDS_TYPEDEF("fn [V = Any](callback: fn (T?, Number?) -> V) -> List[V]")
 SABRE_XX_FIELDS_DESCRIBE("Mutates each element in a `List` with a given transformation callback.")

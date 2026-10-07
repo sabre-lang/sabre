@@ -66,6 +66,13 @@ Test.suite("Methods", fn {
         Assert.equals(temp.get(0), other);
     });
 
+    Test.case("List.swap 'Number, Number'", fn {
+        let values = [10, 20, 30];
+        Assert.truthy(values.swap(0, 2));
+        Assert.equals(values.get(0), 30);
+        Assert.equals(values.get(2), 10);
+    });
+
     Test.case("List.map 'Function'", fn {
         let values = [10, 20, 30];
         let doubled = values.map(fn (nn) => nn * 2);
