@@ -127,7 +127,7 @@ void Sabre::Bytecode::Compiler::expose(
   const auto &modifiers = node->modifiers();
 
   // check for current immutability as well
-  auto immutable = modifiers.test(Variable::Flag::MUTABLE);
+  auto immutable = !modifiers.test(Variable::Flag::MUTABLE);
 
   // check for exports that need to be exposed
   auto exports = modifiers.test(Variable::Flag::EXPORT);

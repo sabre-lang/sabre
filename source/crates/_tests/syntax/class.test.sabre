@@ -19,6 +19,22 @@ namespace Mock {
 
 // - TEST CASES - //
 
+Test.suite("Traits", fn {
+    Test.case("Mutable '()'", fn {
+        class Mutator {
+            public mut count = 0;
+            public let increment = fn: Number {
+                return Self.count += 1;
+            };
+        };
+
+        let mutator = Mutator();
+        Assert.equals(mutator.count, 0);
+        Assert.equals(mutator.increment(), 1);
+        Assert.equals(mutator.count, 1);
+    });
+});
+
 Test.suite("Syntax", fn {
     Test.case("Call 'Mock.One'", fn {
         let instance = Mock.Base();
