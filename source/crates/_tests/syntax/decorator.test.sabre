@@ -10,10 +10,10 @@ import "sabre:assert" as Assert;
 // - TEST MOCKS - //
 
 namespace Mock {
-    //! @brief Uppercase Decorator Typing
+    //! @brief Uppercase Decorator Typing.
     export type Upper = fn (...Any) -> String;
 
-    //! @brief ...
+    //! @brief Simple Uppercase Decorator.
     export let Upper = fn =>
         fn (target: Upper): Upper {
             return fn (...args: Any): String {

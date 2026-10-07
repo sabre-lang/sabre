@@ -1,0 +1,24 @@
+///
+/// @testing Syntax "#..." Declaration.
+/// @describe Coordinates testing builtin attribute syntax.
+///
+
+// Sabre Modules
+import "sabre:test" as Test;
+import "sabre:assert" as Assert;
+
+// - TEST CASES - //
+
+Test.suite("Syntax", fn {
+    Test.case("#[Internal.Optimize] '()'", fn {
+        // prepare a simple function to be optimized
+        #[Internal.Optimize]
+        let foo = fn (value) => value;
+
+        // ensure that the output is correct
+        Assert.equals(foo(42), 42);
+        Assert.equals(foo(Void), Void);
+        Assert.equals(foo(False), False);
+        Assert.equals(foo("abc"), "abc");
+    });
+});
