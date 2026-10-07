@@ -163,7 +163,7 @@ Sabre::Value::Any Sabre::Engine::Invoke::m_jitted(
 
   // construct the underlying stack and frame to be used
   Value::Any stack[Machine::Offset::STK_SIZE] = {};
-  auto frame = Machine::Frame(isolate, info, nullptr);
+  auto frame = Machine::Frame(isolate, info, stack);
 
   // define all the stack properties now
   stack[Machine::Offset::STK_OPTR] = Value::Any(0);
