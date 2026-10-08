@@ -7,6 +7,7 @@
 
 /// Action Includes
 #include "shell/bundle/action.hpp"
+#include "shell/docify/action.hpp"
 #include "shell/format/action.hpp"
 #include "shell/launch/action.hpp"
 #include "shell/lint/action.hpp"
@@ -39,6 +40,7 @@ int32_t main(int32_t argc, char **argv) {
   program.subscribe<Shell::Format::Action>();
   program.subscribe<Shell::Lint::Action>();
   program.subscribe<Shell::Serve::Action>();
+  program.subscribe<Shell::Docify::Action>();
 
   program.subscribe<Shell::Upgrade::Action>();
 

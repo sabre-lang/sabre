@@ -39,9 +39,15 @@ int32_t Sabre::Bundle::Worker::m_bundle() {
   // attempt checking the types available now as necessary
   if (stats.errors) return EXIT_FAILURE;
 
-  // stop if in linting only mode
-  if (!m_options.compile) return EXIT_SUCCESS;
-  else if (stats.hints) $::Debug::println();
+  // handle the current state as necessary now
+  switch (m_options.mode) {
+  default: break;
+  case Mode::LINT: return EXIT_SUCCESS;
+  case Mode::DOCS: return m_docify(*script);
+  }
+
+  // show padding if given some hints at all
+  if (stats.hints) $::Debug::println();
 
   // get an initial starting time-point
   auto start = $::Clock::Performance();
@@ -89,6 +95,8 @@ std::optional<$::URI::Buffer> Sabre::Bundle::Worker::m_resolve(const $::String::
   if (resource.has_value()) return *resource;
   return m_failure(8000000, resource.error()), std::nullopt;
 }
+
+int32_t Sabre::Bundle::Worker::m_docify(const $::URI::View &) { return EXIT_SUCCESS; }
 
 $::FS::Path Sabre::Bundle::Worker::m_output(const $::URI::View &script) {
   return m_output(script, XJCT::Archive::Extension);

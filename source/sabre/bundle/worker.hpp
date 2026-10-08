@@ -41,6 +41,12 @@ protected:
   int32_t m_bundle();
 
   /**
+   * @brief Handles docification of the entry script.
+   * @param resource              Script resource.
+   */
+  int32_t m_docify(const $::URI::View &resource);
+
+  /**
    * @brief Handles resolving the script.
    * @param script                Entry script.
    */

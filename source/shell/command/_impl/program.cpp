@@ -15,6 +15,7 @@
   X("format", "Formats scripts/projects with the builtin styler", .cyan().bold())  \
   X("lint", "Lints scripts/projects for enhanced static analysis", .cyan().bold()) \
   X("serve", "Starts a Sabre language-server instance", .cyan().bold())            \
+  X("docify", "Convert scripts/projects into usable docs", .cyan().bold())         \
   X("", "")                                                                        \
   X("upgrade", "Upgrades to the latest version of Sabre", .blue().bold())          \
   X("<command> --help", "Print help text for a given command", .dim())

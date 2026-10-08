@@ -6,12 +6,19 @@
 
 namespace Sabre::Bundle {
 
+/// @brief Available Bundling Modes.
+enum class Mode : uint8_t {
+  SEA,  // standalone executable application
+  LINT, // only conduct the linting phase
+  DOCS, // construct documentation output
+};
+
 /// @brief Bundler Options.
 struct Options {
   //  PROPERTIES  //
 
   /// @brief Denotes output should be compiled.
-  bool compile = true;
+  Mode mode = Mode::SEA;
 
   /// @brief Expected output file to use.
   $::String::Buffer output = "";
@@ -21,14 +28,11 @@ struct Options {
   /// @brief Constructs defaulted options.
   constexpr Options() = default;
 
-  /// @brief Constructs a set of bundle options.
-  constexpr Options(std::false_type) : compile(false) {}
-
   /**
    * @brief Constructs a set of bundle options.
    * @param output            Output file.
    */
-  constexpr Options(const $::String::View &output) : output(output) {}
+  constexpr Options(Mode mode, const $::String::View &output = {}) : mode(mode), output(output) {}
 };
 
 } // namespace Sabre::Bundle

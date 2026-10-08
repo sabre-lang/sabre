@@ -1,45 +1,6 @@
 /// Shell Includes
 #include "shell/command/program.hpp"
 
-//  X-MACROS  //
-
-#define XX_COMMANDS_LIST(X)                                                        \
-  X("run", "Execute a script/project with Sabre", .magenta().bold())               \
-  X("task", "Runs a pre-defined crate configuration task", .magenta().bold())      \
-  X("test", "Runs all available unit tests with Sabre", .magenta().bold())         \
-  X("", "")                                                                        \
-  X("bundle", "Bundles scripts/projects into executables", .cyan().bold())         \
-  X("format", "Formats scripts/projects with the builtin styler", .cyan().bold())  \
-  X("lint", "Lints scripts/projects for enhanced static analysis", .cyan().bold()) \
-  X("serve", "Starts a Sabre language-server instance", .cyan().bold())            \
-  X("", "")                                                                        \
-  X("upgrade", "Upgrades to the latest version of Sabre", .blue().bold())          \
-  X("<command> --help", "Print help text for a given command", .dim())
-
-#define XX_OPTIONS_LIST(X)                                   \
-  X("-h, --help", "Display global help information")         \
-  X("-v, --version", "Show the current executable version")  \
-  X("    --vendors", "Show all the vendors that Sabre uses") \
-  X("    --revision", "Show the version with revision hash")
-
-#define XX_ENVIRONMENT_LIST(X)                                                                  \
-  X("SABRE_LOGGING_LEVEL", "Sets the debug logging level", .cyan().italic())                    \
-  X("SABRE_HARDWARE_VPROCS", "Maximum virtual processors count", .cyan().italic())              \
-  X("SABRE_STACK_SIZE", "The size used by thread stacks", .cyan().italic())                     \
-  X("SABRE_STACK_LIMIT", "The overflow limit for thread stacks", .cyan().italic())              \
-  X("", "")                                                                                     \
-  X("NO_COLOR", "Disables the use of terminal colors", .cyan().italic())                        \
-  X("NO_PROGRESS", "Disables the use of terminal spinners and progress bars", .cyan().italic())
-
-//  PROPERTIES  //
-
-#define X(N, D, ...) {$::Color::ANSI(N) __VA_ARGS__, D},
-static auto g_descriptor = Shell::Command::Descriptor()
-                               .commands({XX_COMMANDS_LIST(X)})
-                               .options({XX_OPTIONS_LIST(X)})
-                               .environment({XX_ENVIRONMENT_LIST(X)});
-#undef X
-
 //  PRIVATE METHODS  //
 
 void Shell::Command::Descriptor::m_help(std::ostream &os) const {

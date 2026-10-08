@@ -14,8 +14,16 @@ namespace Sabre::Toolchain {
 int32_t lint(const Runtime::Options &options = {});
 
 /**
+ * @brief Handles docifying a runtime.
+ * @param options               Output file.
+ * @param runtime               Runtime options.
+ */
+int32_t docify(const Runtime::Options &options = {});
+int32_t docify(const $::String::View &output, const Runtime::Options &options = {});
+
+/**
  * @brief Handles bundling a runtime.
- * @param options               Options to bundle.
+ * @param options               Bundle options.
  * @param runtime               Runtime options.
  */
 int32_t bundle(const Bundle::Options &options, const Runtime::Options &runtime = {});
