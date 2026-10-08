@@ -1,5 +1,6 @@
 /// Sabre Includes
 #include "sabre/bundle/worker.hpp"
+#include "sabre/author/docify.hpp"
 #include "sabre/bundle/fuse.hpp"
 #include "sabre/bundle/service.hpp"
 #include "sabre/document/buffer.hpp"
@@ -96,18 +97,16 @@ std::optional<$::URI::Buffer> Sabre::Bundle::Worker::m_resolve(const $::String::
   return m_failure(8000000, resource.error()), std::nullopt;
 }
 
-int32_t Sabre::Bundle::Worker::m_docify(const $::URI::View &) { return EXIT_SUCCESS; }
+int32_t Sabre::Bundle::Worker::m_docify(const $::URI::View &resource) {
+  return m_services->get<Author::Docify>()->process(resource, m_options.author);
+}
 
 $::FS::Path Sabre::Bundle::Worker::m_output(const $::URI::View &script) {
   return m_output(script, XJCT::Archive::Extension);
 }
 
 $::FS::Path Sabre::Bundle::Worker::m_output(const $::URI::View &script, const $::String::View &extension) {
-  auto canonical = m_options.output.size(); // prepare the baseline output to be used now based on output given
-  auto output = canonical ? $::Path::canonical(m_options.output) : $::FS::Path(script.body()).replace_extension();
-
-  // and handle deciding the correct extension to be used now
-  return extension.size() && output.extension() != extension ? output += extension : output;
+  return Author::Outfile(m_options.author.output, script, extension);
 }
 
 bool Sabre::Bundle::Worker::m_codesign(const $::FS::Path &output) const noexcept {

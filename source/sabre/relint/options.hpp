@@ -6,7 +6,7 @@
 
 namespace Sabre::Relint {
 
-/// @brief Formatter Options.
+/// @brief Relint Options.
 struct Options {
   //  PROPERTIES  //
 

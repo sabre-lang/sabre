@@ -33,7 +33,7 @@ public:
   //  PUBLIC METHODS  //
 
   /// @brief Gets a view of the available definitions.
-  inline constexpr auto view() const noexcept { return m_definitions; }
+  inline constexpr const auto &view() const noexcept { return m_definitions; }
 
   /**
    * @brief Allows overwriting an immediate definition.

@@ -4,6 +4,10 @@
 /// Async Includes
 #include "sabre/async/_inline/async.ipp"
 
+/// Author Includes
+#include "sabre/author/docify.hpp"
+#include "sabre/author/options.hpp"
+
 /// Bundle Includes
 #include "sabre/bundle/archive.hpp"
 #include "sabre/bundle/codec.hpp"

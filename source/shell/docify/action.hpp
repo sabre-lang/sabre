@@ -10,17 +10,18 @@
 namespace Shell::Docify {
 
 /// @brief Docification Options.
-using Options = Sabre::Runtime::Options;
+using Options = Sabre::Author::Options;
+using Runtime = Sabre::Runtime::Options;
 
 /// @brief Docification Command.
 class Action : public Command::Abstract {
   //  PROPERTIES  //
 
-  /// @brief Output file to write documentation.
-  $::String::Buffer m_output = {};
+  /// @brief Docification options.
+  Options m_options = {};
 
   /// @brief Underlying runtime options.
-  Options m_runtime = {};
+  Runtime m_runtime = {};
 
 public:
   //  CONSTRUCTORS  //

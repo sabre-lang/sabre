@@ -4,6 +4,7 @@
 /// Shell Includes
 #include "shell/bundle/action.hpp"
 #include "shell/command/macros.hpp"
+#include "shell/validators/arguments.hpp"
 
 //  X-MACROS  //
 
@@ -31,14 +32,7 @@ Shell::Bundle::Action::Action() : Abstract("bundle") {
 //  PRIVATE METHODS  //
 
 void Shell::Bundle::Action::m_execute() {
-  // get some details about the arguments
-  auto begin = m_runtime.script.argv.begin();
-  auto end = m_runtime.script.argv.end();
-  auto dashes = std::find(begin, end, "--");
-
-  // remove any items before and including the dashes
-  if (dashes != end) m_runtime.script.argv.erase(begin, dashes + 1);
-
+  Validator::Arguments(m_runtime); // update arguments before bundling
   auto exit_code = Sabre::Toolchain::bundle(m_options, m_runtime);
   if (exit_code) throw CLI::RuntimeError(exit_code); // failed
 }
@@ -51,7 +45,7 @@ void Shell::Bundle::Action::m_subscribe(CLI::App *command) {
   m_common(command, &m_runtime, true);
 
   // prepare some additional options now
-  command->add_option("--outfile", m_options.output);
+  command->add_option("--outfile", m_options.author.output);
 
   // prepare the verbosity flag now
   command->add_flag_callback("--quiet", [&] { m_runtime.flags.verbose = false; });

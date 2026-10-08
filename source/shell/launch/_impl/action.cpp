@@ -4,6 +4,7 @@
 /// Shell Includes
 #include "shell/command/macros.hpp"
 #include "shell/launch/action.hpp"
+#include "shell/validators/arguments.hpp"
 
 //  X-MACROS  //
 
@@ -25,15 +26,7 @@ Shell::Launch::Action::Action() : Abstract("run") {
 //  PRIVATE METHODS  //
 
 void Shell::Launch::Action::m_execute() {
-  // get some details about the arguments
-  auto begin = m_runtime.script.argv.begin();
-  auto end = m_runtime.script.argv.end();
-  auto dashes = std::find(begin, end, "--");
-
-  // remove any items before and including the dashes
-  if (dashes != end) m_runtime.script.argv.erase(begin, dashes + 1);
-
-  // attempt running the runtime now
+  Validator::Arguments(m_runtime); // update arguments
   auto exit_code = Sabre::Toolchain::launch(m_runtime);
   if (exit_code) throw CLI::RuntimeError(exit_code);
 }

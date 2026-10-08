@@ -2,6 +2,7 @@
 #define _SABRE_TOOLCHAIN_BUNDLE_HPP
 
 /// Sabre Includes
+#include "sabre/author/options.hpp"
 #include "sabre/bundle/options.hpp"
 #include "sabre/runtime/options.hpp"
 
@@ -18,8 +19,7 @@ int32_t lint(const Runtime::Options &options = {});
  * @param options               Output file.
  * @param runtime               Runtime options.
  */
-int32_t docify(const Runtime::Options &options = {});
-int32_t docify(const $::String::View &output, const Runtime::Options &options = {});
+int32_t docify(const Author::Options &options, const Runtime::Options &runtime = {});
 
 /**
  * @brief Handles bundling a runtime.

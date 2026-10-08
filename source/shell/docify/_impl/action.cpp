@@ -31,10 +31,8 @@ Shell::Docify::Action::Action() : Abstract("docify") {
 //  PRIVATE METHODS  //
 
 void Shell::Docify::Action::m_execute() {
-  $_ABORT("Unimplemented 'docify' command");
-
-  // auto exit_code = Sabre::Toolchain::docify(m_output, m_runtime);
-  // if (exit_code) throw CLI::RuntimeError(exit_code);
+  auto exit_code = Sabre::Toolchain::docify(m_options, m_runtime);
+  if (exit_code) throw CLI::RuntimeError(exit_code);
 }
 
 void Shell::Docify::Action::m_subscribe(CLI::App *command) {
@@ -45,7 +43,7 @@ void Shell::Docify::Action::m_subscribe(CLI::App *command) {
   m_common(command, &m_runtime, false);
 
   // prepare some additional options now
-  command->add_option("--outfile", m_output);
+  command->add_option("--outfile", m_options.output);
 
   // prepare the verbosity flag now
   command->add_flag_callback("--quiet", [&] { m_runtime.flags.verbose = false; });
