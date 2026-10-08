@@ -39,7 +39,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::defer(Isolate *isolate, const Value::
   static constexpr auto s_symbol = Operator::Inspect::symbol(s_kind);
 
   // and manually override the attribute as required
-  object.fields().emplace(s_symbol, Member::Factory::reference(dispose));
+  object.assign(Member::Factory::reference(s_symbol, dispose));
 
   // finally return the resulting object instance now
   return object;
@@ -80,7 +80,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::overrides(
   if (fields.contains(symbol)) return isolate->panic(6000303, name, target.brand());
 
   // can safely assign the necessary attribute now
-  return fields.emplace(symbol, Member::Factory::reference(callback)), Value::Void();
+  return fields.emplace(symbol, Member::Factory::reference(symbol, callback)), Value::Void();
 }
 
 Sabre::Value::Any Sabre::Engine::Dispatch::super(Isolate *isolate, const Object::Instance &instance, const Args &args) {
@@ -119,7 +119,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::constructor(
 
   // prepare the constructor details
   if (statics.contains(s_symbol)) return isolate->panic(6000800, prototype.brand());
-  return statics.emplace(s_symbol, Member::Factory::reference(closure)), Value::Void();
+  return statics.emplace(s_symbol, Member::Factory::reference(s_symbol, closure)), Value::Void();
 }
 
 Sabre::Value::Any Sabre::Engine::Dispatch::member(
@@ -136,7 +136,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::member(
   if (fields.contains(intern->symbol())) return isolate->panic(6000801, *intern);
 
   // prepare the reference to be bound now
-  auto reference = Member::Factory::reference(value, immutable);
+  auto reference = Member::Factory::reference(intern->view(), value, immutable);
   return fields.emplace(intern->symbol(), std::move(reference)), Value::Void();
 }
 
@@ -186,9 +186,9 @@ Sabre::Engine::Dispatch::barrel(Isolate *isolate, const Frame *frame, const Obje
   auto &fields = exports->current().as<Object::Instance>().fields();
 
   // iterate over the available barrel fields now
-  for (const auto &[key, value] : object.fields()) {
-    if (fields.contains(key)) return isolate->panic(8000302); // failed
-    fields.emplace(key, Member::Factory::reference(value->reference()));
+  for (const auto &[key, reference] : object.fields()) {
+    if (fields.contains(key)) return isolate->panic(8000302); // failed to find the field
+    fields.emplace(key, Member::Factory::reference(reference->key(), reference->value()));
   }
 
   // declare as a success now
@@ -220,8 +220,8 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_object(Isolate *isolate, const std:
   // attempt assigning our values now
   for (size_t ii = 0; ii < pairs.size();) {
     auto field = pairs[ii++], value = pairs[ii++];
-    auto member = Member::Factory::reference(value);
-    object.fields()[field.as<Value::Symbol>()] = std::move(member);
+    auto key = field.as<String::Any>(); // key value to use
+    object.assign(Member::Factory::reference(key.view(), value));
   }
 
   // and return the object that was created
@@ -237,7 +237,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_enumeration(Isolate *isolate, const
 
   // prepare a resolution for incremental values
   static auto increment = [](const Object::Variant &variant) -> Number::Tagged {
-    auto ordinal = variant.value->reference().as<Number::Tagged>();
+    auto ordinal = variant.reference->value().as<Number::Tagged>();
     return Number::Tagged(ordinal.value() + 1); // increment ordinal
   };
 
@@ -249,7 +249,9 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_enumeration(Isolate *isolate, const
 
     // check if the incoming value is void (eg: unassigned)
     if (value.is<Value::Void>()) value = variants.empty() ? Number::Zero : increment(variants.back());
-    variants.emplace_back(Object::Variant{.name = name, .label = label, .value = Member::Factory::reference(value)});
+
+    auto reference = Member::Factory::reference(name.view(), value); // prepare the reference to be bound
+    variants.emplace_back(Object::Variant{.name = name, .label = label, .reference = std::move(reference)});
   }
 
   // and finally construct and load the enumeration now
@@ -289,7 +291,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_expose(
   if (exists) return isolate->panic(8000301, intern->view());
 
   // construct and emplace the field to be used now
-  auto reference = Member::Factory::reference(Value::Any(value));
+  auto reference = Member::Factory::reference(intern->view(), Value::Any(value));
   return fields.emplace(intern->symbol(), std::move(reference)), Value::Void();
 }
 

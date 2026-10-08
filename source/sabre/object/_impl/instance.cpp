@@ -22,5 +22,5 @@ void Sabre::Object::Instance::m_yield(const Instance &self, Globals::Each &yield
   yield(attributes->prototype);
 
   // yield all the underlying member references as necessary now
-  for (const auto &member : attributes->fields | std::views::values) yield(member->reference());
+  for (const auto &member : attributes->fields | std::views::values) yield(member->value());
 }

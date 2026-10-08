@@ -14,28 +14,39 @@ class Reference : public Descriptor {
   /// @brief The underlying reference value.
   Value::Any m_reference = {};
 
+  /// @brief The underlying reference key.
+  $::String::Buffer m_key = {};
+
 public:
   //  CONSTRUCTORS  //
 
+  /// @brief Do not allow constructing empty references.
+  explicit Reference() = delete;
+
   /**
    * @brief Constructs an initial reference.
+   * @param key               Reference key.
    * @param readonly          Readonly state.
    */
-  explicit Reference(bool readonly = false) : Descriptor(readonly) {}
+  explicit Reference(const $::String::View &key, bool readonly = false) : Descriptor(readonly), m_key(key) {}
 
   /**
    * @brief Constructs a member reference.
-   * @param reference         Reference value.
+   * @param key               Reference key.
+   * @param value             Reference value.
    * @param readonly          Readonly state.
    */
-  explicit Reference(const Value::Any &reference, bool readonly = false) :
-      Descriptor(readonly), m_reference(reference) {}
+  explicit Reference(const $::String::View &key, const Value::Any &value, bool readonly = false) :
+      Descriptor(readonly), m_reference(value), m_key(key) {}
 
   //  PUBLIC METHODS  //
 
+  /// @brief Gets the underlying reference key.
+  inline constexpr $::String::View key() const noexcept { return m_key; }
+
   /// @brief Gets the underlying reference value.
-  inline constexpr Value::Any &reference() noexcept { return m_reference; }
-  inline constexpr Value::Any reference() const noexcept { return m_reference; }
+  inline constexpr Value::Any &value() noexcept { return m_reference; }
+  inline constexpr Value::Any value() const noexcept { return m_reference; }
 
   /**
    * @brief Handles getting the value.

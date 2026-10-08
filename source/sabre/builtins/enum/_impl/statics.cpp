@@ -35,7 +35,7 @@ Sabre::Value::Any Sabre::Builtins::Static::label(Isolate *isolate, const Args &a
 }
 
 Sabre::Value::Any Sabre::Builtins::Static::value(Isolate *isolate, const Args &args) {
-  return resolve(isolate, args, [](const Object::Variant *variant) { return variant->value->reference(); });
+  return resolve(isolate, args, [](const Object::Variant *variant) { return variant->reference->value(); });
 }
 
 //  PRIVATE METHODS  //

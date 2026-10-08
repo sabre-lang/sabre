@@ -62,6 +62,7 @@ Todo...
 - Fixed: Commit [2ad55c4](https://github.com/sabre-lang/sabre/commit/2ad55c486d0640991a62094e76216fe6600c4b96#diff-0b8ad881c61b65b7f80a7892e0d86fede39932100fd3ec7a22f023bccda24d08R166) introduced a `nullptr` stack reference for jitted functions. This has been reverted.
 - Fixed: Class members immutability was previously inverted and has now been corrected to match the type-system.
 - Added: Implemented the `List.swap` method for swapping two values by indices in a `List` value.
+- Added: The internal `Object::Instance` value now expects keys to be assigned to each field reference value. This will allow for serialization and reflection of `Object` values.
 
 <h4>Toolkit / sabre serve</h4>
 

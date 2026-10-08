@@ -22,8 +22,8 @@ SABRE_MM_LOWER_NODE(Record, node, compiler, destination) {
     auto kreg = arguments.grow(), vreg = arguments.grow();
 
     // bind the element to a symbol as well
-    auto symbol = compiler->symbol(element->name());
-    compiler->emit<Glyph::LOAD_CONST>(kreg, symbol);
+    auto index = compiler->string(element->name());
+    compiler->emit<Glyph::STRING_MAKE>(kreg, index);
 
     // prepare the initializer instance
     auto *initializer = element->initializer();

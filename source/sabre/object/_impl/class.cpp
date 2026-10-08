@@ -13,5 +13,5 @@ void Sabre::Object::Class::m_yield(const Class &self, Globals::Each &yield) {
   yield(attributes->parent);
 
   // yield all the underlying member references as necessary now
-  for (const auto &member : attributes->statics | std::views::values) yield(member->reference());
+  for (const auto &member : attributes->statics | std::views::values) yield(member->value());
 }

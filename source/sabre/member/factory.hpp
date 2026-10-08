@@ -23,8 +23,11 @@ template <class... As> static inline $::Unique::Pointer<Reference> reference(As 
  * @param isolate               Runtime isolate.
  * @param args                  Arguments to bind.
  */
-template <class... As> static inline $::Unique::Pointer<Reference> native(Runtime::Isolate *isolate, As &&...args) {
-  return reference(isolate->create<Function::Native>(std::forward<As>(args)...));
+template <class... As>
+static inline $::Unique::Pointer<Reference> native(
+    Runtime::Isolate *isolate, Function::Callback callback, const $::String::View &parent, const $::String::View &field
+) {
+  return reference(field, isolate->create<Function::Native>(callback, parent, field));
 }
 
 } // namespace Sabre::Member::Factory

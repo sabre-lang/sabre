@@ -17,7 +17,7 @@ struct Object::Variant {
   String::Any label;
 
   /// @brief The bound member reference.
-  $::Unique::Pointer<Member::Reference> value;
+  $::Unique::Pointer<Member::Reference> reference;
 };
 
 /// @brief Enumeration Attributes.
@@ -85,7 +85,7 @@ struct Object::Enum : public Object::Mixin<Object::Enum> {
    */
   inline constexpr const Variant *resolve(Number::Tagged ordinal) const noexcept {
     for (const auto &variant : variants() | std::views::values) {
-      if (variant.value->reference() == ordinal) return &variant;
+      if (variant.reference->value() == ordinal) return &variant;
     }
 
     // failed to find a suitably variant

@@ -45,6 +45,15 @@ struct Object::Instance : public Object::Mixin<Object::Instance> {
   inline constexpr const Class &prototype() const noexcept { return m_wrapper()->prototype; }
   inline constexpr const String::Any &name() const noexcept { return prototype().name(); }
 
+  /**
+   * @brief Handles assigning an object reference.
+   * @param reference               Reference to bind.
+   */
+  template <class... As>
+  inline constexpr bool assign($::Unique::Pointer<Member::Reference> &&reference) const noexcept {
+    return fields().insert_or_assign(reference->key(), std::move(reference)).second;
+  }
+
 protected:
   //  PRIVATE METHODS  //
 

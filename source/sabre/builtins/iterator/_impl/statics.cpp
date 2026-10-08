@@ -88,9 +88,9 @@ Sabre::Value::Any Sabre::Builtins::Static::dynamic(Isolate *isolate, const Args 
   auto yield = globals->internal(isolate, s_method, Static::yield);
 
   // we bind the context with the necessary properties for iteration
-  context.fields().emplace("next", Member::Factory::reference(generator));
-  context.fields().emplace("value", Member::Factory::reference(Value::Void()));
-  context.fields().emplace("yield", Member::Factory::reference(isolate->bind(yield, context)));
+  context.assign(Member::Factory::reference("next", generator));
+  context.assign(Member::Factory::reference("value", Value::Void()));
+  context.assign(Member::Factory::reference("yield", isolate->bind(yield, context)));
 
   // prepare the callback to be used for the iterator
   Iterable::Callback<Object::Instance> callback = [](auto *isolate, Object::Instance self, size_t idx) -> Value::Any {

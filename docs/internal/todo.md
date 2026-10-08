@@ -2,7 +2,6 @@
 
 Here is a basic list of tasks that I would like to implement for Sabre. The immediate tasks are required as-soon-as-possible, whilst the others are marked with their necessaity.
 
-- [ ] Need to work out a way to convert `Object::Instance` fields into suitable Serde mapping outputs. Currently keys are `Value::Symbol` which cannot be converted to `std::string`
 - [ ] Better formatter support needs to be implemented through more rigorous testing to find more corner cases that could occur in user-code
 - [ ] It would be good for completeness to implement the following execution policies:
     - [x] `::call` / Alias for synchronous function calls
