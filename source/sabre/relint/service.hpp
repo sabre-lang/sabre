@@ -19,7 +19,7 @@ class Service : public XI::Singleton {
   const Options *m_options = nullptr;
 
   /// @brief All available subscribed rules.
-  $::Map::Record<$::Unique::Pointer<Rule>> m_rules = {};
+  $::Map::View<$::Unique::Pointer<Rule>> m_rules = {};
 
 public:
   //  CONSTRUCTORS  //

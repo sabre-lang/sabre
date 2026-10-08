@@ -69,13 +69,13 @@ MM_RESOLVE_SCHEME(DYLIB, name, ) { return $::URI::Buffer(Scheme::DYLIB, name); }
 MM_RESOLVE_SCHEME(SABRE, name, ) {
   auto crate = Crate::Constants::internal(name); // resolve item
   if ($::Path::exists(crate)) return $::URI::Buffer(crate.string());
-  return Failure(8000100, Scheme::SABRE.buffer() + ":" + $::String::Buffer(name));
+  return Failure(8000100, Scheme::SABRE.buffer() + ":" + name);
 }
 
 MM_RESOLVE_SCHEME(CRATE, name, ) {
   auto crate = Crate::Constants::external(name); // resolve item
   if ($::Path::exists(crate)) return $::URI::Buffer(crate.string());
-  return Failure(8000100, Scheme::CRATE.buffer() + ":" + $::String::Buffer(name));
+  return Failure(8000100, Scheme::CRATE.buffer() + ":" + name);
 }
 
 template <class... As> Sabre::Resource::Result Sabre::Resource::Failure(Diagnostic::Code code, As &&...args) {

@@ -19,7 +19,7 @@ SABRE_MM_CHECK_NODE(Interface, node, analyzer) {
   if (properties.empty()) return Type::New::object();
 
   // prepare the fields to be bound now
-  auto fields = $::Map::Record<Type::Entity>();
+  auto fields = $::Map::Dict<Type::Entity>();
 
   // convert all our values as necessary now
   for (const auto *variable : properties) {

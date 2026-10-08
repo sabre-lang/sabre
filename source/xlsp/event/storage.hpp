@@ -19,7 +19,7 @@ class Storage {
   friend class Server::Connection;
 
   /// @brief Function Collection Mapping.
-  template <class F> using Collection = $::Map::Record<$::Unique::Functor<F>>;
+  template <class F> using Collection = $::Map::View<$::Unique::Functor<F>>;
 
   /// @brief Pending Response Typing.
   struct Pending {

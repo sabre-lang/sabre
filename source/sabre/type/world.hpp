@@ -155,13 +155,13 @@ class World {
   Analyzer *m_analyzer = nullptr;
 
   /// @brief Encapsulated entities.
-  $::Map::Record<Entity> m_entities = {};
+  $::Map::View<Entity> m_entities = {};
 
   /// @brief Currently deferred values.
   std::vector<Deferrer> m_deferred = {};
 
   /// @brief Resource locations for cleanup errors.
-  $::Map::Record<XLSP::Range> m_ranges = {};
+  $::Map::View<XLSP::Range> m_ranges = {};
 
 public:
   //  CONSTRUCTORS  //
@@ -198,8 +198,8 @@ public:
   inline constexpr bool exportable() const noexcept { return m_callee == nullptr; }
 
   /// @brief Gets the underlying entities map.
-  inline constexpr $::Map::Record<Entity> &entities() noexcept { return m_entities; }
-  inline constexpr const $::Map::Record<Entity> &entities() const noexcept { return m_entities; }
+  inline constexpr $::Map::View<Entity> &entities() noexcept { return m_entities; }
+  inline constexpr const $::Map::View<Entity> &entities() const noexcept { return m_entities; }
 
   /// @brief Gets/sets the current callee value.
   inline constexpr Callee callee() noexcept { return Callee(this); }

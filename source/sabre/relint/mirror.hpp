@@ -123,7 +123,7 @@ public:
    * @param name                  Name of member field.
    */
   inline constexpr $::Shared::Pointer<Definition> lookup(const $::String::View &name) {
-    auto iter = m_fields.find($::String::Buffer(name)); // attempt finding field
+    auto iter = m_fields.find(name); // attempt finding field from the name
     return iter == m_fields.cend() ? $::Shared::New<Definition>() : iter->second;
   }
 

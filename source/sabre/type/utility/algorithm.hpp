@@ -16,7 +16,7 @@ class Algorithm {
   //  PROPERTIES  //
 
   /// @brief The underlying container value.
-  $::Map::Record<Callback> m_callbacks = {};
+  $::Map::Dict<Callback> m_callbacks = {};
 
 public:
   //  CONSTRUCTORS  //
@@ -28,7 +28,7 @@ public:
    * @brief Handles emplacing fields.
    * @param fields                Fields to bind.
    */
-  constexpr Algorithm(const $::Map::Record<Erased> &fields) {
+  constexpr Algorithm(const $::Map::Dict<Erased> &fields) {
     for (const auto &[name, field] : fields) emplace(name, field);
   }
 
@@ -36,7 +36,7 @@ public:
    * @brief Handles emplacing fields.
    * @param fields                Fields to bind.
    */
-  constexpr Algorithm(const $::Map::Record<Entity> &fields) {
+  constexpr Algorithm(const $::Map::Dict<Entity> &fields) {
     for (const auto &[name, field] : fields) emplace(name, field);
   }
 
@@ -44,8 +44,8 @@ public:
    * @brief Constructs an algorithm from given callbacks.
    * @param callbacks             Callbacks to bind.
    */
-  constexpr Algorithm(const $::Map::Record<Callback> &callbacks) : m_callbacks(callbacks) {}
-  constexpr Algorithm($::Map::Record<Callback> &&callbacks) : m_callbacks(std::move(callbacks)) {}
+  constexpr Algorithm(const $::Map::Dict<Callback> &callbacks) : m_callbacks(callbacks) {}
+  constexpr Algorithm($::Map::Dict<Callback> &&callbacks) : m_callbacks(std::move(callbacks)) {}
 
   //  PUBLIC METHODS  //
 
@@ -96,7 +96,7 @@ public:
    */
   inline constexpr auto view(const Structure *structure, Constraints *constraints = nullptr) const noexcept {
     // prepare the outgoing mapping of entities
-    auto resolved = $::Map::Record<Entity>();
+    auto resolved = $::Map::Dict<Entity>();
 
     // attempt binding each of our items now
     for (const auto &[name, callback] : m_callbacks) {

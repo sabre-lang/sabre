@@ -16,10 +16,12 @@ static auto g_function = Sabre::Type::New::function(g_any);
 static auto g_variadic = Sabre::Type::New::variadic(g_any);
 static auto g_object = $::Shared::New<Sabre::Type::Structure>(g_any);
 static auto g_exception = Sabre::Builtins::Inspect<Sabre::Object::Exception>::typeclass()->instantiate();
+
+static auto o_disposable = Sabre::Operator::Inspect::symbol(Sabre::Operator::Kind::DISP);
 static auto g_disposable = $::Shared::New<Sabre::Type::Structure>(
     "Disposable",
     Sabre::Type::Algorithm({{
-        Sabre::Operator::Inspect::symbol(Sabre::Operator::Kind::DISP),
+        $::String::Buffer(o_disposable),
         Sabre::Type::Entity(g_function),
     }})
 );
@@ -56,8 +58,8 @@ $::Shared::Pointer<Sabre::Type::Structure> Sabre::Type::New::record(const Erased
   return $::Shared::New<Structure>(value);
 }
 
-$::Shared::Pointer<Sabre::Type::Structure> Sabre::Type::New::interface() { return interface($::Map::Record<Entity>()); }
-$::Shared::Pointer<Sabre::Type::Structure> Sabre::Type::New::interface(const $::Map::Record<Entity> &fields) {
+$::Shared::Pointer<Sabre::Type::Structure> Sabre::Type::New::interface() { return interface($::Map::Dict<Entity>()); }
+$::Shared::Pointer<Sabre::Type::Structure> Sabre::Type::New::interface(const $::Map::Dict<Entity> &fields) {
   return $::Shared::New<Structure>(fields);
 }
 
@@ -66,7 +68,7 @@ $::Shared::Pointer<Sabre::Type::Structure> Sabre::Type::New::interface(const $::
 }
 
 $::Shared::Pointer<Sabre::Type::Structure>
-Sabre::Type::New::interface(const $::String::View &name, const $::Map::Record<Entity> &fields) {
+Sabre::Type::New::interface(const $::String::View &name, const $::Map::Dict<Entity> &fields) {
   return $::Shared::New<Structure>(name, fields);
 }
 

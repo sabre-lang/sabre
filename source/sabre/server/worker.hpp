@@ -65,6 +65,7 @@ public:
    * @param mode                      Refresh mode to use.
    */
   void analyze(Refresh mode = Refresh::ENTIRE) const noexcept;
+  void analyze(Guard &&guard, Refresh mode = Refresh::ENTIRE) const noexcept;
 
   /**
    * @brief Handles formatting a file.

@@ -7,10 +7,8 @@
 
 //  PUBLIC METHODS  //
 
-void Sabre::Server::Worker::analyze(Refresh mode) const noexcept {
-  // we always lock the service when it is being analyzed
-  $_UNUSED $_AUTO = m_connection->guard();
-
+void Sabre::Server::Worker::analyze(Refresh mode) const noexcept { analyze(m_connection->guard(), mode); }
+void Sabre::Server::Worker::analyze($_UNUSED Guard &&, Refresh mode) const noexcept {
   // declare that we are analyzing the incoming item
   $_TRACE("--| analyze: requested '{0}'", m_resource.relative());
 

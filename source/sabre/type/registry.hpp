@@ -73,7 +73,7 @@ struct New : public $::Ensure::Static {
    * @param fields                Interface fields.
    */
   static $::Shared::Pointer<Structure> interface();
-  static $::Shared::Pointer<Structure> interface(const $::Map::Record<Entity> &fields);
+  static $::Shared::Pointer<Structure> interface(const $::Map::Dict<Entity> &fields);
 
   /**
    * @brief Handles constructing structural types.
@@ -81,7 +81,7 @@ struct New : public $::Ensure::Static {
    * @param fields                Interface fields.
    */
   static $::Shared::Pointer<Structure> interface(const $::String::View &name);
-  static $::Shared::Pointer<Structure> interface(const $::String::View &name, const $::Map::Record<Entity> &fields);
+  static $::Shared::Pointer<Structure> interface(const $::String::View &name, const $::Map::Dict<Entity> &fields);
 
   /**
    * @brief Constructs a typed result instance.

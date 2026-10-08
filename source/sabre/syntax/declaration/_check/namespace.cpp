@@ -21,7 +21,7 @@ SABRE_MM_CHECK_NODE(Namespace, node, analyzer) {
   // scope the incoming namespace now
   $_PP_SCOPE() {
     auto world = analyzer->scope(); // scope now
-    auto fields = $::Map::Record<Type::Entity>();
+    auto fields = $::Map::Dict<Type::Entity>();
 
     // prepare the result to be used
     result = analyzer->check(node->block()->statements());

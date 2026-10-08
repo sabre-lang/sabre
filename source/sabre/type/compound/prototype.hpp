@@ -30,7 +30,7 @@ class Prototype : public Mixin<Prototype> {
   Erased m_constructor = nullptr;
 
   /// @brief Static field properties available.
-  $::Map::Record<Entity> m_statics = {};
+  $::Map::Dict<Entity> m_statics = {};
 
 public:
   //  CONSTRUCTORS  //
@@ -64,8 +64,8 @@ public:
   inline constexpr const Algorithm &fields() const noexcept { return m_structure->fields(); }
 
   /// @brief The available metaclass fields.
-  inline constexpr $::Map::Record<Entity> &statics() noexcept { return m_statics; }
-  inline constexpr const $::Map::Record<Entity> &statics() const noexcept { return m_statics; }
+  inline constexpr $::Map::Dict<Entity> &statics() noexcept { return m_statics; }
+  inline constexpr const $::Map::Dict<Entity> &statics() const noexcept { return m_statics; }
 
   /// @brief The available class operators.
   inline constexpr Apply &operators() noexcept { return m_structure->operators(); }

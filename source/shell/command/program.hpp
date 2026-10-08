@@ -43,7 +43,7 @@ class Program : public Usage {
   $::Unique::Pointer<CLI::App> m_app;
 
   /// @brief Subscribed commands available.
-  $::Map::Record<$::Unique::Pointer<Abstract>> m_commands = {};
+  $::Map::View<$::Unique::Pointer<Abstract>> m_commands = {};
 
 public:
   //  CONSTRUCTORS  //

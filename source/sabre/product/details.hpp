@@ -22,9 +22,9 @@ static inline constexpr Version::Semantic version() {
 }
 
 /// @brief Gets all the available vendors.
-static inline constexpr $::Map::Record<Version::Semantic> vendors() {
+static inline constexpr $::Map::View<Version::Semantic> vendors() {
 #define X(N, V, ...) {N, Version::Semantic(V)},
-  static $::Map::Record<Version::Semantic> s_vendors = {SABRE_XX_VENDOR_VERSIONS(X)};
+  static $::Map::View<Version::Semantic> s_vendors = {SABRE_XX_VENDOR_VERSIONS(X)};
   return s_vendors; // and return the result now
 #undef X
 }

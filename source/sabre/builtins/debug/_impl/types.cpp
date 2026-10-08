@@ -11,7 +11,7 @@ $_FWD(Sabre::Builtins, using TN = Type::New)
 
 void Sabre::Builtins::Wrapper<Sabre::Builtins::Custom::Debug>::m_typedefs(Type::World *globals) {
   // prepare the fields to be used
-  auto fields = $::Map::Record<Type::Entity>();
+  auto fields = $::Map::Dict<Type::Entity>();
 
   // bind all the underlying fields to be used now
 #define SABRE_XX_FIELDS_DEFINE(N, ...) fields.emplace(#N, TN::variadic(TN::none()));

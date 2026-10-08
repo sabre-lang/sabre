@@ -46,7 +46,7 @@ SABRE_MM_CHECK_NODE(Enum, node, analyzer) {
   auto name = node->name();
 
   // prepare the underlying variants that have been found
-  auto variants = $::Map::Record<Type::Entity>();
+  auto variants = $::Map::Dict<Type::Entity>();
 
   // assign a new shape instance now
   auto shape = analyzer->shapes()->assign(node);

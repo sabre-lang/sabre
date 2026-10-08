@@ -74,5 +74,5 @@ $::String::Buffer Sabre::Dotenv::Reader::m_decipher(const View &, $::String::Vie
 }
 
 void Sabre::Dotenv::Reader::m_emplace(View &env, const $::String::View &key, const $::String::Buffer &value) {
-  env.insert_or_assign($::String::Buffer(key), value);
+  env.insert_or_assign(key, value);
 }

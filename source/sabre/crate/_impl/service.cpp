@@ -18,7 +18,7 @@ const Sabre::Crate::Manifest *Sabre::Crate::Service::resolve(const $::URI::View 
   $_AUTO $_UNUSED = $::Lock::guard(m_mutex);
 
   // resolve the key to be used currently
-  auto key = $::String::Buffer(resource.view());
+  auto key = resource.view();
 
   // check if the resource is currently available
   if (m_storage.contains(key)) return m_storage.at(key).get();

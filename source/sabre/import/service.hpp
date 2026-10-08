@@ -30,7 +30,7 @@ class Service : public XI::Singleton {
   $::Unique::Pointer<Storage> m_storage;
 
   /// @brief Available loaders to be used.
-  $::Map::Record<$::Unique::Pointer<Loader>> m_loaders = {};
+  $::Map::View<$::Unique::Pointer<Loader>> m_loaders = {};
 
 public:
   //  CONSTRUCTORS  //

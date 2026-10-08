@@ -33,14 +33,6 @@ public:
    * @param key                     Key to get.
    */
   inline constexpr std::optional<$::String::Buffer> get(const $::String::View &key) const noexcept {
-    return get($::String::Buffer(key));
-  }
-
-  /**
-   * @brief Handles getting an environment variable.
-   * @param key                     Key to get.
-   */
-  inline constexpr std::optional<$::String::Buffer> get(const $::String::Buffer &key) const noexcept {
     return m_variables.contains(key) ? std::optional(m_variables.at(key)) : std::nullopt;
   }
 
@@ -48,8 +40,7 @@ public:
    * @brief Handles removing an environment variable.
    * @param key                     Key to remove.
    */
-  inline constexpr bool del(const $::String::Buffer &key) noexcept { return m_variables.erase(key); }
-  inline constexpr bool del(const $::String::View &key) noexcept { return del($::String::Buffer(key)); }
+  inline constexpr bool del(const $::String::View &key) noexcept { return m_variables.erase(key); }
 
   /**
    * @brief Handles setting an environment variable.
@@ -57,16 +48,7 @@ public:
    * @param value                   Value to set.
    */
   inline constexpr bool set(const $::String::View &key, const $::String::View &value) noexcept {
-    return set($::String::Buffer(key), $::String::Buffer(value));
-  }
-
-  /**
-   * @brief Handles setting an environment variable.
-   * @param key                     Key to set.
-   * @param value                   Value to set.
-   */
-  inline constexpr bool set(const $::String::Buffer &key, const $::String::Buffer &value) noexcept {
-    return m_variables.insert_or_assign(key, value).second;
+    return m_variables.insert_or_assign(key, $::String::Buffer(value)).second;
   }
 
 private:

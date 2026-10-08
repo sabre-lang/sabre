@@ -7,13 +7,14 @@
 namespace Sabre::Relint {
 
 /// @brief Formatter Options.
-struct Options { //  PROPERTIES  //
+struct Options {
+  //  PROPERTIES  //
 
   /// @brief Enables all the recommended options.
   bool recommended = true;
 
   /// @brief The rules override severities to be enabled.
-  $::Map::Dict<Severity> rules = {};
+  $::Map::Base<$::String::Buffer, Severity> rules = {};
 
   /// @brief The available rules to be enabled.
   std::vector<$::String::Buffer> plugins = {};

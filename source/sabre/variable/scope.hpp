@@ -16,10 +16,10 @@ class Scope {
   $::Map::Set<$::String::View> m_leaked = {};
 
   /// @brief Currently bound locals.
-  $::Map::Record<Register::Slot> m_bound = {};
+  $::Map::View<Register::Slot> m_bound = {};
 
   /// @brief Available constant variables.
-  $::Map::Record<Value::Any> m_constants = {};
+  $::Map::View<Value::Any> m_constants = {};
 
   /// @brief Previous Variables Instance.
   $::Shared::Pointer<Scope> m_ancestor = nullptr;

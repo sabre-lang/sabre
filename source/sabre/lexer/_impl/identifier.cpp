@@ -5,7 +5,7 @@
 
 void Sabre::Lexer::Dispatch::m_identifier(Scanner &lexer, Buffer &tokens) {
   // prepare a list of available keywords now
-  static $::Map::Record<Kind> keywords = {
+  static $::Map::View<Kind> keywords = {
 #define SABRE_XX_TOKEN_KEYWORD(N, S, ...) {S, Kind::N},
 #include "sabre/lexer/_defines/tokens.def"
   };

@@ -41,7 +41,7 @@ public:
    * @param definition        Definition to bind.
    */
   inline void overwrite(const $::String::View &name, const $::Shared::Pointer<Definition> &definition) noexcept {
-    m_definitions.try_emplace($::String::Buffer(name), definition); // we immediately update here
+    m_definitions.try_emplace(name, definition); // we immediately update here
   }
 
   /**
@@ -67,7 +67,7 @@ public:
    * @param name              Name of variable.
    */
   inline constexpr $::Shared::Pointer<Definition> resolve(const $::String::View &name) const noexcept {
-    auto iter = m_definitions.find($::String::Buffer(name));
+    auto iter = m_definitions.find(name);
     if (iter != m_definitions.cend()) return iter->second;
     return m_ancestor ? m_ancestor->resolve(name) : $::Shared::New<Definition>();
   }
@@ -117,17 +117,6 @@ private:
    */
   template <class R>
   inline constexpr bool m_define(const $::String::View &name, Mirror *mirror, R &&resolver) noexcept {
-    return m_define($::String::Buffer(name), mirror, std::move(resolver));
-  }
-
-  /**
-   * @brief Declares a reference instance.
-   * @param name              Name of variable.
-   * @param mirror            Mirror to define.
-   * @param resolver          Resolver function.
-   */
-  template <class R>
-  inline constexpr bool m_define(const $::String::Buffer &name, Mirror *mirror, R &&resolver) noexcept {
     // check if the definition actually exists at all
     if (!m_definitions.contains(name)) m_definitions.try_emplace(name, $::Shared::New<Definition>());
 

@@ -15,6 +15,7 @@ $_FWD(Sabre::Server, class Transport)
 $_FWD(Sabre::Server, class Connection)
 
 /// Forward Definitions
+$_FWD(Sabre::Server, using Guard = $::Lock::Unique<$::Mutex::Auto>)
 $_FWD(Sabre::Server, template <size_t N> using Channel = XLSP::Message::Channel<N>)
 
 #endif

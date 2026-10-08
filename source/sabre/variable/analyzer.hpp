@@ -15,7 +15,7 @@ class Analyzer {
   //  TYPEDEFS  //
 
   /// @brief Entries Mapping for Captures.
-  using Entries = $::Map::Record<Entry>;
+  using Entries = $::Map::View<Entry>;
 
   /// @brief Deferred Handler Typing.
   using Deferrer = $::Shared::Functor<void(Analyzer *) const>;

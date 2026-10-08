@@ -18,7 +18,7 @@ class Service : public XI::Singleton, public XI::Immediate {
   Generator m_generator = {};
 
   /// @brief Keep a copy of the base locale.
-  std::locale m_classic = m_generator();
+  std::locale m_classic = std::locale::classic();
 
 public:
   //  CONSTRUCTORS  //
@@ -71,7 +71,7 @@ public:
    * @param right                     Right-most string.
    */
   inline int64_t compare(const $::String::View &left, const $::String::View &right) const {
-    return m_compare(left, right, m_generator());
+    return m_compare(left, right, std::locale());
   }
 
   /**
@@ -89,7 +89,7 @@ public:
    * @param input                     Input to transform.
    * @param locale                    Locale to inherit.
    */
-  inline $::String::Buffer lowercase(const $::String::View &input) const { return m_lower(input, m_generator()); }
+  inline $::String::Buffer lowercase(const $::String::View &input) const { return m_lower(input, std::locale()); }
   inline $::String::Buffer lowercase(const $::String::View &input, const std::locale &locale) const {
     return m_lower(input, locale);
   }
@@ -99,7 +99,7 @@ public:
    * @param input                     Input to transform.
    * @param locale                    Locale to inherit.
    */
-  inline $::String::Buffer uppercase(const $::String::View &input) const { return m_upper(input, m_generator()); }
+  inline $::String::Buffer uppercase(const $::String::View &input) const { return m_upper(input, std::locale()); }
   inline $::String::Buffer uppercase(const $::String::View &input, const std::locale &locale) const {
     return m_upper(input, locale);
   }

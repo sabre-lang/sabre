@@ -43,7 +43,7 @@ public:
   //  PUBLIC METHODS  //
 
   /// @brief Prepares a suitable scoped connection guard.
-  $_NODISCARD inline constexpr auto guard() noexcept { return $::Lock::guard(m_mutex); }
+  $_NODISCARD inline constexpr Guard guard() noexcept { return $::Lock::scope(m_mutex); }
 
   /// @brief Gets the underlying utilities.
   inline constexpr const Utilities *utilities() const noexcept { return m_utilities.get(); }
@@ -75,6 +75,18 @@ public:
    */
   template <class... As> inline constexpr void analyze(Refresh mode, As &&...args) {
     schedule(std::forward<As>(args)..., [mode](Worker *worker) { worker->analyze(mode); });
+  }
+
+  /**
+   * @brief Handles coordinating analysis.
+   * @param mode                  Refersh mode.
+   * @param guard                 Connection guard.
+   * @param args                  Worker arguments.
+   */
+  template <class... As> inline constexpr void analyze(Refresh mode, Guard &&guard, As &&...args) {
+    schedule(std::forward<As>(args)..., [mode, guard = std::move(guard)](Worker *worker) mutable {
+      worker->analyze(std::move(guard), mode); // ensure we using the given mutex lock
+    });
   }
 
 private:

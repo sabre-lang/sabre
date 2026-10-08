@@ -77,7 +77,7 @@ template <class T, class... As> $_INLINE_PERF auto Encode(const std::vector<T> &
  * @param value                 Object to encode.
  * @param args                Extra arguments.
  */
-template <class T, class... As> $_INLINE_PERF auto Encode(const Map::Base<Text, T> &elements, As &&...args) {
+template <class T, class... As> $_INLINE_PERF auto Encode(const Map::Dict<T> &elements, As &&...args) {
   // prepare some details about the items
   auto encoded = Object();
 
@@ -128,7 +128,7 @@ template <class T, class... As> $_INLINE_PERF auto Decode(const Object &elements
   using R = decltype(Decode<T>(Value()));
 
   // prepare some details about the items
-  auto decoded = Map::Base<Text, R>();
+  auto decoded = Map::Dict<R>();
 
   // iterate over the elements to be used
   for (const auto &[key, value] : elements) decoded[key] = Decode<T>(value, std::forward<As>(args)...);

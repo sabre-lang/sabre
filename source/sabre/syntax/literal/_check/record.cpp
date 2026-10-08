@@ -24,7 +24,7 @@ SABRE_MM_CHECK_NODE(Record, node, analyzer) {
   $_UNUSED $_AUTO = analyzer->trace(node);
 
   // prepare the fields to be bound now
-  auto fields = $::Map::Record<Type::Entity>();
+  auto fields = $::Map::Dict<Type::Entity>();
 
   // convert all our values as necessary now
   for (const auto *variable : elements) {

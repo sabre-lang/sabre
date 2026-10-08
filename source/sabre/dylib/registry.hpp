@@ -16,7 +16,7 @@ class Registry : public $::Ensure::Singleton<Registry> {
   mutable $::Mutex::Auto m_mutex;
 
   /// @brief All available dynamic libraries.
-  $::Map::Record<$::Unique::Pointer<Addon>> m_addons = {};
+  $::Map::View<$::Unique::Pointer<Addon>> m_addons = {};
 
 public:
   //  PUBLIC METHODS  //

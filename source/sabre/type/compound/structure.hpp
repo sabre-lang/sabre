@@ -62,7 +62,7 @@ public:
    * @param fields                    Interface fields.
    */
   explicit Structure(const $::String::View &name, const Algorithm &fields) : m_fields(fields), m_name(name) {}
-  explicit Structure(const $::String::View &name, const $::Map::Record<Entity> &fields) :
+  explicit Structure(const $::String::View &name, const $::Map::Dict<Entity> &fields) :
       m_fields(fields), m_name(name) {}
 
   //  PUBLIC METHODS  //
