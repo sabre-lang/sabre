@@ -2,6 +2,7 @@
 
 Here is a basic list of tasks that I would like to implement for Sabre. The immediate tasks are required as-soon-as-possible, whilst the others are marked with their necessaity.
 
+- [ ] Remove all references of `:` in `<Callout title="...">` values since it appears every single one appends this character
 - [ ] Better formatter support needs to be implemented through more rigorous testing to find more corner cases that could occur in user-code
 - [ ] It would be good for completeness to implement the following execution policies:
     - [x] `::call` / Alias for synchronous function calls

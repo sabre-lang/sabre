@@ -5,17 +5,49 @@ author: Reuben Roessler
 title: Sabre v0.4.0
 ---
 
+import { Callout } from '@/website/components';
+
 ## Environment Files
 
-Todo...
+With this release of Sabre, your program will have the capability to load environment files and read/write environment variables of the running process. To use this feature, the `--env` file flag has been implemented:
 
-## Format Features
+```shell
+# Automatically find a potential ".env" file in you current working directory.
+sabre run --env ./script.sabre
 
-Todo...
+# Manually specify a desired environment file (any number of files can be loaded).
+sabre run --env .env ./script.sabre
+```
+
+To then read these environment variables at runtime, the `sabre:env` crate can be used:
+
+```sabre
+import "sabre:env" as Env;
+
+let my_var = Env.get("MY_VAR");
+Debug.println("MY_VAR: {0}".fmt(my_var));
+```
+
+<Callout title="Note:">Sabre currently supports the standard [Dotenv](https://www.dotenv.org/) syntax.</Callout>
+
+## Format Flags
+
+Previously the `sabre format` command used a default configuration when called. Specialized formatting could only be requested through the use of the VSC extension for Sabre. This has now be fixed so that unless specified, files to be formatted will use their parent `_crate.jsonc` formatting options.
+
+```shell
+# This will look for a "_crate.jsonc" file in each directory upwards from "script.sabre"
+sabre format ./script.sabre
+
+# Otherwise you can manually specify an alternative configuration to the used
+sabre format --config ./configs/format.jsonc ./script.sabre
+```
 
 ## Testing Features
 
-Todo...
+The following feature flags and options for testing have now been implemented:
+
+- `--seed`
+- `--randomize`
 
 ## Buffer Builtin
 
