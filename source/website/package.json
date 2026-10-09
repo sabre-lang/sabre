@@ -23,6 +23,7 @@
         "@paper-design/shaders-react": "^0.0.80",
         "@shikijs/transformers": "^4.4.3",
         "clsx": "^2.1.1",
+        "feed": "^6.0.0",
         "fumadocs-core": "^16.14.5",
         "fumadocs-mdx": "^15.3.0",
         "fumadocs-ui": "^16.14.5",
