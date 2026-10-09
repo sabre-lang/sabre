@@ -1,6 +1,5 @@
 ---
-draft: true
-date: 1970-01-01
+date: 2026-10-11
 author: Reuben Roessler
 title: Sabre v0.4.0
 ---
@@ -44,26 +43,135 @@ sabre format --config ./configs/format.jsonc ./script.sabre
 
 ## Testing Features
 
-The following feature flags and options for testing have now been implemented:
+Sabre's test runner now has more feature flags and options implemented for improved support.
 
-- `--seed`
-- `--randomize`
+### Bailout After failures
+
+The `--bailout` flag can be used to abort running tests after a given number of tests fail. By default, Sabre runs all tests and reports all failures, however running testing in a CI it can be preferrable to exit early to reduce usage.
+
+```shell
+# Exit after exactly 1 failure
+sabre test --bailout
+
+# Exit after a given number of failures
+sabre test --bailout nn
+```
+
+### Randomize Execution Order
+
+To run tests in a randomized order, the `--randomize` or `--seed` flags can be use. This helps detect tests that rely upon shared state or a particular execution order.
+
+```shell
+# This will full randomize the execution order and print the "seed" used
+sabre test --randomize
+```
+
+To then reproduce randomization results, the `--seed` flag can be used. This can be useful to always produce the same randomized test execution order, or run tests in the same order as a previous `--randomize` run.
+
+```shell
+# Reproduce a specific randomized run
+sabre test --seed 123456
+```
+
+<Callout title="Note:">
+    The `--seed` flag automatically sets the `--randomize` flag, so only one ever needs to be specified.
+</Callout>
+
+### Reporting Improvements
+
+Sabre aims to support a variety of reporting formats, both built-in and custom. These can be specified with the `--reporter` option:
+
+```shell
+# Explicitly setting a desired reporter
+sabre test --reporter text
+```
+
+<Callout title="Note:">
+    Currently on the `text` reporter has been implemented. More to come in the future for other reporter formats.
+</Callout>
+
+Additionally, test results can be piped to a desired output using the `--outfile` option:
+
+```shell
+# Pipe output to a desired location
+sabre test --outfile report.txt
+```
 
 ## Buffer Builtin
 
-Todo...
+To improve performance and simplify the representation of filesystem outputs, the `Buffer` built has been created. Synonymous with the `Buffer` object in Node JS, it is a fixed-length sequence of bytes. The reasoning for adding this builtin is to directly map internal buffers from the filesystem or other sources to Sabre. This will help developers by creating a lossless representation of various internal and external buffers. For now it has been created alongside the the `sabre:fs` crate to directly map to file contents.
 
-## Deference Policy
+```sabre
+// We can simply encode some arbitrary text.
+let buffer = Buffer.encode("Hello, World!");
 
-Todo...
+// Then decode it at a later point with an optional encoding.
+let text = Buffer.decode(buffer);
+
+// This will then print "Hello, World!" to the console.
+Debug.println(text);
+```
 
 ## Filesystem Crate
 
-Todo...
+The `sabre:fs` crate has had some simple methods implemented to start exposing low-level filesystem operations. This includes the following:
+
+```sabre
+// Get the filesystem crate.
+import "sabre:fs" as FS;
+
+// Create a temporary file that can be automictically disposed.
+use temporary = FS.temp_file();
+
+// This generates a randomly named temporary file.
+Debug.println("Path:", temporary.path());
+
+// We can then verify that the entry exists on the system.
+Debug.println("Entry exists:", FS.exists_entry(temporary.path()));
+
+// Or more explicitly that is a file that exists on the system.
+Debug.println("File exists:", FS.exists_file(temporary.path()));
+
+// Prepare a desired set of content for the temporary file.
+let input = "Content for my temporary file";
+
+// Let's write some arbitrary content to the file.
+FS.write_text(temporary.path(), input);
+
+// Or we can write raw buffers directly.
+FS.write_file(temporary.path(), Buffer.encode(input));
+
+// Read the buffer of a file is then just as simple.
+Debug.println("Buffer:", FS.read_file(temporary.path()));
+
+// Or read the decoded buffer of a file as well.
+Debug.println("Value: '{0}'".fmt(FS.read_text(temporary.path())));
+
+// If the file was manually created without resource disposal, it can also be removed manually.
+FS.remove_entry(temporary.path());
+```
+
+## Deference Policy
+
+To further improve the use of explicit resource manager, the `::defer` execution policy has been created. This allows creating a `Disposable` value from a given callback that can be executed at the end of a scope. This is useful for running one-off cleanup handlers or other end-of-scope routines.
+
+```sabre
+// This callback cleans up constructed resources.
+let cleanup = fn (value: Any) {
+    Debug.println("Cleanup Called!");
+    Debug.println("Input Argument:", value);
+};
+
+// Call our callback with the execution policy attached.
+use scoped: Disposable = cleanup::defer(42);
+
+// After the scope ends, our bound callback will be called.
+Debug.println("Program Running!");
+```
 
 ## Upcoming Work
 
-Todo...
+This release of Sabre started laying further foundations for ongoing builtin crate support, whilst also continuing to maintain correctness and improve developer experience. Following this, the core goals outlined from the previous progress reports still applies. This being to continue to improve developer features to then expand the builtin crates. Keep tuned to the next available progress report for more information!
 
 ---
 
