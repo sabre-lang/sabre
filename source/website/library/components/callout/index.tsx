@@ -15,7 +15,7 @@ export function Callout({ children, type, title, className, style, ...props }: C
         <div className={className} style={style} {...props}>
             <div role="none" className="w-0.5 bg-(--callout-color)/50 rounded-sm" />
             <div className="flex flex-col gap-2 min-w-0 flex-1">
-                {title && <p className="font-medium my-0!">{title}</p>}
+                {title && <p className="font-medium my-0!">{title}:</p>}
                 <div className="text-fd-muted-foreground prose-no-margin empty:hidden" children={children} />
             </div>
         </div>

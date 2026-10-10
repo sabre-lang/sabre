@@ -23,7 +23,7 @@ for (nn in iterator) { ... }
 
 In terms of performance, although `List.range` will incur a minor performance cost to construction, they should be faster in iteration to an `Iterator.range` which does its computation on the fly. Conversely, a `List.range` will require more memory than that produced by an `Iterator.range` value.
 
-<Callout title="Note:">
+<Callout title="Note">
     Since `List.range` needs to build the range on construction, infinite lists are impossible to be defined as a `List`
     value.
 </Callout>

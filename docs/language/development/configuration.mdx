@@ -14,14 +14,14 @@ Sabre' behaviour can be configured by utilizing `_crate.jsonc` configuration fil
 
 All crates should specify a designated name that is used to identify itself. Alongside the `version` field, it is the unique identifier for the crate. Because of this, there are some rules with associated with naming a crate.
 
-<Callout title="Rules:">
+<Callout title="Rules">
 
     - The name must be of the format `[\w-]+` or `@[\\w-]+/[\\w-]+`.
     - The total length of a published name must be less than or equal to 50 characters.
 
 </Callout>
 
-<Callout title="Tips:">
+<Callout title="Tips">
 
     - It is best to use short descriptive naming.
     - It is recommended to use a scoping such as `@author/...`.
@@ -77,7 +77,7 @@ The testing framework can be configured using the `test` field. More specificall
 
 The builtin linter can be configured using the `lint` field. For now, this only allows toggling the linter rules that Sabre is shipped with. See the [linting](/language/toolkit/linting) section for more information.
 
-<Callout title="Note:">
+<Callout title="Note">
     Builtin rules are still actively being developed and as such may be subject to change. Additionally, plugin support
     is planned for a future release.
 </Callout>

@@ -27,7 +27,7 @@ let my_var = Env.get("MY_VAR");
 Debug.println("MY_VAR: {0}".fmt(my_var));
 ```
 
-<Callout title="Note:">Sabre currently supports the standard [Dotenv](https://www.dotenv.org/) syntax.</Callout>
+<Callout title="Note">Sabre currently supports the standard [Dotenv](https://www.dotenv.org/) syntax.</Callout>
 
 ## Format Flags
 
@@ -73,7 +73,7 @@ To then reproduce randomization results, the `--seed` flag can be used. This can
 sabre test --seed 123456
 ```
 
-<Callout title="Note:">
+<Callout title="Note">
     The `--seed` flag automatically sets the `--randomize` flag, so only one ever needs to be specified.
 </Callout>
 
@@ -86,7 +86,7 @@ Sabre aims to support a variety of reporting formats, both built-in and custom. 
 sabre test --reporter text
 ```
 
-<Callout title="Note:">
+<Callout title="Note">
     Currently on the `text` reporter has been implemented. More to come in the future for other reporter formats.
 </Callout>
 

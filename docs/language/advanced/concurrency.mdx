@@ -32,7 +32,7 @@ By removing the `async` keyword from function declaration, and moving this to th
 
 Eventually, Sabre plans to allow custom execution policies for asynchronous scheduling. This would free developers to use any form of concurrency they desire.
 
-<Callout title="Note:">
+<Callout title="Note">
     The current proposal is to use an additional execution policy, such as `::spawn`, the takes a scheduler context as
     the first argument. This could also open up the freedom to allow for additional types (such as explicit tail-calls).
 </Callout>
@@ -63,7 +63,7 @@ Internally, most mutations of Sabre values are made thread-safe. Each object con
 
 However, variable assignment is inherently not thread-safe but can be made so using the standard library [utilities for concurrency](/crates/async) and [explicit resource management](/language/advanced/resources).
 
-<Callout title="Note:">
+<Callout title="Note">
     The explicit resource management functionality and the standard library utilities for concurrency have not yet been
     implemented. Please see the [roadmap](/project/roadmap) for the current progress on this functionality.
 </Callout>

@@ -40,7 +40,7 @@ for (offset in Iterator.range(bytecode.size())) dispatch(offset);
 
 Previously <Anchor.Super index="2"/>, Sabre implemented the interpreter using direct-threading. Although this solution has great performance, it could be relatively finicky to fine-tune since it relied on all cases being perfectly inlined <Anchor.Super index="3"/> to maintain this performance. During the current rewrite, I decided to instead opt for a tail-call interpreter since this should come with similar benefits to the direct-thread approach whilst also simplifying compilation heuristics.
 
-<Callout title="Note:">
+<Callout title="Note">
     The `match` statement is currently unimplemented in v0.1.2 and will be available when v0.2.0 is released.
 </Callout>
 

@@ -27,7 +27,7 @@ export let worker = fn (args...) {
 };
 ```
 
-<Callout title="Note:">
+<Callout title="Note">
     The `fs_open`, `fs_close` and `fs_unlink` methods are placeholders as the file-system library has not yet been
     implemented.
 </Callout>
@@ -108,7 +108,7 @@ export let worker = fn (args...) {
 
 When this function is now called, it will construct a temporary file, process some required work, and then automatically release any disposables registered through `use` declarations. For those that have seen this pattern before, this is similar to [`using` declarations in C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using), [`with` statements in Python](https://docs.python.org/3/reference/compound_stmts.html#with) or [`try-with-resource` statements in Java](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html).
 
-<Callout title="Note:">
+<Callout title="Note">
     It is important to note that disposables that are declared with the `use` declaration are cleaned-up in a
     first-in-last-out order (FIFO), similar to a stack.
 </Callout>
