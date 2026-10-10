@@ -99,8 +99,8 @@ SABRE_MM_DYLIB_METHOD(FS, temp_file, isolate, args) {
 
   // ensure we construct a suitable unique basename now
   auto basename = XH::UUID::V7().to_string();
-  if (prefix) basename = prefix->view() + basename;
-  basename = basename + (suffix ? suffix->view() : ".txt");
+  if (prefix) basename = prefix->clone() + basename;
+  basename = basename + (suffix ? suffix->clone() : ".txt");
 
   // construct the unique path now as necessary
   auto file_path = std::filesystem::temp_directory_path() / basename;

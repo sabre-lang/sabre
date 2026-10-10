@@ -68,6 +68,9 @@ struct Any : public Value::Any {
   /// @brief Gets the view of the string.
   inline constexpr $::String::View view() const noexcept { return {data(), bytes()}; }
 
+  /// @brief Clones the view as an underlying string.
+  inline constexpr $::String::Buffer clone() const noexcept { return $::String::Buffer(data(), bytes()); }
+
   /// @brief Gets the symbol value of the string.
   inline constexpr Value::Symbol symbol() const {
     if (Large::m_is(m_pointer)) return m_as<Large>()->symbol(); // faster

@@ -242,7 +242,7 @@ Sabre::Value::Any Sabre::Builtins::Field::pad_leading(Isolate *isolate, const Ar
   }
 
   // and prepend the buffer now
-  return String::Any(isolate, buffer + self.view());
+  return String::Any(isolate, buffer + self.clone());
 }
 
 Sabre::Value::Any Sabre::Builtins::Field::pad_trailing(Isolate *isolate, const Args &args) {
@@ -280,7 +280,7 @@ Sabre::Value::Any Sabre::Builtins::Field::pad_trailing(Isolate *isolate, const A
   }
 
   // and prepend the buffer now
-  return String::Any(isolate, self.view() + buffer);
+  return String::Any(isolate, self.clone() + buffer);
 }
 
 Sabre::Value::Any Sabre::Builtins::Field::fmt(Isolate *isolate, const Args &args) {

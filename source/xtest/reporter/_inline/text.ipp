@@ -65,7 +65,7 @@ public:
     // prepare a function to pluralize values
     static auto s_pad = [](const $::String::View &input, size_t size) { return fmt::format("{0:{1}}", input, size); };
     static auto s_plural = [](size_t value, const $::String::View &input = "") -> $::String::Buffer {
-      return fmt::to_string(value) + input + (value == 1 ? "" : "s");
+      return fmt::to_string(value).append(input) + (value == 1 ? "" : "s");
     };
 
     // get the expected formatting padding to be used
