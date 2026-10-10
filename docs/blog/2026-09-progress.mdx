@@ -1,0 +1,32 @@
+---
+date: 2026-10-11
+author: Reuben Roessler
+title: Progress / September 2026
+---
+
+import { Callout } from '@/website/components';
+
+## Status Update
+
+With September (and a little of October) comes again another big release of Sabre. Most notably the slow filling out of baseline language features for the commencement of implemeting internal crates. There is still heaps to be done, including the tasks mentioned in the [last progress report](/blog/2026-08-progress.md) posted.
+
+## Rename Fallout
+
+Recently I posted about Sabre to start gaining some more public recognition. In doing so, there was a community recommendation to change the name from Talos (which had some minor overlap with another large project). Since I was already using a sword as an icon, I thought that the next best logical name should be significant of this, hence the name Sabre.
+
+<Callout title="Note">Eventually I will look into updating the icon for Sabre to match the real ones!</Callout>
+
+## Crate Documentation
+
+One of the additional tasks that I'm looking at for the next release of Sabre is adding a command for generating documentation for crates. In this last release I prepared the foundations for this with the following:
+
+```shell
+# Running this command will output formatted documenation
+sabre docify ./path/to/_crate.jsonc
+```
+
+The core goal with this is to generate documentation for the website, however making this feature available for others would greatly benefit development of external Sabre crates. The specifics haven't quite been figured out, but allowing a way to choose a desired format such as JSON, HTML or Markdown is the gameplan. For now the first iteration will only output one of these formats for website use.
+
+## Upcoming Work
+
+Looking back over the past few months of progress is starting to make me excited to attempt [Advent of Code](https://adventofcode.com/) with Sabre. Hopefully the upcoming work on internal crates and further improvements to testing and developer support will make this a breeze of challenge.
