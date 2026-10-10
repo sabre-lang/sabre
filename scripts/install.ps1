@@ -5,7 +5,7 @@
 param(
     [String]$Tag = "latest", # The incoming version.
     [Switch]$Dry = $false, # Whether to write outputs.
-    [Switch]$Force = $false, # Forces writing of outputs.
+    [Switch]$Force = $false # Forces writing of outputs.
 );
 
 # -  PROPERTIES  - #
