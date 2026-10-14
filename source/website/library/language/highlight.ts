@@ -92,7 +92,7 @@ export namespace Highlight {
             async init(options) {
                 const details = await import('shiki');
                 return details.createHighlighter({
-                    langs: [Grammar()],
+                    langs: Grammar(),
                     engine: engine(details)(),
                     langAlias: options?.langAlias,
                     themes: Array.from(Object.values(Themes)),

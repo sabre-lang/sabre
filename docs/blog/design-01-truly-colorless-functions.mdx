@@ -1,0 +1,322 @@
+---
+draft: true
+date: 1970-01-01
+author: Reuben Roessler
+title: Design 01 - Truly Colorless Functions
+description: A design exploration intto concurrency and execution policies of Sabre
+---
+
+import { Callout } from '@/website/components';
+
+export const Red = (props) => <span {...props} style={{ color: 'light-dark(#D73A49, #F97583)' }} />;
+export const Blue = (props) => <span {...props} style={{ color: 'light-dark(#005CC5, #79B8FF)' }} />;
+export const Other = (props) => <span {...props} style={{ color: 'light-dark(#E36209, #FFAB70)' }} />;
+
+With all the recent advancements in programming language design, I find it fascinating that many of them either opt for an asynchronous model that has some form of function coloring or they leave concurrency to userland implementations. Because of this, I wanted Sabre to feature a concurrent runtime, whilst also keeping functions truly colorless. This lofty goal eventually led me to designing [execution policies](/language/advanced/concurrency), which I think are an elegant syntactic solution to this.
+
+<Callout title="Note">
+    This is a continuation (or follow up) from an [original blog post I
+    made](https://blog.rroessler.io/blog/2025_11_12-colorless-functions) when I first started toying with the idea of
+    execution policies. There you will see some of my initial thoughts, mostly stemming from realizations based on
+    concurrency in the Zig programming language. This post will instead go more in-depth into the actual design of
+    colorless functions and concurrency in Sabre.
+</Callout>
+
+## Researching the Past
+
+There is no better place to start than at the beginning, so let's look back at the blog posts that ultimately shaped this journey:
+
+- [Futures Aren't Ersatz Threads](https://monkey.org/~marius/futures-arent-ersatz-threads.html) by _Marius Eriksen_ <span className="text-fd-muted-foreground">(April 2, 2013)</span>
+- [What Color is Your Function?](https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/) by _Bob Nystrom_ <span className="text-fd-muted-foreground">(February 1, 2015)</span>
+- [What is Zig's "Colorblind" Async/Await](https://kristoff.it/blog/zig-colorblind-async-await/) by _Loris Cro_ <span className="text-fd-muted-foreground">(June 21, 2020)</span>
+- [Let Futures be Futures](https://without.boats/blog/let-futures-be-futures/) by _Without Boats_ <span className="text-fd-muted-foreground">(February 3, 2024)</span>
+- [Zig's New Async I/O](https://kristoff.it/blog/zig-new-async-io/) by _Loris Cro_ <span className="text-fd-muted-foreground">(July 13, 2025)</span>
+- [Design Space Exploration of Async/Await](https://cel.cs.brown.edu/blog/design-space-async-await/) by _Gavin Gray_ <span className="text-fd-muted-foreground">(September 8, 2026)</span>
+
+These are all some incredible posts discussing the various nuances of async/await syntax and runtime design found within many programming languages. Some even try to offer solutions that ultimately end up falling short of solving the function coloring problem.
+
+## What Color is Your Function?
+
+This phrase, originally popularized by Bob Nystrom's infamous post proposed a colorful allegory for explaining common pitfalls with modern async/await syntax. He postures a _theoretical language_ which has the following rules for _two_ distinctly colored functions:
+
+1. Every function **MUST** have a color (implicit or explicit)
+2. Calling a function **MUST** use that colors _convention_
+3. You **CAN** call a <Blue>blue function</Blue> from within a <Red>red function</Red>
+4. You **CANNOT** call a <Red>red function</Red> from within a <Blue>blue function</Blue>
+
+The result of which looks and functions surprisingly familiar to other popular languages:
+
+```colorless tab="Theory"
+red_function do_something_carnelian() {
+    do_something_azure(); // No worries!
+}
+
+blue_function do_something_azure() {
+    do_something_carnelian(); // ERROR!
+}
+```
+
+```js tab="JavaScript"
+async function do_something_carnelian() {
+    do_something_azure(); // No worries!
+}
+
+function do_something_azure() {
+    await do_something_carnelian(); // ERROR!
+}
+```
+
+```dart tab="Dart"
+Future<void> do_something_carnelian() async {
+    do_something_azure(); // No worries!
+}
+
+void do_something_azure() {
+    await do_something_carnelian(); // ERROR!
+}
+```
+
+```rs tab="Rust"
+async fn do_something_carnelian() {
+    do_something_azure(); // No worries!
+}
+
+fn do_something_azure() {
+    do_something_carnelian().await; // ERROR!
+}
+```
+
+Even languages that use a userland or library solution also fall short in a rather subtle way. Take the recent `std.Io` interface addition to Zig, which provides concurrency from a dedicated instance of the `std.Io` interface. That statement should already be ringing alarm bells as instead of coloring functions with the <Red>async</Red> keyword, a <Red>parameter</Red> now holds the coloring. This also extends to other languages that use thread pools to manage concurrency.
+
+```colorless tab="Theory"
+function do_something_carnelian(io: async) {
+    do_something_azure(); // No worries!
+}
+
+function do_something_azure() {
+    do_something_carnelian(); // ERROR!
+}
+```
+
+```zig tab="Zig"
+const std = @import("std");
+
+fn do_something_carnelian(io: std.Io) {
+    do_something_azure(); // No worries!
+}
+
+fn do_something_azure() {
+    do_something_carnelian(); // ERROR!
+}
+```
+
+```java tab="Java"
+import java.util.concurrent.*;
+
+public class Colorful {
+    public static Future<void> do_something_carnelian(ExecutorService executor) {
+        return executor.submit(() -> do_something_azure()); // No worries!
+    }
+
+    public static void do_something_azure() {
+        do_something_carnelian().get(); // ERROR!
+    }
+}
+```
+
+### Languages Without Colors
+
+It is good to note that there are some notable programming languages that have colorless functions. However, their solutions are either cumbersome or lack the capability of being extensible. Ruby is an incredible example of this, where althought threads can be easily created and awaited, there is no functionality for customizing the scheduler:
+
+```ruby title="colorless.ruby"
+# Some abitrary computation
+task = proc do
+    "Hello, World!"
+end
+
+# Can be invoked synchronously
+puts task.call()
+
+# Or invoked asynchronously
+puts Thread.new(&task).value
+```
+
+<Callout title="Note">
+    Since Ruby 3.0 there is the `async/scheduler` gem which allows setting a custom scheduler for `Fiber` values. This
+    extensibility however falls short as it assigns a global scheduler for the current thread and cannot be applied to
+    `Fiber` values on creation.
+</Callout>
+
+## Goalposts for Concurrency
+
+With the above examples of function coloring we have _mostly_ described the problem that we are trying to solve. As such, let's describe a set of core goals that we want to achieve with our solution:
+
+1. Functions **CANNOT** be annotated with <Red>async</Red> or <Red>parameter</Red> based coloring
+2. Functions **MUST** have the ability to be called agnostically (as <Blue>sync</Blue>, <Red>async</Red> or <Other>other</Other>)
+3. Syntax **MUST** be concise, readable and reasonably familiar
+4. Global variables **CANNOT** be used and must be an _extendable_ solution
+5. _Optional:_ Syntax **SHOULD** allow for method chaining and be intuitive
+
+## Back to the Future
+
+Coming back to the implementation in Zig, the first design decision we should make use of is the `Future` interface. Synonymous with the term _Promise_ that was coined in 1976 by Danial P. Friedman and David Wise, the `Future` type perfectly encapsulates the blocking semantics we desire with the `.await()` method. This led to the initial design that was incorporated into Sabre in early 2025.
+
+```sabre tab="initial-design.sabre"
+// A function that has some abitrary computation
+let task = fn (value) => Debug.println(value);
+
+// Initial design with a global factory for "Future" values
+let result = Future.async(task, 42).await();
+```
+
+```sabre tab="chainable-await.sabre"
+// A function that computes an abitrary list
+let task = fn (end: Number) => List.range(end);
+
+// The ".await()" method allows for easy chainability
+let result = Future.async(task, 42).await().map(fn (nn) => nn *2);
+```
+
+This solution almost solves all our problems, with the only violation being that a global variable has been used of which the [evilness](https://www.forrestthewoods.com/blog/global-variables-are-evil-and-unsafe/) of such an action is insurmountable. More correctly, the use of the global `Future.async` factory is not easily extendable by developers, as Sabre does not allow modifying internal namespaces.
+
+## Go-ing Against the Rules
+
+Coming back a step, let's take a quick detour into how the Go programming language manages concurrency. Previously, I carefully omitted Go as similar to Ruby, it has no concept of function coloring. Additionally, Go coordinates concurrency through the use of goroutines which operate similarly to fibers in Ruby. In effect, both of these implementations work on variations of the following model:
+
+- **Processor:** Represents a logical processor such as a CPU core on a machine.
+- **Thread:** Represents a physically OS thread created and managed by the operating system.
+- **Fiber:** Represents a lightweight unit of execution that can be scheduled on a parent thread.
+
+Fundamentally, this is the same principle that Sabre coordinates concurrency with. This use of fibers is incredibly powerful for concurrency as they can yield themselves to the scheduler whilst other tasks run. By awaiting a `Future` result, the current fiber would yield itself to a queue that would later be resumed after the `Future` is completed.
+
+Goroutines themselves are especially inspiring, as they introduced syntax that inverts concurrency:
+
+```go title="concurrency.go"
+package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+func task(id int, wg *sync.WaitGroup) {
+    defer wg.Done()
+    fmt.Print(id)
+}
+
+func main() {
+    var wg sync.WaitGroup
+    values := []int{1, 2, 3}
+    for _, ii := range values {
+        wg.Add(1)
+        go task(ii, &wg)
+    }
+    wg.Wait()
+}
+```
+
+By instead leveraging a prefix operator, Go shifts the paradigm of concurrency by instead creating goroutines at the desired callsite. This led me to realize that the root cause of function coloring stems from a design flaw in annotating declarations with colors. By moving these annotations to the callsite, Go was able to _mostly_ reuse functions agnostically.
+
+<Callout title="Note">
+    Looking at the above example we can still see some issues with our implementation in Go. This being the use of a
+    `WaitGroup` to maintain synchronization. This is one area where I see Go falling slightly short of being the perfect
+    example for colorless functions.
+</Callout>
+
+## Unconventional (Calling) Conventions
+
+Taking inspiration from the goroutine syntax, I initially decided to replace the `Future.async` global with a prefix <Red>async</Red> operator. This however ended up breaking our beautiful chainability as we now required parenthesis around to call any `Future` methods. To alleviate this, I decided to move to an infix <Red>async</Red> operator instead.
+
+```sabre tab="prefix-design.sabre"
+// A function that has some abitrary computation
+let task = fn (value) => Debug.println(value);
+
+// Attempt using a prefix operator for execution
+let result = (async task(42)).await();
+```
+
+```sabre tab="infix-design.sabre"
+// A function that has some abitrary computation
+let task = fn (value) => Debug.println(value);
+
+// Attempt using an infix operator for execution
+let result = task async(42).await();
+```
+
+This last solution felt almost perfect, but there was a lingering feeling that something was missing to make this solution more readable. The gap between `task` and `async` stuck out to me as being incredibly disjointed. From a readability perspective, it felt as though there was no connection between the two. After some tweaking with styling, I landed on the final syntax available in Sabre today:
+
+```sabre tab="async-policy.sabre"
+// A function that has some abitrary computation
+let task = fn (value) => Debug.println(value);
+
+// Final design for creating "Future" values in Sabre
+let result = task::async(42).await();
+              // ^^----- This is the "async" execution policy!
+```
+
+```sabre tab="call-policy.sabre"
+// A function that has some abitrary computation
+let task = fn (value) => Debug.println(value);
+
+// This policy is just the default function invocation
+let result = task::call(42);
+              // ^^---- This is the "call" execution policy!
+```
+
+```sabre tab="defer-policy.sabre"
+// A function that has some abitrary computation
+let task = fn (value) => Debug.println(value);
+
+// This policy allows creating anonymous "Disposable" values in Sabre
+use result = task::defer(42);
+              // ^^----- This is the "defer" execution policy!
+```
+
+```sabre tab="chainable-policy.sabre"
+// A function that computes an abitrary list
+let task = fn (end: Number) => List.range(end);
+
+// Both "::async" and ".await()" allow for easy chainability
+let result = task::async(42).await().map(fn (nn) => nn *2);
+              // ^^----- This is the "async" execution policy!
+```
+
+Taking inspiration from how C++ names `std::launch` usage, I decided to name this choice of calling convention an execution policy. It also meant we could describe alternative execution policies, as seen above, for other calling conventions used in Sabre. From introducing this syntactical choice, execution policies are able to fulfill all our design requirements and provide truly colorless functions.
+
+- [x] Function declarations are now colorless by design
+- [x] Concurrency is now explicit when tied to a callsite
+- [x] Syntax is concise, readable and reasonably familiar
+- [x] Execution policies can be customizable for other conventions
+- [x] _Bonus:_ Method chaining is maintained and intuitive for developers
+- [x] _Bonus:_ The `::` token simplifies completion analysis in language servers.
+
+Of these goals, only extensibility is still the area that needs improvement in Sabre. In terms of syntax, execution policies can be easily extended by introducing a new policy keyword. Logistically however, introducing a `spawn` policy for custom scheduling poses questions with regard to interacting with other policies.
+
+```sabre tab="spawn-policy.sabre"
+// Suppose we have a task that calls common "Future" policies and/or routines
+let task = fn (duration: Number) {
+    // We could invoke a delay for the context of this "Future"
+    Future.delay(duration).await();
+
+    // Or we could call another task with the "async" policy
+    another::async(duration).await();
+};
+
+// If we then spawn our task with a custom scheduler, how does it interact with the other policies?
+let thenable = task::spawn(scheduler, 1000);
+```
+
+Should the `spawn` policy attach the custom scheduler to the `Future` created and cause all subsequent calls to `async` to use the custom scheduler, or should it only be used in that instance. My current through process is that spawning a future with a custom scheduler should be pervasive and that all subsequent calls should use that scheduler unless specified otherwise.
+
+<Callout title="Note">
+    Currently both the addition of new execution policies and the proposed `spawn` policy have not yet been implemented
+    in Sabre. This is because I am still working out the finer details with how Sabre should integrate these features in
+    an intuitive and simplistic manner for developers that want to use them. I am also very open to ideas from the
+    community as well on this and will use this opportunity to create a system for adding proposals for Sabre's design.
+</Callout>
+
+## Joining Threads
+
+After much thought and jumping between multiple different designs for concurrency, Sabre is now powered by what I call execution policies. This design that I initially [speculated back in 2025](https://github.com/rroessler/rroessler.io/commit/ba246a3c810efb6c06cf2df37b25c75af8c6cd33) is able to truly remove function coloring, whilst also enabling the capability for extensible concurrency support.
+
+Although this started as an extremely lofty goal, I believe that this provides both an elegant solution and stronger explanation of where function coloring stems from. Looking to the future, I hope that others can utilize and improve this design to weave the final thread for their own concurrency tapestries.

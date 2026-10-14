@@ -32,7 +32,7 @@ export default fumadocs.defineConfig({
         providerImportSource: '@/website/markdown/_bootstrap',
         rehypeCodeOptions: {
             themes: Language.Themes,
-            langs: [Language.Grammar()],
+            langs: Language.Grammar(),
             transformers: [Language.Transformer.Deprecated()],
         },
     },
