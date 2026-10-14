@@ -22,4 +22,5 @@ Sabre statically links these libraries:
 | [`glaze`](https://github.com/stephenberry/glaze)         | [MIT](https://github.com/stephenberry/glaze/blob/main/LICENSE)            |
 | [`lief`](https://github.com/lief-project/LIEF)           | [Apache 2.0](https://github.com/lief-project/LIEF/blob/main/LICENSE)      |
 | [`modern-uuid`](https://github.com/gershnik/modern-uuid) | [BSD 3-Clause](https://github.com/gershnik/modern-uuid/blob/main/LICENSE) |
+| [`simdutf`](https://github.com/simdutf/simdutf)          | [MIT](https://github.com/simdutf/simdutf/blob/master/LICENSE-MIT)         |
 | [`spdlog`](https://github.com/gabime/spdlog)             | [MIT](https://github.com/gabime/spdlog/blob/main/LICENSE)                 |
