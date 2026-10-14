@@ -16,14 +16,13 @@ To check that Sabre was installed successfully, open a new terminal window and r
 sabre --version # should output "vx.y.z-build"
 ```
 
-<Callout type="warning">
-    **Note**: If you receive a `command not found` error, you may have to manually add the installation directory
-    (`~/.sabre/bin`) to your `$PATH`.
+<Callout title="Note">
+    Sabre can be built natively by following the [instructions available here](/project/development).
 </Callout>
 
-<Callout>
-    **Building Natively**: Sabre can be built natively by following the [instructions available
-    here](/project/development).
+<Callout title="Note" type="warning">
+    If you see a `command not found` error, you may have to manually add the installation directory (`~/.sabre/bin`) to
+    your `$PATH`.
 </Callout>
 
 ## Upgrading / Removing
@@ -37,7 +36,7 @@ sabre upgrade --remove      # removes Sabre from your system
 
 <Callout>
 
-    **Note**: To manually remove Sabre:
+    **Note:** To manually remove Sabre
 
     ```shell tab="Linux / Darwin"
     rm -rf ~/.sabre
