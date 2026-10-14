@@ -2,10 +2,14 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
+/// Vendor Modules
+import * as JSONC from 'jsonc-parser';
+
 /// Website Modules
 import { TOC } from '@/website/components';
 import { Assets } from '@/website/assets';
 import { Product } from '@/website/product';
+import { Docify } from '@/website/docify';
 
 /// Package Modules
 import { Manifest } from '../manifest';
@@ -42,7 +46,7 @@ export namespace Registry {
         const resolve = (...segments: string[]) => path.resolve(crate, '..', ...segments);
 
         // attempt parsing the incoming JSONC file now
-        return { ...JSON.parse(fs.readFileSync(crate, 'utf-8')), resource: crate, resolve };
+        return { ...m_details(name, crate), resource: crate, resolve };
     }
 
     /**
@@ -50,20 +54,71 @@ export namespace Registry {
      * @param source                Source to transform.
      */
     export function transform(source: typeof import('@/website/source').Source.crates, prefix = 'crates') {
-        // prepare the base table-of-contents to be used
-        const toc = [TOC.seed('Overview'), TOC.seed('Exports')];
-
         // prepare a set of keyed items
         const keys = new Set<string>();
         const index = `${prefix}/index.mdx`;
 
         // iteratively update the source files now
         for (const file of source.files) {
+            // ignore invalid file types
             if (file.type === 'meta' || file.path === index) continue;
-            (keys.add(file.path.split('/')[1]), (file.data.toc = toc));
+
+            // prepare the key to be used
+            const key = file.path.split('/')[1];
+            const { project } = resolve(key) ?? {};
+
+            // bind the key and table as necessary now
+            (keys.add(key), (file.data.toc = m_seed(project)));
         }
 
         // attempt removing the collapsible items
         for (const key of keys) source.files.push(TOC.meta(key, prefix));
+    }
+
+    //  PRIVATE METHODS  //
+
+    /**
+     * Handles parsing crate details.
+     * @param name                  Name of crate.
+     * @param crate                 Crate file-path.
+     */
+    function m_details(name: string, crate: string): Manifest {
+        // parse the current crate details and project details
+        const details = JSONC.parse(fs.readFileSync(crate, 'utf-8'));
+
+        // prepare the docify project as well to be used
+        const project = Assets.crates(name, '_docify.jsonc');
+        if (!fs.existsSync(project)) return details;
+
+        // can safely resolve both details now
+        return { ...details, project: JSONC.parse(fs.readFileSync(project, 'utf-8')) };
+    }
+
+    /**
+     * Handles seeding the TOC values.
+     * @param project               Project documentation.
+     */
+    function m_seed(project: Docify.Project | undefined): TOC {
+        // prepare the overview header to be used
+        const header = [TOC.seed('Overview')];
+
+        // ignore if current invalid at all
+        if (typeof project === 'undefined') return header;
+
+        // prepare the seed handler for children
+        const seed = (section: string, identifier: string) => {
+            const name = project.nodes[identifier].name;
+            return TOC.seed(name, { url: `#${section}-${name.toLowerCase()}`, depth: 3 });
+        };
+
+        // iterate over the available groups to be output
+        return header.concat(
+            project.groups.flatMap((group) => {
+                if (group.children.length === 0) return [];
+                const level = seed.bind(undefined, group.title.toLowerCase());
+                const children = group.children.map(level);
+                return [TOC.seed(group.title)].concat(children);
+            }),
+        );
     }
 }

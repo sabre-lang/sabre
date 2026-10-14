@@ -98,7 +98,7 @@ std::optional<$::URI::Buffer> Sabre::Bundle::Worker::m_resolve(const $::String::
 }
 
 int32_t Sabre::Bundle::Worker::m_docify(const $::URI::View &resource) {
-  return m_services->get<Author::Docify>()->process(resource, m_options.author);
+  return m_services->get<Author::Docify>(m_options.author)->process(resource);
 }
 
 $::FS::Path Sabre::Bundle::Worker::m_output(const $::URI::View &script) {

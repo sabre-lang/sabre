@@ -7,5 +7,7 @@
 /// Forward Declarations
 $_FWD(Sabre::Author, class Docify)
 $_FWD(Sabre::Author, struct Options)
+$_FWD(Sabre::Author, struct Project)
+$_FWD(Sabre::Author, class Serializer)
 
 #endif

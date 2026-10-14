@@ -7,6 +7,8 @@
 /// Author Includes
 #include "sabre/author/docify.hpp"
 #include "sabre/author/options.hpp"
+#include "sabre/author/project.hpp"
+#include "sabre/author/serializer.hpp"
 
 /// Bundle Includes
 #include "sabre/bundle/archive.hpp"

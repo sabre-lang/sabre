@@ -6,16 +6,19 @@
     "description": "A forward-thinking programming language that puts developers first",
     "scripts": {
         "--  START  --": "",
-        "start": "next dev . --turbopack",
+        "start": "run-s bundle:docs start:dev",
+        "start:dev": "next dev . --turbopack",
         "serve": "run-s bundle serve:impl",
         "serve:impl": "bunx serve -l 3000 out",
         "--  BUNDLE  --": "",
         "lint": "run-s lint:*",
         "lint:eslint": "eslint .",
         "lint:tsc": "tsc --noEmit --project .",
-        "bundle": "next build . --turbopack",
+        "bundle": "run-s bundle:*",
+        "bundle:docs": "bun run ../../tools/docify",
+        "bundle:next": "next build . --turbopack",
         "--  CLEAN  --": "",
-        "clean": "rimraf .next .source out next-env.d.ts"
+        "clean": "rimraf .next .source out next-env.d.ts _docify.json"
     },
     "dependencies": {
         "@fumadocs/local-md": "^0.3.2",

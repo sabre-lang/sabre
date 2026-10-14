@@ -16,6 +16,7 @@ let m_cast = Detail.Unsafe.cast;
 
 // - NAMESPACES - //
 
+//! @brief Heap memory utilities.
 export namespace Heap {
     // - PUBLIC METHODS - //
 
@@ -29,6 +30,7 @@ export namespace Heap {
     export let avail = m_cast[fn -> Number](mem.heap_avail);
 };
 
+//! @brief Thread memory utilities.
 export namespace Thread {
     // - PUBLIC METHODS - //
 

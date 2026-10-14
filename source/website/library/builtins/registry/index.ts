@@ -80,14 +80,17 @@ export namespace Registry {
 
         // iteratively update the source files now
         for (const file of source.files) {
+            // ignore invalid file types
             if (file.type === 'meta' || file.path === index) continue;
 
-            const key = file.path.split('/')[1]; // prepare the key
+            // prepare the key to be used
+            const key = file.path.split('/')[1];
             const { fields, statics } = resolve(key) ?? {};
 
             // rebuild the table-of-contents to be used
             const toc = [header].concat(m_seed('fields', fields), m_seed('statics', statics));
 
+            // bind the key and table as necessary now
             (keys.add(key), (file.data.toc = toc));
         }
 

@@ -7,10 +7,11 @@
 
 //  X-MACROS  //
 
-#define XX_OPTIONS_LIST(X)                                    \
-  X("--quiet", "Hides verbose docification outputs")          \
-  X("--outfile", "The output file to write documentation to") \
-  X("", "")                                                   \
+#define XX_OPTIONS_LIST(X)                                      \
+  X("--quiet", "Hides verbose docification outputs")            \
+  X("--stdout", "Pipe output to the console instead of a file") \
+  X("--outfile", "The output file to write documentation to")   \
+  X("", "")                                                     \
   SHELL_XX_OPTIONS_COMMON(X)
 
 //  CONSTRUCTORS  //
@@ -46,9 +47,10 @@ void Shell::Docify::Action::m_subscribe(CLI::App *command) {
   command->add_option("--outfile", m_options.output);
 
   // prepare the verbosity flag now
+  command->add_flag("--stdout", m_options.console);
   command->add_flag_callback("--quiet", [&] { m_runtime.flags.verbose = false; });
 
-  // prepare the positionsal the will be available now
+  // prepare the positional the will be available now
   command->add_option("script.sabre", m_runtime.script);
 
   // set the necessary callback to run the instance now

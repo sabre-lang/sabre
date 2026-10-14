@@ -6,6 +6,9 @@ node_modules/
 build/
 dist/
 
+# Documentation Outputs
+_docify.jsonc
+
 # Profiling Outputs
 valgrind.out.*
 callgrind.out.*
