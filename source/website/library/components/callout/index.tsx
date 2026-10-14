@@ -19,7 +19,7 @@ export function Callout({ children, type, title, className, style, ...props }: C
     // construct the container of the callout now
     return (
         <div className={className} style={style} {...props}>
-            <div role="none" className="w-0.75 bg-(--callout-color)/50 rounded-sm" />
+            <div role="none" className="w-2 bg-(--callout-color)/50 rounded-sm" />
             <div className="text-fd-muted-foreground prose-no-margin empty:hidden min-w-0" children={children} />
         </div>
     );

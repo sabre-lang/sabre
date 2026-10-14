@@ -33,7 +33,7 @@ There is no better place to start than at the beginning, so let's look back at t
 - [Zig's New Async I/O](https://kristoff.it/blog/zig-new-async-io/) by _Loris Cro_ <span className="text-fd-muted-foreground">(July 13, 2025)</span>
 - [Design Space Exploration of Async/Await](https://cel.cs.brown.edu/blog/design-space-async-await/) by _Gavin Gray_ <span className="text-fd-muted-foreground">(September 8, 2026)</span>
 
-These are all some incredible posts discussing the various nuances of async/await syntax and runtime design found within many programming languages. Some even try to offer solutions that ultimately end up falling short of solving the function coloring problem.
+These are all some incredible posts discussing the various nuances of async/await syntax and runtime design found within many programming languages. Some even try to offer solutions that ultimately end up falling short of solving the function coloring problem. I highly recommend reading through these before continuing, though they aren't strictly required to understand this design exploration.
 
 ## What Color is Your Function?
 
@@ -126,7 +126,7 @@ public class Colorful {
 
 ### Languages Without Colors
 
-It is good to note that there are some notable programming languages that have colorless functions. However, their solutions are either cumbersome or lack the capability of being extensible. Ruby is an incredible example of this, where althought threads can be easily created and awaited, there is no functionality for customizing the scheduler:
+It is good to note that there are some notable programming languages that do have colorless functions. However, their solutions typically lack the capability of being extensible. Ruby is an incredible example of this, where although threads can be easily created and awaited, there is little functionality for customizing the scheduler:
 
 ```ruby title="colorless.ruby"
 # Some abitrary computation
@@ -143,8 +143,8 @@ puts Thread.new(&task).value
 
 <Callout title="Note">
     Since Ruby 3.0 there is the `async/scheduler` gem which allows setting a custom scheduler for `Fiber` values. This
-    extensibility however falls short as it assigns a global scheduler for the current thread and cannot be applied to
-    `Fiber` values on creation.
+    extensibility however falls short as it assigns a _global_ scheduler for the current thread and cannot be applied
+    manually when creating fibers.
 </Callout>
 
 ## Goalposts for Concurrency
@@ -181,7 +181,7 @@ This solution almost solves all our problems, with the only violation being that
 
 ## Go-ing Against the Rules
 
-Coming back a step, let's take a quick detour into how the Go programming language manages concurrency. Previously, I carefully omitted Go as similar to Ruby, it has no concept of function coloring. Additionally, Go coordinates concurrency through the use of goroutines which operate similarly to fibers in Ruby. In effect, both of these implementations work on variations of the following model:
+Coming back a step, let's take a quick detour into how the Go programming language manages concurrency. Previously, I carefully omitted Go which similar to Ruby has no concept of function coloring. Additionally, Go coordinates concurrency through the use of goroutines which operate similarly to fibers in Ruby. In effect, both of these implementations work on variations of the following model:
 
 - **Processor:** Represents a logical processor such as a CPU core on a machine.
 - **Thread:** Represents a physically OS thread created and managed by the operating system.
@@ -219,8 +219,9 @@ By instead leveraging a prefix operator, Go shifts the paradigm of concurrency b
 
 <Callout title="Note">
     Looking at the above example we can still see some issues with our implementation in Go. This being the use of a
-    `WaitGroup` to maintain synchronization. This is one area where I see Go falling slightly short of being the perfect
-    example for colorless functions.
+    `WaitGroup` to maintain synchronization. This is where I see Go falling short as the perfect example for colorless
+    functions. By relying on synchronization primitives, Go now needs to pass these across boundaries unlike the
+    `Future` interface which integrates synchronization with the blocking `.await()` method.
 </Callout>
 
 ## Unconventional (Calling) Conventions
@@ -243,7 +244,7 @@ let task = fn (value) => Debug.println(value);
 let result = task async(42).await();
 ```
 
-This last solution felt almost perfect, but there was a lingering feeling that something was missing to make this solution more readable. The gap between `task` and `async` stuck out to me as being incredibly disjointed. From a readability perspective, it felt as though there was no connection between the two. After some tweaking with styling, I landed on the final syntax available in Sabre today:
+This last solution almost felt perfect, but there was a lingering feeling that something was missing to make this solution more readable. Most notably, the gap between `task` and `async` stuck out to me as being incredibly disjointed. From a readability perspective, it felt as though there was no connection between the two. After some tweaking with styling, I landed on the final syntax available in Sabre today:
 
 ```sabre tab="async-policy.sabre"
 // A function that has some abitrary computation
@@ -281,7 +282,7 @@ let result = task::async(42).await().map(fn (nn) => nn *2);
               // ^^----- This is the "async" execution policy!
 ```
 
-Taking inspiration from how C++ names `std::launch` usage, I decided to name this choice of calling convention an execution policy. It also meant we could describe alternative execution policies, as seen above, for other calling conventions used in Sabre. From introducing this syntactical choice, execution policies are able to fulfill all our design requirements and provide truly colorless functions.
+Taking inspiration from how C++ names `std::launch` parameters, I decided to name this calling convention syntax an execution policy. It also meant we could describe alternative execution policies, as seen above, for other calling conventions used in Sabre. From introducing this syntactical choice, execution policies are able to fulfill all our design requirements and provide truly colorless functions.
 
 - [x] Function declarations are now colorless by design
 - [x] Concurrency is now explicit when tied to a callsite
@@ -306,7 +307,7 @@ let task = fn (duration: Number) {
 let thenable = task::spawn(scheduler, 1000);
 ```
 
-Should the `spawn` policy attach the custom scheduler to the `Future` created and cause all subsequent calls to `async` to use the custom scheduler, or should it only be used in that instance. My current through process is that spawning a future with a custom scheduler should be pervasive and that all subsequent calls should use that scheduler unless specified otherwise.
+Should the `spawn` policy attach the custom scheduler to the `Future` created and cause all subsequent calls to `async` to use the custom scheduler, or should it only be used in that instance? My current through process is that spawning a future with a custom scheduler should be pervasive and that all subsequent calls should use that scheduler unless specified otherwise.
 
 <Callout title="Note">
     Currently both the addition of new execution policies and the proposed `spawn` policy have not yet been implemented
@@ -315,7 +316,7 @@ Should the `spawn` policy attach the custom scheduler to the `Future` created an
     community as well on this and will use this opportunity to create a system for adding proposals for Sabre's design.
 </Callout>
 
-## Joining Threads
+## Stitching Threads Together
 
 After much thought and jumping between multiple different designs for concurrency, Sabre is now powered by what I call execution policies. This design that I initially [speculated back in 2025](https://github.com/rroessler/rroessler.io/commit/ba246a3c810efb6c06cf2df37b25c75af8c6cd33) is able to truly remove function coloring, whilst also enabling the capability for extensible concurrency support.
 
