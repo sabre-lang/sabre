@@ -1,7 +1,7 @@
 ---
 date: 2026-09-07
 author: Reuben Roessler
-title: Progress / August 2026
+title: Progress - August 2026
 description: Monthly progress report about the recent rewrite release of Sabre
 ---
 

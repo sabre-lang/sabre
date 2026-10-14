@@ -1,7 +1,7 @@
 ---
 date: 2026-06-05
 author: Reuben Roessler
-title: Progress / May 2026
+title: Progress - May 2026
 description: The first in a series of monthly posts aiming to provide progress reports for the Sabre programming language
 ---
 
