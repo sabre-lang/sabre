@@ -2,6 +2,7 @@
 date: 2026-03-04
 author: Reuben Roessler
 title: Sabre v0.1.0
+description: Release announcement post for Sabre v0.1.0
 ---
 
 ## Hello, Sabre!
