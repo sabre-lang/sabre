@@ -17,7 +17,7 @@ let m_cast = Detail.Unsafe.cast;
 // - TYPEDEFS - //
 
 //! @brief Utility class for temporary files.
-class Temporary(prefix, suffix) {
+class Temporary(prefix, suffix) implements Disposable {
     // - PROPERTIES - //
 
     //! @brief The internal temporary path.

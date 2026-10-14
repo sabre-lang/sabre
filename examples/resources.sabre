@@ -4,7 +4,7 @@
 ///
 
 // Let's define a resource generator.
-let scoped = fn (label: String): Any {
+let scoped = fn (label: String): Disposable {
     // Show when the resource is created.
     Debug.println("Created '{0}'".fmt(label));
 
