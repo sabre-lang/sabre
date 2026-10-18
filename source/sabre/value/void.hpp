@@ -19,6 +19,12 @@ struct Void : public Any {
    */
   constexpr Void(const Feedback &feedback) : Any(m_encode(feedback)) {}
 
+  //  OPERATOR METHODS  //
+
+  /// @brief Helper to bypass equality checking.
+  inline constexpr bool operator==(const Value::Any &other) const noexcept { return m_pointer == other.pointer(); }
+  inline constexpr bool operator!=(const Value::Any &other) const noexcept { return m_pointer != other.pointer(); }
+
   //  PUBLIC METHODS  //
 
   /// @brief Denotes if the void value is "okay".

@@ -33,6 +33,10 @@ struct Small : public Value::Any {
   constexpr Small(const char *view) : Small({view, std::strlen(view)}) {}
   constexpr Small(const $::String::View &view) : Value::Any(m_encode(view)) {}
 
+  /// @brief Helper to bypass equality checking.
+  inline constexpr bool operator==(const Value::Any &other) const noexcept { return m_pointer == other.pointer(); }
+  inline constexpr bool operator!=(const Value::Any &other) const noexcept { return m_pointer != other.pointer(); }
+
   //  PUBLIC METHODS  //
 
   inline constexpr size_t size() const noexcept { return m_size(m_pointer); }

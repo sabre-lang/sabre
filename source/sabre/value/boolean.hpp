@@ -21,6 +21,12 @@ struct Boolean : public Any {
   /// @brief Gets the associated truthiness.
   inline constexpr operator bool() const noexcept { return state(); }
 
+  //  OPERATOR METHODS  //
+
+  /// @brief Helper to bypass equality checking.
+  inline constexpr bool operator==(const Value::Any &other) const noexcept { return m_pointer == other.pointer(); }
+  inline constexpr bool operator!=(const Value::Any &other) const noexcept { return m_pointer != other.pointer(); }
+
   //  PUBLIC METHODS  //
 
   /// @brief Gets the current boolean state.

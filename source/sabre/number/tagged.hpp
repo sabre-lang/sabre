@@ -44,6 +44,10 @@ struct Tagged : public Value::Any {
   inline constexpr operator int32_t() const noexcept { return static_cast<int32_t>(value()); }
   inline constexpr operator int64_t() const noexcept { return static_cast<int64_t>(value()); }
 
+  /// @brief Helper to bypass equality checking.
+  inline constexpr bool operator==(const Value::Any &other) const noexcept { return m_pointer == other.pointer(); }
+  inline constexpr bool operator!=(const Value::Any &other) const noexcept { return m_pointer != other.pointer(); }
+
   inline constexpr bool operator==(double value) const noexcept { return m_pointer == Tagged(value).m_pointer; }
   inline constexpr bool operator!=(double value) const noexcept { return m_pointer != Tagged(value).m_pointer; }
   inline constexpr auto operator<=>(const Tagged &other) const noexcept { return value() <=> other.value(); }

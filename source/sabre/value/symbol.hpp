@@ -42,6 +42,12 @@ struct Symbol : public Any {
   constexpr Symbol(const $::URI::View &resource) : Symbol(resource.view()) {}
   constexpr Symbol(const $::URI::Buffer &resource) : Symbol(resource.view()) {}
 
+  //  OPERATOR METHODS  //
+
+  /// @brief Helper to bypass equality checking.
+  inline constexpr bool operator==(const Value::Any &other) const noexcept { return m_pointer == other.pointer(); }
+  inline constexpr bool operator!=(const Value::Any &other) const noexcept { return m_pointer != other.pointer(); }
+
   //  PUBLIC METHODS  //
 
   /// @brief Gets the underlying hash-value.
