@@ -71,18 +71,21 @@ private:
    */
   inline constexpr std::pair<Value::Symbol, Property>
   m_factory(const $::String::View &name, const $::String::View &field, Function::Callback callback) noexcept {
+    // prepare the symbol to be used
+    auto symbol = Value::Symbol(field);
+
     // prepare an initial value in the cache
-    m_cache.emplace(field, Value::Failure());
+    m_cache.emplace(symbol, Value::Failure());
 
     // prepare the property getter to be used now
-    auto getter = Getter([=, this, symbol = Value::Symbol(field)](Runtime::Isolate *isolate, auto) -> Value::Any {
+    auto getter = Getter([=, this](Runtime::Isolate *isolate, auto) -> Value::Any {
       auto &value = m_cache.at(symbol); // resolve the item
       if ($_LIKELY(value != Value::Failure())) return value;
       return value = isolate->create<Function::Native>(callback, name, field);
     });
 
     // and construct the resulting entry now
-    return {field, Property(std::move(getter))};
+    return {symbol, Property(std::move(getter))};
   };
 };
 
