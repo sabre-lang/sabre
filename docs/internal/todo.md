@@ -7,10 +7,12 @@ Here is a basic list of tasks that I would like to implement for Sabre. The imme
     - [x] `::call` / Alias for synchronous function calls
     - [-] `::spawn` / Assigns a custom scheduler context
     - [x] `::defer` / Helper for inline `Operator.dispose`
+    - [ ] `::block` / Alias for `::async(...).await()`
 
 ### Backlog
 
 - [ ] Decorator command-line switch (eg: to disable/enable decorators based on a given profile, which could be used to enable profiling/logging dynamically)
+- [ ] Simplify continuation-passing style for execution policies in loops. Might need to start with functional methods to handle looped `Future` values
 - [ ] Need to investigate a way to both streamline function/machine frame-stack generation so that construction is fast, similar for both and in a small memory footprint as well
 - [ ] The current language server implementation has some strange stutters every once in a while. It would be good to document this for addressing these performance issues
 - [ ] The current language server implementation does not allow for partial refreshing of the cached documents. This would be a great fix to improve more performance
