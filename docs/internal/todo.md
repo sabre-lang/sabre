@@ -3,6 +3,7 @@
 Here is a basic list of tasks that I would like to implement for Sabre. The immediate tasks are required as-soon-as-possible, whilst the others are marked with their necessaity.
 
 - [ ] Better formatter support needs to be implemented through more rigorous testing to find more corner cases that could occur in user-code
+- [ ] Alias internal method calls into bytecode. This would help reduce field lookups, global lookups and improve performance of builtin values
 - [x] It would be good for completeness to implement the following execution policies:
     - [x] `::call` / Alias for synchronous function calls
     - [-] `::spawn` / Assigns a custom scheduler context
