@@ -170,6 +170,13 @@ public:
   void lower(const Syntax::Node *node, const Register::Slot &destination = {});
 
   /**
+   * @brief For elligible instructions, coordinates peep-hole optimizations.
+   * @param node                      Node to lower.
+   * @param destination               Destination to use.
+   */
+  Register::Slot reduce(const Syntax::Node *node, const Register::Slot &destination = {});
+
+  /**
    * @brief Handles emitting preamble information.
    * @param preamble                  Preamble node.
    * @param value                     Source of preamble.

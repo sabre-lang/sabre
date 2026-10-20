@@ -11,5 +11,6 @@ description: Release announcement post for Sabre vX.X.X
 
 <h4>Toolkit / sabre run</h4>
 
+- Fixed: Applied better peep-hole optimization to bytecode to reduce the total register moves required.
 - Fixed: Improved performance of internal hash-maps using `Symbol::Value` as keys through bypassing equality checking.
 - Fixed: Optimized internal `Member::Storage` retrievals by caching reference descriptors after native method construction.

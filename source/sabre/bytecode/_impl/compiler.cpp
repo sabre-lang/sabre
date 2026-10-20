@@ -70,6 +70,38 @@ void Sabre::Bytecode::Compiler::lower(const Syntax::Node *node, const Register::
   Visitor::visit(node, this, Register::Slot(sink));
 }
 
+Sabre::Register::Slot Sabre::Bytecode::Compiler::reduce(const Syntax::Node *node, const Register::Slot &sink) {
+  switch (node->trivia()->hash()) {
+  // ignore default values as needed
+  default: return lower(node, sink), sink;
+
+  // only for identifiers do we attempt reduction
+  case $::RTTI::Hash<Syntax::Identifier>(): break;
+
+  // handle some special cases that can be followed
+  case $::RTTI::Hash<Syntax::Typed>(): return reduce(node->as<Syntax::Typed>()->value(), sink);
+  }
+
+  // prepare a trace (like we would have done for identifiers)
+  $_UNUSED $_AUTO = trace(node);
+
+  // we have a valid identifier, so we can suitably reduce our value
+  auto *identifier = node->as<Syntax::Identifier>();
+
+  // get details about the identifier
+  auto name = identifier->name();
+  auto extent = captures()->extent(identifier);
+
+  // only if we have a suitable extent to apply a peephole optimization
+  if (extent == Variable::Extent::LOCAL) {
+    auto vreg = variables()->resolve(name);
+    if (!variables()->leaked(name)) return vreg;
+  }
+
+  // otherwise we handle as a normal load instead
+  return load(name, extent, sink), sink;
+}
+
 Sabre::Bytecode::Disposable Sabre::Bytecode::Compiler::disposable(const Syntax::Block *block) {
   // count the total resources that will be disposed on this blocks completion
   auto resources = std::ranges::count_if(block->statements(), [](const Syntax::Node *node) -> bool {
