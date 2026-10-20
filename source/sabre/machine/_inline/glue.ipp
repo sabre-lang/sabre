@@ -198,8 +198,8 @@ static inline Reference recall(Runtime::Isolate *isolate, const Info *info, cons
  * @param target                Target to call.
  * @param values                Argument values.
  */
-static inline Reference spawn(Runtime::Isolate *isolate, Reference target, const Value::Any *values) {
-  return Engine::Dispatch::spawn(isolate, Value::Cast(target), argv(values)).pointer();
+static inline Reference async(Runtime::Isolate *isolate, Reference target, const Value::Any *values) {
+  return Engine::Dispatch::async(isolate, Value::Cast(target), argv(values)).pointer();
 }
 
 /**

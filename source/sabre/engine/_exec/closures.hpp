@@ -108,37 +108,37 @@ SABRE_MM_ENGINE_EXECUTE(CALL_N_FIELD, isolate, frame, unqualified) {
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);
 }
 
-SABRE_MM_ENGINE_EXECUTE(SPAWN_0_VOID, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::SPAWN_0_VOID>();
-  auto result = spawn(isolate, frame->accumulator());
+SABRE_MM_ENGINE_EXECUTE(ASYNC_0_VOID, isolate, frame, unqualified) {
+  auto *instruction = unqualified->cast<Glyph::ASYNC_0_VOID>();
+  auto result = async(isolate, frame->accumulator());
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);
 }
 
-SABRE_MM_ENGINE_EXECUTE(SPAWN_N_VOID, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::SPAWN_N_VOID>();
+SABRE_MM_ENGINE_EXECUTE(ASYNC_N_VOID, isolate, frame, unqualified) {
+  auto *instruction = unqualified->cast<Glyph::ASYNC_N_VOID>();
   auto [callee, argv] = frame->split(instruction->get<1>());
-  auto result = spawn(isolate, callee, argv);
+  auto result = async(isolate, callee, argv);
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);
 }
 
-SABRE_MM_ENGINE_EXECUTE(SPAWN_0_FIELD, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::SPAWN_0_FIELD>();
+SABRE_MM_ENGINE_EXECUTE(ASYNC_0_FIELD, isolate, frame, unqualified) {
+  auto *instruction = unqualified->cast<Glyph::ASYNC_0_FIELD>();
   auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
-  auto result = m_spawn(isolate, symbol, {frame->accumulator()});
+  auto result = m_async(isolate, symbol, {frame->accumulator()});
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);
 }
 
-SABRE_MM_ENGINE_EXECUTE(SPAWN_N_FIELD, isolate, frame, unqualified) {
-  auto *instruction = unqualified->cast<Glyph::SPAWN_N_FIELD>();
+SABRE_MM_ENGINE_EXECUTE(ASYNC_N_FIELD, isolate, frame, unqualified) {
+  auto *instruction = unqualified->cast<Glyph::ASYNC_N_FIELD>();
   auto [target, argv] = frame->split(instruction->get<2>());
   auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
-  auto result = m_spawn(isolate, symbol, {target, argv});
+  auto result = m_async(isolate, symbol, {target, argv});
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);

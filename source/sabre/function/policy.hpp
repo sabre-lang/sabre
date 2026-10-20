@@ -10,6 +10,7 @@
 #define SABRE_XX_FUNCTION_POLICIES(X)                \
   X(CALL, "call")   /** Normal call invocation. */   \
   X(ASYNC, "async") /** Default async invocation. */ \
+  X(BLOCK, "block") /** Forced block invocation. */  \
   X(DEFER, "defer") /** Defers scoped execution. */  \
   X(SPAWN, "spawn") /** Custom async invocation. */
 

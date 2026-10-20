@@ -73,7 +73,7 @@ SABRE_MM_DYLIB_METHOD(Assert, panics, isolate, args) {
   SABRE_MM_ASSERT_TYPEOF(isolate, Function::Any, args[0]);
 
   // get the incoming function to be called now
-  auto result = isolate->spawn(args.at(0));
+  auto result = isolate->async(args.at(0));
 
   // if the result is an error, then stop
   if (!result.has_value()) return Value::Void();

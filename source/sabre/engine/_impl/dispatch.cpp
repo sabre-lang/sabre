@@ -22,7 +22,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::invoke(Isolate *isolate, const Value:
   return Invoke::dynamic(isolate, target, args);
 }
 
-Sabre::Value::Any Sabre::Engine::Dispatch::spawn(Isolate *isolate, const Value::Any &target, const Args &args) {
+Sabre::Value::Any Sabre::Engine::Dispatch::async(Isolate *isolate, const Value::Any &target, const Args &args) {
   if (!target.is<Function::Any>()) return isolate->panic(6000201, target.brand());
   return isolate->create<Async::Future>(target.as<Function::Any>(), args);
 }
@@ -264,10 +264,10 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_invoke(Isolate *isolate, const Valu
   return invoke(isolate, callee, args);
 }
 
-Sabre::Value::Any Sabre::Engine::Dispatch::m_spawn(Isolate *isolate, const Value::Symbol &symbol, const Args &args) {
+Sabre::Value::Any Sabre::Engine::Dispatch::m_async(Isolate *isolate, const Value::Symbol &symbol, const Args &args) {
   auto callee = getter(isolate, args.self(), symbol);
   if (!callee.pointer().okay()) return callee;
-  return spawn(isolate, callee, args);
+  return async(isolate, callee, args);
 }
 
 Sabre::Value::Any Sabre::Engine::Dispatch::m_defer(Isolate *isolate, const Value::Symbol &symbol, const Args &args) {

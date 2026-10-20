@@ -11,7 +11,7 @@ Sabre::Testing::Service::Service(XI::Container *services) : m_services(services)
 
 //  PRIVATE METHODS  //
 
-int32_t Sabre::Testing::Service::m_spawn() { return m_services->get<Async::Service>()->launch<Entry>(m_services); }
+int32_t Sabre::Testing::Service::m_launch() { return m_services->get<Async::Service>()->launch<Entry>(m_services); }
 
 int32_t Sabre::Testing::Service::m_invoke(const Options &options) {
   // declare an error if a session is in progress

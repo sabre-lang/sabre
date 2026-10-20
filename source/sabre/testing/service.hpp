@@ -41,7 +41,7 @@ public:
   inline constexpr const Storage *storage() const noexcept { return m_storage.get(); }
 
   /// @brief Spawns the current testing runtime.
-  inline constexpr int32_t spawn() { return m_spawn(); }
+  inline constexpr int32_t launch() { return m_launch(); }
 
   /**
    * @brief Requests a testing session.
@@ -53,7 +53,7 @@ private:
   //  PRIVATE METHODS  //
 
   /// @brief Handles launching the testing runtime.
-  int32_t m_spawn();
+  int32_t m_launch();
 
   /**
    * @brief Requests a testing session.

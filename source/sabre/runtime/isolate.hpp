@@ -146,8 +146,8 @@ public:
    * @param args                      Arguments to bind.
    * @param trace                     Optional trace.
    */
-  Async::Result spawn(const Value::Any &target, const Resource::Trace &trace);
-  Async::Result spawn(const Value::Any &target, Function::Args &&args = {}, const Resource::Trace &trace = {});
+  Async::Result async(const Value::Any &target, const Resource::Trace &trace);
+  Async::Result async(const Value::Any &target, Function::Args &&args = {}, const Resource::Trace &trace = {});
 
   /**
    * @brief Handles resolving runtime paths.

@@ -98,11 +98,11 @@ void Sabre::Bytecode::Invoker::m_bind<Sabre::Function::Policy::ASYNC>(
 ) const noexcept {
   switch (m_convention) {
   case Convention::VOID: $_FALLTHROUGH; // we do not have inline items when spawning
-  case Convention::INLINE: compiler->emit<Glyph::SPAWN_0_VOID>(destination); break;
+  case Convention::INLINE: compiler->emit<Glyph::ASYNC_0_VOID>(destination); break;
   case Convention::FIELD: {
     $_UNUSED $_AUTO = compiler->trace(m_callee);
     auto field = m_callee->as<Syntax::Accessor>()->field(); // cast to suitable field
-    compiler->emit<Glyph::SPAWN_0_FIELD>(destination, compiler->symbol(field->name()));
+    compiler->emit<Glyph::ASYNC_0_FIELD>(destination, compiler->symbol(field->name()));
   } break;
   }
 }
@@ -113,11 +113,11 @@ void Sabre::Bytecode::Invoker::m_bind<Sabre::Function::Policy::ASYNC>(
 ) const noexcept {
   switch (m_convention) {
   case Convention::VOID: $_FALLTHROUGH; // we do not have inline items when spawning
-  case Convention::INLINE: compiler->emit<Glyph::SPAWN_N_VOID>(destination, span); break;
+  case Convention::INLINE: compiler->emit<Glyph::ASYNC_N_VOID>(destination, span); break;
   case Convention::FIELD: {
     $_UNUSED $_AUTO = compiler->trace(m_callee);
     auto field = m_callee->as<Syntax::Accessor>()->field(); // cast to a suitable field now
-    compiler->emit<Glyph::SPAWN_N_FIELD>(destination, compiler->symbol(field->name()), span);
+    compiler->emit<Glyph::ASYNC_N_FIELD>(destination, compiler->symbol(field->name()), span);
   } break;
   }
 }

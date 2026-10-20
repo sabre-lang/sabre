@@ -7,5 +7,5 @@
 //  PUBLIC METHODS  //
 
 int32_t Sabre::Toolchain::test(const Runtime::Options &options) {
-  return bootstrap(options)->load<Testing::Service>()->spawn();
+  return bootstrap(options)->load<Testing::Service>()->launch();
 }

@@ -140,7 +140,7 @@ SABRE_MM_MACHINE_EMIT(CALL_N_FIELD, builder, instruction) {
   __ee__ test(dx, Validate::FAST);
 }
 
-SABRE_MM_MACHINE_EMIT(SPAWN_0_VOID, builder, instruction) {
+SABRE_MM_MACHINE_EMIT(ASYNC_0_VOID, builder, instruction) {
   // prepare the register slots we require
   auto dx = __ee__ slot(instruction->get<0>());
   auto tx = __ee__ slot(Register::Accumulator);
@@ -149,13 +149,13 @@ SABRE_MM_MACHINE_EMIT(SPAWN_0_VOID, builder, instruction) {
   __ee__ params();
 
   // and then start calling the necessary glue method
-  __ee__ call(Glue::spawn, dx, builder->isolate, tx, builder->params);
+  __ee__ call(Glue::async, dx, builder->isolate, tx, builder->params);
 
   // finally do a fast test after the invocation
   __ee__ test(dx, Validate::FAST);
 }
 
-SABRE_MM_MACHINE_EMIT(SPAWN_N_VOID, builder, instruction) {
+SABRE_MM_MACHINE_EMIT(ASYNC_N_VOID, builder, instruction) {
   // prepare the span to be used
   auto span = instruction->get<1>();
 
@@ -167,13 +167,13 @@ SABRE_MM_MACHINE_EMIT(SPAWN_N_VOID, builder, instruction) {
   __ee__ params(span.slice(1));
 
   // and then start calling the necessary glue method
-  __ee__ call(Glue::spawn, dx, builder->isolate, tx, builder->params);
+  __ee__ call(Glue::async, dx, builder->isolate, tx, builder->params);
 
   // finally do a fast test after the invocation
   __ee__ test(dx, Validate::FAST);
 }
 
-SABRE_MM_MACHINE_EMIT(SPAWN_0_FIELD, builder, instruction) {
+SABRE_MM_MACHINE_EMIT(ASYNC_0_FIELD, builder, instruction) {
   // prepare the arena details to be used
   auto index = instruction->get<1>();
 
@@ -189,13 +189,13 @@ SABRE_MM_MACHINE_EMIT(SPAWN_0_FIELD, builder, instruction) {
   __ee__ params(Register::Accumulator);
 
   // and then start calling the necessary glue method
-  __ee__ call(Glue::spawn, dx, builder->isolate, vx, builder->params);
+  __ee__ call(Glue::async, dx, builder->isolate, vx, builder->params);
 
   // finally do a fast test after the invocation
   __ee__ test(dx, Validate::FAST);
 }
 
-SABRE_MM_MACHINE_EMIT(SPAWN_N_FIELD, builder, instruction) {
+SABRE_MM_MACHINE_EMIT(ASYNC_N_FIELD, builder, instruction) {
   // prepare the arena details to be used
   auto index = instruction->get<1>();
   auto span = instruction->get<2>();
@@ -212,7 +212,7 @@ SABRE_MM_MACHINE_EMIT(SPAWN_N_FIELD, builder, instruction) {
   __ee__ params(span.first(), span.slice(1));
 
   // and then start calling the necessary glue method
-  __ee__ call(Glue::spawn, dx, builder->isolate, vx, builder->params);
+  __ee__ call(Glue::async, dx, builder->isolate, vx, builder->params);
 
   // finally do a fast test after the invocation
   __ee__ test(dx, Validate::FAST);

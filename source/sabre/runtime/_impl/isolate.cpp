@@ -57,12 +57,12 @@ Sabre::Value::Any Sabre::Runtime::Isolate::invoke(const Value::Any &target, cons
   return Engine::Invoke::dynamic(this, target, args);
 }
 
-Sabre::Async::Result Sabre::Runtime::Isolate::spawn(const Value::Any &target, const Resource::Trace &trace) {
-  return spawn(target, {}, trace);
+Sabre::Async::Result Sabre::Runtime::Isolate::async(const Value::Any &target, const Resource::Trace &trace) {
+  return async(target, {}, trace);
 }
 
 Sabre::Async::Result
-Sabre::Runtime::Isolate::spawn(const Value::Any &target, Function::Args &&args, const Resource::Trace &trace) {
+Sabre::Runtime::Isolate::async(const Value::Any &target, Function::Args &&args, const Resource::Trace &trace) {
   // prepare the incoming frame to be used for the execution of the target
   auto frame = trace.anonymous() ? nullptr : $::Unique::New<Resource::Frame>(this, trace);
 
