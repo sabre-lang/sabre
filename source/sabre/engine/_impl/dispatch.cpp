@@ -296,7 +296,10 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_expose(
 }
 
 Sabre::Value::Any Sabre::Engine::Dispatch::m_feedback(Isolate *isolate, const Feedback &feedback) {
-  // validate the incoming target
+  // immediately check for valid results
+  if ($_LIKELY(feedback.field.pointer().okay())) return feedback.field;
+
+  // validate the incoming target if it potentially failed
   if ($_UNLIKELY(!feedback.target.pointer().okay())) return Value::Failure();
 
   // resolve a suitable feedback code to be used
@@ -305,13 +308,10 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_feedback(Isolate *isolate, const Fe
       {Value::Feedback::FIELD_IMMUTABLE, 6000301},
   };
 
-  // fail immediately when feedback does not exist
-  auto reference = feedback.field.pointer().feedback();
-  if ($_LIKELY(!s_codes.contains(reference))) return feedback.field;
-
   // get the necessary details to be shown
   auto brand = feedback.target.brand();
   auto *intern = isolate->intern(feedback.symbol);
+  auto reference = feedback.field.pointer().feedback();
 
   // build the necessary panic to be returned
   if (intern) return isolate->panic(s_codes.at(reference), brand, intern->view());
