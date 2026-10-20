@@ -297,7 +297,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_expose(
 
 Sabre::Value::Any Sabre::Engine::Dispatch::m_feedback(Isolate *isolate, const Feedback &feedback) {
   // validate the incoming target
-  if (!feedback.target.pointer().okay()) return Value::Failure();
+  if ($_UNLIKELY(!feedback.target.pointer().okay())) return Value::Failure();
 
   // resolve a suitable feedback code to be used
   static $::Map::Base<Value::Feedback, Diagnostic::Code> s_codes = {
@@ -307,7 +307,7 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_feedback(Isolate *isolate, const Fe
 
   // fail immediately when feedback does not exist
   auto reference = feedback.field.pointer().feedback();
-  if (!s_codes.contains(reference)) return feedback.field;
+  if ($_LIKELY(!s_codes.contains(reference))) return feedback.field;
 
   // get the necessary details to be shown
   auto brand = feedback.target.brand();

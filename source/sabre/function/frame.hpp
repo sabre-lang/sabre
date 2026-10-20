@@ -95,11 +95,20 @@ public:
   }
 
   /**
+   * @brief Handles moving registers fast.
+   * @param ax                    Alpha register.
+   * @param bx                    Beta register.
+   */
+  $_INLINE_PERF constexpr void move(const Register::Slot &ax, const Register::Slot &bx) noexcept {
+    m_stack[bx] = m_stack[ax];
+  }
+
+  /**
    * @brief Handles swapping two stack items.
    * @param ax                    Alpha register.
    * @param bx                    Beta register.
    */
-  inline constexpr void swap(const Register::Slot &ax, const Register::Slot &bx) noexcept {
+  $_INLINE_PERF constexpr void swap(const Register::Slot &ax, const Register::Slot &bx) noexcept {
     std::swap(m_stack[ax], m_stack[bx]);
   }
 

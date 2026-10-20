@@ -4,6 +4,7 @@
 /// Sabre Includes
 #include "sabre/function/native.hpp"
 #include "sabre/member/property.hpp"
+#include "sabre/member/reference.hpp"
 #include "sabre/runtime/isolate.hpp"
 #include "sabre/value/symbol.hpp"
 
@@ -22,11 +23,11 @@ struct Storage {
 private:
   //  PROPERTIES  //
 
-  /// @brief Cached member values.
-  $::Map::Base<Value::Symbol, Value::Any> m_cache = {};
+  /// @brief Cached properties that were used as factories for others.
+  $::Map::Base<Value::Symbol, $::Unique::Pointer<Descriptor>> m_cache = {};
 
   /// @brief All available properties that have been constructed.
-  $::Map::Base<Value::Symbol, Member::Property> m_members = {};
+  $::Map::Base<Value::Symbol, $::Unique::Pointer<Descriptor>> m_members = {};
 
 public:
   //  CONSTRUCTORS  //
@@ -57,7 +58,7 @@ public:
    */
   inline constexpr View retrieve(const Value::Symbol &symbol) noexcept {
     auto iter = m_members.find(symbol); // attempt resolving
-    return iter == m_members.cend() ? nullptr : &iter->second;
+    return iter == m_members.cend() ? nullptr : iter->second.get();
   }
 
 private:
@@ -69,23 +70,20 @@ private:
    * @param field                 Field to bind.
    * @param callback              Native callback.
    */
-  inline constexpr std::pair<Value::Symbol, Property>
+  inline constexpr std::pair<Value::Symbol, $::Unique::Pointer<Property>>
   m_factory(const $::String::View &name, const $::String::View &field, Function::Callback callback) noexcept {
     // prepare the symbol to be used
     auto symbol = Value::Symbol(field);
 
-    // prepare an initial value in the cache
-    m_cache.emplace(symbol, Value::Failure());
-
     // prepare the property getter to be used now
     auto getter = Getter([=, this](Runtime::Isolate *isolate, auto) -> Value::Any {
-      auto &value = m_cache.at(symbol); // resolve the item
-      if ($_LIKELY(value != Value::Failure())) return value;
-      return value = isolate->create<Function::Native>(callback, name, field);
+      Value::Any value = isolate->create<Function::Native>(callback, name, field);
+      m_cache.emplace(symbol, std::move(m_members.at(symbol))); // cache old property
+      return (m_members[symbol] = $::Unique::New<Reference>(field, value), value);
     });
 
     // and construct the resulting entry now
-    return {symbol, Property(std::move(getter))};
+    return {symbol, $::Unique::New<Property>(std::move(getter))};
   };
 };
 
