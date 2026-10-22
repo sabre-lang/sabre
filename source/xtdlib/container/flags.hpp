@@ -102,8 +102,7 @@ public:
    * @param flags                     Flags to test.
    */
   template <class... Ts> inline constexpr bool test(std::convertible_to<T> auto... flags) const noexcept {
-    auto mask = (m_nth(flags) | ...);
-    return (m_flags & mask) == mask;
+    return ((m_flags >> flags & 1) || ...);
   }
 
 private:

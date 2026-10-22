@@ -52,7 +52,7 @@ struct String::Large : public Object::Mixin<Large> {
   /// @brief Handles getting the underlying symbol value.
   inline constexpr Value::Symbol symbol() const {
     auto &storage = m_storage(); // prepare the storage now
-    auto hashed = m_header()->toggle<Object::Flag::HASHED>(true);
+    auto hashed = !m_header()->toggle<Object::Flag::HASHED>(true);
 
     // check if the incoming value has already been cached
     if ($_LIKELY(hashed)) return storage.m_symbol;
