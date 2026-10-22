@@ -16,3 +16,4 @@ description: Release announcement post for Sabre vX.X.X
 - Fixed: Optimized internal `Member::Storage` retrievals by caching reference descriptors after native method construction.
 - Fixed: Prioritized feedback checks for validness first over invalidness. This allows skipping unnecessary exception generation.
 - Fixed: Object headers were not being cached properly when executing garbage collection causing crashes. Now reachability is toggled correctly.
+- Fixed: Minor bug with internal flags not toggling properly. This cause `String` symbols to not be saved but now they are hashed and saved.
