@@ -21,6 +21,9 @@ template <class E> struct Flags : public Bit::Flags<std::underlying_type_t<E>> {
   /// @brief Allow default construction.
   constexpr Flags() = default;
 
+  /// @brief Allow direct conversion from the underlying type.
+  constexpr Flags(const Base &other) : Base(other) {}
+
   /**
    * @brief Sets an initial set of flags.
    * @param flags                 Flags to set.

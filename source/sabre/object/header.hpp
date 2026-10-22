@@ -55,7 +55,7 @@ public:
   inline constexpr bool reachable() const noexcept { return is<Flag::REACHABLE>(); }
 
   /// @brief Constructs a view-only set of flags.
-  inline constexpr $::Enum::Flags<Flag> flags() const noexcept { return static_cast<Flag>(m_flags.load()); }
+  inline constexpr $::Enum::Flags<Flag> flags() const noexcept { return $::Bit::Flags<uint8_t>(m_flags.load()); }
 
   /// @brief Allow getting the underlying region of a header.
   inline constexpr Heap::Region *region() const noexcept {
@@ -100,7 +100,7 @@ public:
     if constexpr (F == Flag::REACHABLE) m_survivors += state;
 
     // and return the final result when completed
-    return m_flags = flags().flip(F, state).value(), true;
+    return m_flags = value.flip(F).value(), true;
   }
 };
 

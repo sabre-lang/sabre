@@ -79,7 +79,7 @@ public:
    * @param state                     Optional state.
    */
   inline constexpr Flags &flip(T flag) { return m_flags ^= m_nth(flag), *this; }
-  inline constexpr Flags &flip(T flag, bool state) { return m_flags &= ~m_nth(flag), m_flags |= state << flag, *this; }
+  inline constexpr Flags &flip(T flag, bool state) { return state ? set(flag) : clear(flag), *this; }
 
   /**
    * @brief Handles setting all the given bits.
@@ -102,7 +102,8 @@ public:
    * @param flags                     Flags to test.
    */
   template <class... Ts> inline constexpr bool test(std::convertible_to<T> auto... flags) const noexcept {
-    return ((m_flags >> flags & 1) || ...);
+    auto mask = (m_nth(flags) | ...);
+    return (m_flags & mask) == mask;
   }
 
 private:
