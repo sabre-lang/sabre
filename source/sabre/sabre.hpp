@@ -106,6 +106,7 @@
 #include "sabre/garbage/service.hpp"
 
 /// Globals Includes
+#include "sabre/globals/cache.hpp"
 #include "sabre/globals/roots.hpp"
 #include "sabre/globals/service.hpp"
 

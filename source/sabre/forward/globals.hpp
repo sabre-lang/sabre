@@ -6,6 +6,7 @@
 #include "sabre/forward/value.hpp"
 
 /// Forward Declarations
+$_FWD(Sabre::Globals, class IC)
 $_FWD(Sabre::Globals, class Each)
 $_FWD(Sabre::Globals, class Roots)
 $_FWD(Sabre::Globals, class Service)

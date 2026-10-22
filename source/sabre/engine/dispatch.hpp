@@ -204,9 +204,18 @@ private:
    * @param target                Target to call.
    * @param args                  Arguments to apply.
    */
-  static Value::Any m_invoke(Isolate *isolate, const Value::Symbol &symbol, const Args &args = {});
   static Value::Any m_async(Isolate *isolate, const Value::Symbol &symbol, const Args &args = {});
   static Value::Any m_defer(Isolate *isolate, const Value::Symbol &symbol, const Args &args = {});
+
+  /**
+   * @brief Handles dispatching a call operations.
+   * @param isolate               Runtime isolate.
+   * @param frame                 Engine frame.
+   * @param target                Target to call.
+   * @param args                  Arguments to apply.
+   */
+  static Value::Any m_invoke(Isolate *isolate, const Instruction *, const Value::Symbol &symbol, const Args &args = {});
+  static Value::Any m_native(Isolate *isolate, const Instruction *, const Value::Symbol &symbol, const Args &args = {});
 
   /**
    * @brief Handles exposing an export value.

@@ -140,6 +140,9 @@ SABRE_XX_GLYPH_CALL(CALL_N_INLINE, /** dst */ Register::Slot, /** argv */ Regist
 SABRE_XX_GLYPH_CALL(CALL_0_FIELD, /** dst */ Register::Slot, /** symbol */ Index)
 SABRE_XX_GLYPH_CALL(CALL_N_FIELD, /** dst */ Register::Slot, /** symbol */ Index, /** argv */ Register::Span)
 
+SABRE_XX_GLYPH_CALL(CALL_0_NATIVE, /** dst */ Register::Slot, /** tx */ Index)
+SABRE_XX_GLYPH_CALL(CALL_N_NATIVE, /** dst */ Register::Slot, /** tx */ Index, /** argv */ Register::Span)
+
 SABRE_XX_GLYPH_CALL(ASYNC_0_VOID, /** dst */ Register::Slot)
 SABRE_XX_GLYPH_CALL(ASYNC_N_VOID, /** dst */ Register::Slot, /** argv */ Register::Span)
 SABRE_XX_GLYPH_CALL(ASYNC_0_FIELD, /** dst */ Register::Slot, /** symbol */ Index)

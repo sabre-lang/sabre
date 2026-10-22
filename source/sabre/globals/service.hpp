@@ -4,6 +4,7 @@
 /// Sabre Includes
 #include "sabre/forward/type.hpp"
 #include "sabre/function/callback.hpp"
+#include "sabre/globals/cache.hpp"
 #include "sabre/globals/roots.hpp"
 #include "sabre/object/class.hpp"
 #include "sabre/value/symbol.hpp"
@@ -29,6 +30,9 @@ class Service : public XI::Singleton, public XI::Immediate {
   /// @brief Preloaded factories for use.
   $::Map::Base<Value::Symbol, Factory> m_factories = {};
 
+  /// @brief Gets the inline cache for natives.
+  $::Unique::Pointer<IC> m_natives = $::Unique::New<IC>();
+
   /// @brief Explicitly available global roots.
   $::Unique::Pointer<Roots> m_roots = $::Unique::New<Roots>();
 
@@ -42,6 +46,9 @@ public:
 
   /// @brief Gets all the available runtime roots.
   inline constexpr Roots *roots() const noexcept { return m_roots.get(); }
+
+  /// @brief Gets the inline cache for natives.
+  inline constexpr IC *natives() const noexcept { return m_natives.get(); }
 
   /// @brief Gets the available global types.
   inline constexpr Type::World *types() const noexcept { return m_types.get(); }

@@ -99,7 +99,7 @@ protected:
 
 template <> struct ankerl::unordered_dense::hash<Sabre::Value::Symbol> {
   using is_avalanching = void; // declare that this is not avalanchable
-  $_NODISCARD uint64_t operator()(const Sabre::Value::Symbol &symbol) const noexcept { return symbol.hash(); }
+  $_NODISCARD uint64_t operator()(const Sabre::Value::Symbol &symbol) const noexcept { return symbol.pointer(); }
 };
 
 #endif

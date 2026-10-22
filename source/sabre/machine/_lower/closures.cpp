@@ -139,3 +139,6 @@ SABRE_MM_MACHINE_EMIT(CALL_N_FIELD, builder, instruction) {
   // finally do a fast test after the invocation
   __ee__ test(dx, Validate::FAST);
 }
+
+SABRE_MM_MACHINE_EMIT(CALL_0_NATIVE, , ) { $_ABORT("Cannot lower Glyph::CALL_0_NATIVE"); }
+SABRE_MM_MACHINE_EMIT(CALL_N_NATIVE, , ) { $_ABORT("Cannot lower Glyph::CALL_N_NATIVE"); }

@@ -216,6 +216,7 @@ Test.suite("Statics", fn {
         Assert.equals(String.from(True), "True");
         Assert.equals(String.from(False), "False");
         Assert.equals(String.from(Void), "Void");
+        Assert.equals(String.from("abc"), "abc");
     });
 
     Test.case("String.codepoint 'Number'", fn {

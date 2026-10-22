@@ -2,6 +2,7 @@
 #include "sabre/engine/dispatch.hpp"
 #include "sabre/engine/exports.hpp"
 #include "sabre/engine/invoke.hpp"
+#include "sabre/globals/cache.hpp"
 #include "sabre/member/factory.hpp"
 #include "sabre/runtime/isolate.hpp"
 
@@ -258,12 +259,6 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_enumeration(Isolate *isolate, const
   return isolate->create<Object::Enum>(std::move(variants));
 }
 
-Sabre::Value::Any Sabre::Engine::Dispatch::m_invoke(Isolate *isolate, const Value::Symbol &symbol, const Args &args) {
-  auto callee = getter(isolate, args.self(), symbol);
-  if (!callee.pointer().okay()) return callee;
-  return invoke(isolate, callee, args);
-}
-
 Sabre::Value::Any Sabre::Engine::Dispatch::m_async(Isolate *isolate, const Value::Symbol &symbol, const Args &args) {
   auto callee = getter(isolate, args.self(), symbol);
   if (!callee.pointer().okay()) return callee;
@@ -274,6 +269,31 @@ Sabre::Value::Any Sabre::Engine::Dispatch::m_defer(Isolate *isolate, const Value
   auto callee = getter(isolate, args.self(), symbol);
   if (!callee.pointer().okay()) return callee;
   return defer(isolate, callee, args);
+}
+
+Sabre::Value::Any Sabre::Engine::Dispatch::m_invoke(
+    Isolate *isolate, const Instruction *instruction, const Value::Symbol &symbol, const Args &args
+) {
+  auto callee = getter(isolate, args.self(), symbol);
+  if ($_UNLIKELY(!callee.pointer().okay())) return callee;
+
+  // check whether we can suitably promote this value now
+  if (auto *natives = isolate->natives(); natives->set(args.self(), symbol, callee)) {
+    // we do something relatively unsafe when promoting our instruction
+    auto glyph = static_cast<Glyph::Encoded>(instruction->glyph().encoded() + 2);
+    *const_cast<Instruction *>(instruction) = instruction->transform(glyph);
+  }
+
+  // always run the invocation regardless of the result
+  return invoke(isolate, callee, args);
+}
+
+Sabre::Value::Any Sabre::Engine::Dispatch::m_native(
+    Isolate *isolate, const Instruction *instruction, const Value::Symbol &symbol, const Args &args
+) {
+  auto callee = isolate->natives()->get(args.self(), symbol); // resolve a callee now
+  if (!callee.pointer().okay()) return m_invoke(isolate, instruction, symbol, args);
+  return invoke(isolate, callee, args); // can suitably invoke our details now
 }
 
 Sabre::Value::Any Sabre::Engine::Dispatch::m_expose(

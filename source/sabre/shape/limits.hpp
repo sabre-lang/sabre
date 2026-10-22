@@ -14,6 +14,7 @@ namespace Sabre::Shape::Limits {
 static constexpr Underlying MAXIMUM = UINT32_MAX;
 static constexpr Underlying THRESHOLD =
     SABRE_XX_VALUES_IMMEDIATE($_XX_ENUM_COUNT) + SABRE_XX_VALUES_OBJECT($_XX_ENUM_COUNT) 1;
+static constexpr Underlying BUILTINS = THRESHOLD - 1;
 
 } // namespace Sabre::Shape::Limits
 

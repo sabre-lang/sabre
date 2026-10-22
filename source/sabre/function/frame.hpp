@@ -90,8 +90,8 @@ public:
    * @param index                 Register index.
    * @param value                 Value to assign.
    */
-  $_INLINE_PERF constexpr Value::Any store(const Register::Slot &index, const Value::Any &value) {
-    return m_assert(index), m_stack[index] = value;
+  $_INLINE_PERF constexpr void store(const Register::Slot &index, const Value::Any &value) {
+    m_assert(index), m_stack[index] = value;
   }
 
   /**

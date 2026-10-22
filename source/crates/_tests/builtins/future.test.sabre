@@ -62,13 +62,13 @@ Test.suite("Methods", fn {
     // test that we can transform valid values
     Test.case("Future.then 'success'", fn {
         let future = success.then(transform); // bind
-        Assert.equals(future.await(), transform(message));
+        Assert.equals(future.await(), message.to_upper());
     });
 
     // test that we can transform invalid values
     Test.case("Future.fails 'failure'", fn {
         let future = failure.fails(transform); // bind
-        Assert.equals(future.await(), transform(message));
+        Assert.equals(future.await(), message.to_upper());
     });
 });
 

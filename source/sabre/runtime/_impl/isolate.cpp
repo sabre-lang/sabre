@@ -150,6 +150,10 @@ std::vector<Sabre::Resource::Trace> Sabre::Runtime::Isolate::m_backtrace() {
   return stack;
 }
 
+Sabre::Globals::IC *Sabre::Runtime::Isolate::m_natives() const noexcept {
+  return m_services->get<Globals::Service>()->natives();
+}
+
 Sabre::Garbage::Lifetimes *Sabre::Runtime::Isolate::m_lifetimes() const noexcept {
   return m_services->get<Garbage::Service>()->lifetimes();
 }

@@ -78,6 +78,7 @@ Sabre::String::Literal::style(Runtime::Isolate *isolate, const $::String::View &
 }
 
 Sabre::Value::Any Sabre::String::Literal::report(Runtime::Isolate *isolate, const std::exception &exception) {
+  $::Debug::eprintln("Exception: {0}", exception.what());
   return report(isolate, exception.what());
 }
 

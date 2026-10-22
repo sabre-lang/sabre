@@ -82,6 +82,19 @@ public:
   /// @brief Denotes if this is a terminating instruction.
   inline constexpr bool terminates() const noexcept { return glyph().terminates(); }
 
+  /// @brief Allows transforming an instruction.
+  inline constexpr Instruction transform(const Glyph &other) const noexcept {
+    // create a copy of this instruction value
+    auto copy = Instruction(*this);
+
+    // and update the glyph being used now
+    copy.m_encoded &= ~static_cast<Encoded>(0xFF);
+    copy.m_encoded |= other.encoded();
+
+    // return the resultant copy
+    return copy;
+  }
+
 protected:
   //  PRIVATE METHODS  //
 

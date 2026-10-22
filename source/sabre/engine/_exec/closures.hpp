@@ -92,7 +92,7 @@ SABRE_MM_ENGINE_EXECUTE(CALL_N_INLINE, isolate, frame, unqualified) {
 SABRE_MM_ENGINE_EXECUTE(CALL_0_FIELD, isolate, frame, unqualified) {
   auto *instruction = unqualified->cast<Glyph::CALL_0_FIELD>();
   auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
-  auto result = m_invoke(isolate, symbol, {frame->accumulator()});
+  auto result = m_invoke(isolate, unqualified, symbol, {frame->accumulator()});
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);
@@ -102,7 +102,26 @@ SABRE_MM_ENGINE_EXECUTE(CALL_N_FIELD, isolate, frame, unqualified) {
   auto *instruction = unqualified->cast<Glyph::CALL_N_FIELD>();
   auto [target, argv] = frame->split(instruction->get<2>());
   auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
-  auto result = m_invoke(isolate, symbol, {target, argv});
+  auto result = m_invoke(isolate, unqualified, symbol, {target, argv});
+  if ($_UNLIKELY(!result.pointer().okay())) return result;
+  frame->store(instruction->get<0>(), result);
+  $_MUSTTAIL return tailcall(isolate, frame, unqualified);
+}
+
+SABRE_MM_ENGINE_EXECUTE(CALL_0_NATIVE, isolate, frame, unqualified) {
+  auto *instruction = unqualified->cast<Glyph::CALL_0_NATIVE>();
+  auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
+  auto result = m_native(isolate, unqualified, symbol, {frame->accumulator()});
+  if ($_UNLIKELY(!result.pointer().okay())) return result;
+  frame->store(instruction->get<0>(), result);
+  $_MUSTTAIL return tailcall(isolate, frame, unqualified);
+}
+
+SABRE_MM_ENGINE_EXECUTE(CALL_N_NATIVE, isolate, frame, unqualified) {
+  auto *instruction = unqualified->cast<Glyph::CALL_N_NATIVE>();
+  auto [target, argv] = frame->split(instruction->get<2>());
+  auto symbol = frame->constant<Value::Symbol>(instruction->get<1>());
+  auto result = m_native(isolate, unqualified, symbol, {target, argv});
   if ($_UNLIKELY(!result.pointer().okay())) return result;
   frame->store(instruction->get<0>(), result);
   $_MUSTTAIL return tailcall(isolate, frame, unqualified);

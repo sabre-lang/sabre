@@ -83,6 +83,9 @@ public:
   /// @brief Gets the underlying runtime options.
   inline constexpr const Options *options() const noexcept { return *m_services; }
 
+  /// @brief Gets the available global natives inline cache.
+  inline constexpr Globals::IC *natives() const noexcept { return m_natives(); }
+
   /// @brief Gets a formatted backtrace value.
   inline constexpr std::vector<Resource::Trace> backtrace() { return m_backtrace(); }
 
@@ -237,6 +240,9 @@ private:
 
   /// @brief Gets a formatted backtrace value.
   std::vector<Resource::Trace> m_backtrace();
+
+  /// @brief Gets the inline cache for natives.
+  Globals::IC *m_natives() const noexcept;
 
   /// @brief Gets the disposable lifetimes container.
   Garbage::Lifetimes *m_lifetimes() const noexcept;

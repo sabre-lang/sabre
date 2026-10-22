@@ -31,6 +31,9 @@ template <class T> static constexpr Underlying Lookup() {
 #undef X
 }
 
+// ensure that our maximum builtins value is always an object instance
+static_assert(Lookup<Object::Instance>() == Limits::BUILTINS);
+
 } // namespace Sabre::Shape
 
 #endif
