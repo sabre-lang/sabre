@@ -36,6 +36,9 @@ Sabre::Globals::Service::Service() : m_types($::Unique::New<Type::World>()) {
   m_roots->bind([this](Each &yield) {
     for (auto &value : m_values | std::views::values) yield(value);
     for (auto &value : m_internal | std::views::values) yield(value);
+    for (auto &cache : m_natives->m_cache | std::views::values) {
+      for (auto &value : cache | std::views::values) yield(value);
+    }
   });
 }
 

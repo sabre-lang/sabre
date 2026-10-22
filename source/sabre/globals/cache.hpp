@@ -9,10 +9,15 @@ namespace Sabre::Globals {
 
 /// @brief Globals Natives Cache.
 class IC {
+  //  TYPEDEFS  //
+
+  /// @brief Allow the globals service access.
+  friend class Service;
+
   //  PROPERTIES  //
 
   /// @brief Prepare a cache based on shape/symbols.
-  $::Map::Base<Shape::Underlying, $::Map::Base<Value::Symbol, Value::Any>> m_natives = {};
+  $::Map::Base<Shape::Underlying, $::Map::Base<Value::Symbol, Value::Any>> m_cache = {};
 
 public:
   //  CONSTRUCTORS  //

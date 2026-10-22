@@ -14,7 +14,7 @@ Sabre::Value::Any Sabre::Globals::IC::get(const Value::Any &self, const Value::S
   if (shape >= Shape::Limits::BUILTINS) return Value::Failure();
 
   // get the baseline cache to be used and the spot
-  const auto &cache = m_natives[shape];
+  const auto &cache = m_cache[shape];
   auto iter = cache.find(symbol), end = cache.end();
 
   // resolve as necessary now depending on status
@@ -29,5 +29,5 @@ bool Sabre::Globals::IC::set(const Value::Any &self, const Value::Symbol &symbol
   if (shape >= Shape::Limits::BUILTINS || !callee.is<Function::Native>()) return false;
 
   // we can safely promote our incoming value now
-  return m_natives[shape].emplace(symbol, callee), true;
+  return m_cache[shape].emplace(symbol, callee), true;
 }
