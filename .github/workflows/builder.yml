@@ -30,7 +30,7 @@ jobs:
         steps:
             - uses: actions/checkout@v6
             - uses: lukka/get-cmake@latest
-
+              with: { cmakeVersion: ~4.4.0 }
             - uses: ZhongRuoyu/setup-llvm@v0
               with: { llvm-version: 22 }
 
