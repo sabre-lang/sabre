@@ -1,4 +1,5 @@
 /// Vendor Modules
+import * as React from 'react';
 import { Heading } from 'fumadocs-ui/components/heading';
 
 /// Website Modules
@@ -8,6 +9,15 @@ import { Code, Fragment } from '@/website/components';
 /// Package Modules
 import { Registry } from '../registry';
 import { Manifest } from '../manifest';
+
+/**
+ * Constructs additional content for a given variable.
+ * @param props                     Addendum properties.
+ */
+export type Property = React.PropsWithChildren<{ name: string; variant: Docify.Variant }>;
+export function Property({ children }: Property) {
+    return <React.Fragment children={children} />;
+}
 
 /** Crate Documentation Component. */
 export interface Component extends Component.Props {}
@@ -20,12 +30,25 @@ export function Component({ name, children }: Component) {
     const empty = typeof manifest.project === 'undefined' || manifest.project.groups.length === 0;
     if (empty) children = <p>This crate is current unimplemented and its details are pending.</p>;
 
+    // remove all addendum items for usage
+    const validate = (child: any) => React.isValidElement(child) && child.type === Property;
+    const [properties, heading] = React.Children.toArray(children).reduce(
+        ([left, right], child) => (validate(child) ? [[...left, child], right] : [left, [...right, child]]),
+        [[], []] as [any[], any[]],
+    );
+
+    // ensure we convert our addendum into a suitable set of items to be used by the project
+    const addendum = properties.reduce(
+        (acc, child) => Object.assign({ [`${child.props.name}/${child.props.variant}`]: child }, acc),
+        Object.create(null), // allow assigning to a basic object instance
+    );
+
     // and return the resulting documentation
     return (
         <Fragment>
             <Heading as="h2" id="overview" children="Overview" />
-            {children ?? <p>Unimplemented...</p>}
-            <Component.Project project={manifest.project} />
+            {heading.length ? heading : <p>Unimplemented...</p>}
+            <Component.Project project={manifest.project} addendum={addendum} />
             <p>{/* This is some custom padding here */}</p>
         </Fragment>
     );
@@ -43,7 +66,8 @@ export namespace Component {
      * Constructs a suitable project output.
      * @param manifest                  Minimal manifest details.
      */
-    export function Project({ project }: Pick<Manifest, 'project'>) {
+    export type Project = Pick<Manifest, 'project'> & { addendum?: Record<string, React.ReactNode> };
+    export function Project({ project, addendum }: Project) {
         // ignore when not suitably given a good value
         if (typeof project === 'undefined' || project.groups.length === 0) return;
 
@@ -66,6 +90,7 @@ export namespace Component {
                 return [
                     <Heading key={`${node.name}-${jj}`} as="h3" id={id} children={<code>{node.name}</code>} />,
                     <Code.Dynamic key={`${node.name}-${jj}-code`} lang="sabre" code={code} />,
+                    addendum?.[`${node.name}/${node.variant ?? node.typing}`],
                 ];
             }),
         ]);
