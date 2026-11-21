@@ -127,16 +127,16 @@ set(SPDLOG_INSTALL ON)
 set(SPDLOG_FMT_EXTERNAL ON)
 
 # Declare all the necessary repositories
-__sabre_vendors_declare(ankerl v4.9.2 REPO "martinus/unordered_dense.git")
-__sabre_vendors_declare(asmjit v1.21.0 REPO "asmjit/asmjit.git" TAG master)
+__sabre_vendors_declare(ankerl v5.3.3 REPO "martinus/unordered_dense.git")
+__sabre_vendors_declare(asmjit v1.25.0 REPO "asmjit/asmjit.git" TAG master)
 __sabre_vendors_declare(aster v1.1.3 REPO "rroessler/aster.git")
 __sabre_vendors_declare(CLI11 v2.7.2 REPO "CLIUtils/CLI11.git")
-__sabre_vendors_declare(fmt 12.2.0 REPO "fmtlib/fmt.git")
+__sabre_vendors_declare(fmt 12.2.1 REPO "fmtlib/fmt.git")
 __sabre_vendors_declare(function2 4.2.5 REPO "naios/function2.git")
-__sabre_vendors_declare(glaze v8.1.0 REPO "stephenberry/glaze.git")
+__sabre_vendors_declare(glaze v9.1.0 REPO "stephenberry/glaze.git")
 __sabre_vendors_declare(lief 1.0.0 REPO "lief-project/LIEF.git")
 __sabre_vendors_declare(muuid v2.5.0 REPO "gershnik/modern-uuid.git" TAG v2.3)
-__sabre_vendors_declare(simdutf v9.2.1 REPO "simdutf/simdutf.git")
+__sabre_vendors_declare(simdutf v9.4.0 REPO "simdutf/simdutf.git")
 __sabre_vendors_declare(spdlog v1.17.0 REPO "gabime/spdlog.git")
 
 # Also expose "boost" as a vendor
