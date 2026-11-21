@@ -1,13 +1,50 @@
 ---
+draft: true
 date: 1970-01-01
 author: Reuben Roessler
 title: Sabre vX.X.X
 description: Release announcement post for Sabre vX.X.X
 ---
 
+## Docs Generation
+
+Todo...
+
+## Performance Tuning
+
+Since I've only had limited time to work on Sabre recently, I decided to take a look into some areas that were lacking performance optimizations. These included:
+
+- [2848862](https://github.com/sabre-lang/sabre/commit/284886299e5cb4ddcf3f627c82c8b9587ed51ffd): Feedback checks for property access would previously prioritize invalidness. This meant for every property access there would be unnecessary checks occuring for valid lookups.
+- [2a9db23](https://github.com/sabre-lang/sabre/commit/2a9db2396cdac34ef72124489f29fe33a4aa9c5c): Peep-hole optimization of internal register moves. This allowed reducing bytecode move operations when a register could be easily used instead of moved into a temporary register for following instruction.
+- [f9caf3d](https://github.com/sabre-lang/sabre/commit/f9caf3d6bc870906dad4e3739a2825386f449348): Added simple inline caching for builtin native functions. By tracing usage of builtin native functions, Sabre now modifies those bytecode calls to retrieve a value from cache instead of slow property lookups.
+- [c4a4626](https://github.com/sabre-lang/sabre/commit/c4a462683f84965ac48189fff074ae09092aba69): The internal hashing method used for internal hash-maps was not specialized for `Symbol` and other values. By adding this specialization it removed a computation for comparing equality of similar simple values.
+
+## GitHub Actions
+
+Sabre can now be used inside GitHub Workflows with the [`setup-sabre`](https://github.com/sabre-lang/actions/tree/main/setup-sabre) action. To use the action, all that is required is the following step:
+
+```yaml
+steps:
+    - name: Setup Sabre
+      uses: sabre-lang/actions/setup-sabre@main
+      with:
+          sabre-version: latest # or some other version
+          github-token: ${{ github.token }} # to avoid rate limiting
+```
+
+At this stage, the action simply installs the latest or given version of Sabre using the necessary installer for that system. The versioning and GitHub token can be optionally specified for more target choices of installation.
+
+## Upcoming Work
+
+Todo...
+
 ---
 
 ## Bug Fixes
+
+<h4>Toolkit / sabre docify</h4>
+
+- Added: Todo...
 
 <h4>Toolkit / sabre run</h4>
 
